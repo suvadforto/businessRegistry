@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+		body {
+			font-family: Helvetica, sans-serif;
+			font-size: 10pt;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th, td {
+			border: 1px solid black;
+			padding: 4px;
+		}
+		th {
+			background-color: #eeeeee;
+		}
+	</style>
+</head>
+<body>
+
+<h1>Business Registry Report</h1>
+<p>
+    Kreirano: {{ now|date:"Y-m-d H:i" }}<br>
+    Kreairao: {{ generated_by.username }}
+</p>
+<hr>
+<p>
+    Total businesses: {{ businesses|length }}<br>
+    Active: {{ businesses|dictsort:"status"|length }}
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Registration #</th>
+            <th>City</th>
+            <th>Status</th>
+            <th>Date registered</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for business in businesses %}
+        <tr>
+            <td>{{ business.name }}</td>
+            <td>{{ business.registration_number }}</td>
+            <td>{{ business.city }}</td>
+            <td>{{ business.status }}</td>
+            <td>{{ business.date_registered }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<footer>
+    Business Registry System — Confidential
+</footer>
+
+</body>
+</html>

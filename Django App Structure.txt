@@ -1,0 +1,8 @@
+project/
+ ├─ project/
+ │   ├─ settings.py
+ │   └─ urls.py
+ └─ registry/
+     ├─ models.py
+     ├─ admin.py
+     └─ apps.py

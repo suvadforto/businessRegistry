@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Business Registry</title>
+</head>
+<body>
+    <h1>Businesses</h1>
+    <ul>
+        {% for b in businesses %}
+            <li>{{ b.name }} — {{ b.registration_number }} — {{ b.city }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
