@@ -21,6 +21,7 @@ from .models import (
     Document,
     User,
     AuditLog,
+    ActivityCode,
 )
 
 # -------------------------
@@ -121,6 +122,11 @@ class DocumentInline(admin.TabularInline):
     readonly_fields = ('uploaded_at',)
     show_change_link = True
 
+@admin.register(ActivityCode)
+class ActivityCodeAdmin(admin.ModelAdmin):
+    list_display = ('code', 'description')
+    search_fields = ('code', 'description')
+    ordering = ('code',)
 
 
 # -------------------------
@@ -131,6 +137,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'registration_number', 'city', 'status', 'is_deleted', 'date_registered', 'assigned_clerk')
     search_fields = ('name', 'registration_number', 'tax_number')
     list_filter = ('status', 'city', 'legal_form', 'assigned_clerk')
+    autocomplete_fields = ('activity_code', 'secondary_activities', 'assigned_clerk')
     ordering = ('name',)
 #NEW fieldsets 12.02.2026    
     fieldsets = (
@@ -138,7 +145,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
         'fields': ('name', 'registration_number', 'tax_number', 'status', 'date_registered')
     }),
     ('Klasifikacija', {
-        'fields': ('industry', 'legal_form', 'activity_code', 'secondary_activity')
+        'fields': ('industry', 'legal_form', 'activity_code')
     }),
     ('Operativni Podaci', {
         'fields': ('start_date', 'end_date', 'number_of_employees')

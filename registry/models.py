@@ -30,6 +30,16 @@ class SoftDeleteModel(models.Model):
         self.save()
 
 
+class ActivityCode(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    description = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ['code']
+
+    def __str__(self):
+        return f"{self.code} – {self.description}"
+        
 class Business(SoftDeleteModel):
     STATUS_CHOICES = [
         ('active', 'Aktivan'),
@@ -65,18 +75,19 @@ class Business(SoftDeleteModel):
         null=True,
         verbose_name="Broj računa"
     )
-    activity_code = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-        verbose_name="Šifra djelatnosti"
+    activity_code = models.ForeignKey(
+    ActivityCode,
+    on_delete=models.SET_NULL,
+    null=True,
+    related_name='primary_businesses',
+    verbose_name="Glavna djelatnost"
     )
 
-    secondary_activity = models.CharField(
-        max_length=255,
-        blank=True,
-        null=True,
-        verbose_name="Dodatna djelatnost"
+    secondary_activities = models.ManyToManyField(
+    ActivityCode,
+    blank=True,
+    related_name='secondary_businesses',
+    verbose_name="Dodatne djelatnosti"
     )
     internal_notes = models.TextField(
         blank=True,
@@ -93,10 +104,7 @@ class Business(SoftDeleteModel):
             verbose_name="Dodijeljeni službenik"
     )
 
-    def clean(self):
-        if self.end_date and self.start_date:
-            if self.end_date < self.start_date:
-                raise ValidationError("Datum prestanka rada ne može biti prije datuma početka rada.")
+    
 #END OF NEW FIELDS 
                 
     name = models.CharField(max_length=255,verbose_name="Naziv obrta")
@@ -126,11 +134,24 @@ class Business(SoftDeleteModel):
     
     objects = ActiveManager()
     all_objects = models.Manager()
+    
     def clean(self):
+        errors = {}
+        
+        if self.pk and self.activity_code in self.secondary_activities.all():
+            raise ValidationError({'secondary_activities': "Glavna djelatnost ne može biti među dodatnim djelatnostima."})
+            
+        if self.end_date and self.start_date:
+            if self.end_date < self.start_date:
+                errors['end_date'] = "Datum prestanka rada ne može biti prije datuma početka rada."
+
         if self.assigned_clerk and self.assigned_clerk.role != 'clerk':
-            raise ValidationError(
-                "Dodijeljeni korisnik mora biti službenik (clerk)."
-            )
+            errors['assigned_clerk'] = "Dodijeljeni korisnik mora biti službenik (clerk)."
+
+        if errors:
+            raise ValidationError(errors)
+    
+    
             
     class Meta:
         verbose_name = _("Obrt")
