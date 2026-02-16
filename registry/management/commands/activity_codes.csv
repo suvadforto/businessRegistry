@@ -1,2 +1,610 @@
 code,description
-47.11,Trgovina na malo u nespecijaliziranim prodavnicama
+01.11,Uzgoj žitarica (osim riže), mahunarki i uljarica
+01.12,Uzgoj riže
+01.13,Uzgoj povrća, dinja i lubenica, korjenastog i gomoljastog povrća
+01.14,Uzgoj šećerne trske
+01.15,Uzgoj duhana
+01.16,Uzgoj vlaknastih biljaka
+01.19,Uzgoj ostalih jednogodišnjih usjeva, d. n.
+01.21,Uzgoj vinove loze
+01.22,Uzgoj tropskog i suptropskog voća
+01.23,Uzgoj agruma
+01.24,Uzgoj jezgričavog i koštičavog voća
+01.25,Uzgoj ostalog drvenastog, grmolikog i orašastog voća
+01.26,Uzgoj uljnih plodova
+01.27,Uzgoj biljaka za pripremu napitaka
+01.28,Uzgoj začinskog, aromatičnog i ljekovitog bilja
+01.29,Uzgoj ostalih višegodišnjih usjeva
+01.30,Uzgajanje sadnog materijala i ukrasnog bilja
+01.41,Uzgoj muznih krava
+01.42,Uzgoj ostalih goveda i bivola
+01.43,Uzgoj konja i ostalih kopitara
+01.44,Uzgoj deva i lama
+01.45,Uzgoj ovaca i koza
+01.46,Uzgoj svinja
+01.47,Uzgoj peradi
+01.49,Uzgoj ostalih životinja
+01.50,Mješovita poljoprivredna proizvodnja
+01.61,Pomoćne djelatnosti za uzgoj usjeva
+01.62,Pomoćne djelatnosti za uzgoj životinja
+01.63,Djelatnosti nakon žetve usjeva
+01.64,Dorada sjemena za sjetvu
+01.70,Lov, stupičarenje i uslužne djelatnosti povezane s njima
+02.10,Uzgajanje šuma i ostale djelatnosti u šumarstvu
+02.20,Sječa drva
+02.30,Sakupljanje samoniklih šumskih plodova i proizvoda, osim drvnih sortimenata
+02.40,Pomoćne usluge u šumarstvu
+03.11,Morski ribolov
+03.12,Slatkovodni ribolov
+03.21,Morska akvakultura
+03.22,Slatkovodna akvakultura
+05.10,Vađenje kamenog ugljena
+05.20,Vađenje lignita
+06.10,Vađenje sirove nafte
+06.20,Vađenje prirodnog plina
+07.10,Vađenje željeznih ruda
+07.21,Vađenje uranijevih i torijevih ruda
+07.29,Vađenje ostalih ruda obojenih metala
+08.11,Vađenje ukrasnog kamena i kamena za gradnju, krečnjaka, gipsa, krede i škriljevca
+08.12,Djelatnosti kopova šljunka i pijeska; vađenje gline i kaolina
+08.91,Vađenje minerala za proizvodnju hemikalija i prirodnih mineralnih gnojiva
+08.92,Vađenje treseta
+08.93,Vađenje soli
+08.99,Vađenje ostalih ruda i kamena, d. n.
+09.10,Pomoćne djelatnosti za vađenje nafte i prirodnog plina
+09.90,Pomoćne djelatnosti za ostalo vađenje ruda i kamena
+10.11,Prerada i konzerviranje mesa
+10.12,Prerada i konzerviranje mesa peradi
+10.13,Proizvodnja proizvoda od mesa i mesa peradi
+10.20,Prerada i konzerviranje riba, ljuskara i mekušaca
+10.31,Prerada i konzerviranje krompira
+10.32,Proizvodnja sokova od voća i povrća
+10.39,Ostala prerada i konzerviranje voća i povrća
+10.41,Proizvodnja ulja i masti
+10.42,Proizvodnja margarina i sličnih jestivih masti
+10.51,Proizvodnja mlijeka, mliječnih proizvoda i sira
+10.52,Proizvodnja sladoleda i drugih smrznutih smjesa
+10.61,Proizvodnja mlinskih proizvoda
+10.62,Proizvodnja škroba i škrobnih proizvoda
+10.71,Proizvodnja hljeba; svježih peciva i kolača
+10.72,Proizvodnja dvopeka i keksa; trajnih peciva i kolača
+10.73,Proizvodnja makarona, rezanaca, kuskusa i sličnih proizvoda od brašna
+10.81,Proizvodnja šećera
+10.82,Proizvodnja kakaa, čokolade i slastičarskih proizvoda
+10.83,Prerada čaja i kafe
+10.84,Proizvodnja začina i dodataka hrani
+10.85,Proizvodnja gotove hrane i jela
+10.86,Proizvodnja homogeniziranih prehrambenih preparata i dijetetske hrane
+10.89,Proizvodnja ostalih prehrambenih proizvoda, d. n.
+10.91,Proizvodnja pripremljene stočne hrane
+10.92,Proizvodnja pripremljene hrane za kućne ljubimce
+11.01,Destiliranje, pročišćavanje i miješanje alkoholnih pića
+11.02,Proizvodnja vina od grožđa
+11.03,Proizvodnja jabukovače i ostalih voćnih vina
+11.04,Proizvodnja ostalih nedestiliranih fermentiranih pića
+11.05,Proizvodnja piva
+11.06,Proizvodnja slada
+11.07,Proizvodnja osvježavajućih pića; proizvodnja mineralne vode i drugih flaširanih voda
+12.00,Proizvodnja duhanskih proizvoda
+13.10,Priprema i predenje tekstilnih vlakana
+13.20,Tkanje tekstila
+13.30,Dorada tekstila
+13.91,Proizvodnja pletenih i kukičanih tkanina
+13.92,Proizvodnja gotovih tekstilnih proizvoda, osim odjeće
+13.93,Proizvodnja tepiha i prostirki
+13.94,Proizvodnja užadi, konopaca, pletenica i mreža
+13.95,Proizvodnja netkanog tekstila i proizvoda od netkanog tekstila, osim odjeće
+13.96,Proizvodnja ostalih tehničkih i industrijskih tekstilnih proizvoda
+13.99,Proizvodnja ostalog tekstila, d. n.
+14.11,Proizvodnja kožne odjeće
+14.12,Proizvodnja radne odjeće
+14.13,Proizvodnja ostale vanjske odjeće
+14.14,Proizvodnja rublja
+14.19,Proizvodnja ostale odjeće i pribora za odjeću
+14.20,Proizvodnja krznenih proizvoda
+14.31,Proizvodnja pletenih i kukičanih čarapa
+14.39,Proizvodnja ostale pletene i kukičane odjeće
+15.11,Štavljenje i obrada kože; dorada i bojenje krzna
+15.12,Proizvodnja putnih torbi, ručnih torbi i sličnih proizvoda; sedlarskih i remenarskih proizvoda
+15.20,Proizvodnja obuće
+16.10,Piljenje i blanjanje drva
+16.21,Proizvodnja furnira i ploča na bazi drva
+16.22,Proizvodnja sastavljenog parketa
+16.23,Proizvodnja ostale građevinske stolarije i elemenata
+16.24,Proizvodnja drvene ambalaže
+16.29,Proizvodnja ostalih proizvoda od drva; proizvoda od pluta, slame i pletarskih materijala
+17.11,Proizvodnja celuloze
+17.12,Proizvodnja papira i kartona
+17.21,Proizvodnja valovitog papira i kartona te ambalaže od papira i kartona
+17.22,Proizvodnja proizvoda od papira za kućanstvo, higijenu i toaletne potrebe
+17.23,Proizvodnja uredskog materijala od papira
+17.24,Proizvodnja tapeta
+17.29,Proizvodnja ostalih proizvoda od papira i kartona
+18.11,Tiskanje novina
+18.12,Ostalo tiskanje
+18.13,Usluge pripreme za tisak i objavljivanje
+18.14,Knjigovezačke i srodne usluge
+18.20,Umnožavanje snimljenih zapisa
+19.10,Proizvodnja koksnih proizvoda
+19.20,Proizvodnja rafiniranih naftnih proizvoda
+20.11,Proizvodnja industrijskih plinova
+20.12,Proizvodnja bojila i pigmenata
+20.13,Proizvodnja ostalih osnovnih anorganskih hemikalija
+20.14,Proizvodnja ostalih osnovnih organskih hemikalija
+20.15,Proizvodnja gnojiva i dušičnih spojeva
+20.16,Proizvodnja plastičnih masa u primarnim oblicima
+20.17,Proizvodnja sintetičkog kaučuka u primarnim oblicima
+20.20,Proizvodnja pesticida i drugih agrohemijskih proizvoda
+20.30,Proizvodnja boja, lakova i sličnih premaza, tiskarskih boja i kitova
+20.41,Proizvodnja sapuna i deterdženata, sredstava za čišćenje i poliranje
+20.42,Proizvodnja parfema i toaletno-kozmetičkih preparata
+20.51,Proizvodnja eksploziva
+20.52,Proizvodnja ljepila
+20.53,Proizvodnja eteričnih ulja
+20.59,Proizvodnja ostalih hemijskih proizvoda, d. n.
+20.60,Proizvodnja hemijskih vlakana
+21.10,Proizvodnja osnovnih farmaceutskih proizvoda
+21.20,Proizvodnja farmaceutskih preparata
+22.11,Proizvodnja guma za vozila; protektiranje guma
+22.19,Proizvodnja ostalih proizvoda od gume
+22.21,Proizvodnja ploča, listova, cijevi i profila od plastike
+22.22,Proizvodnja ambalaže od plastike
+22.23,Proizvodnja građevinskih proizvoda od plastike
+22.29,Proizvodnja ostalih proizvoda od plastike
+23.11,Proizvodnja ravnog stakla
+23.12,Oblikovanje i obrada ravnog stakla
+23.13,Proizvodnja šupljeg stakla
+23.14,Proizvodnja staklenih vlakana
+23.19,Proizvodnja i obrada ostalog stakla, uključujući tehničko staklo
+23.20,Proizvodnja vatrostalnih proizvoda
+23.31,Proizvodnja keramičkih pločica i ploča
+23.32,Proizvodnja opeke, crijepa i ostalih građevinskih proizvoda od pečene gline
+23.41,Proizvodnja keramičkih proizvoda za kućanstvo i ukrasnih predmeta
+23.42,Proizvodnja sanitarne keramike
+23.43,Proizvodnja keramičkih izolatora i izolacijskih elemenata
+23.44,Proizvodnja ostalih tehničkih keramičkih proizvoda
+23.49,Proizvodnja ostalih keramičkih proizvoda
+23.51,Proizvodnja cementa
+23.52,Proizvodnja vapna i gipsa
+23.61,Proizvodnja proizvoda od betona za građevinarstvo
+23.62,Proizvodnja proizvoda od gipsa za građevinarstvo
+23.63,Proizvodnja gotove betonske smjese
+23.64,Proizvodnja maltera
+23.65,Proizvodnja proizvoda od vlaknastog cementa
+23.69,Proizvodnja ostalih proizvoda od betona, gipsa i cementa
+23.70,Rezanje, oblikovanje i obrada kamena
+23.91,Proizvodnja brusnih proizvoda
+23.99,Proizvodnja ostalih nemetalnih mineralnih proizvoda, d. n.
+24.10,Proizvodnja sirovog željeza, čelika i ferolegura
+24.20,Proizvodnja čeličnih cijevi, šupljih profila i pripadajućih fitinga
+24.31,Hladno vučenje šipki
+24.32,Hladno valjanje uskih traka
+24.33,Hladno oblikovanje ili savijanje profila
+24.34,Hladno vučenje žice
+24.41,Proizvodnja plemenitih metala
+24.42,Proizvodnja aluminija
+24.43,Proizvodnja olova, cinka i kositra
+24.44,Proizvodnja bakra
+24.45,Proizvodnja ostalih obojenih metala
+24.46,Proizvodnja nuklearnog goriva
+25.11,Proizvodnja metalnih konstrukcija i njihovih dijelova
+25.12,Proizvodnja metalne građevinske stolarije
+25.21,Proizvodnja kotlova i radijatora za centralno grijanje
+25.29,Proizvodnja ostalih metalnih cisterni, rezervoara i spremnika
+25.30,Proizvodnja parnih kotlova, osim kotlova za centralno grijanje
+25.40,Proizvodnja oružja i municije
+25.50,Kovanje, prešanje, štancanje i valjanje metala; metalurgija praha
+25.61,Obrada i presvlačenje metala
+25.62,Mehanička obrada metala
+25.71,Proizvodnja sječiva
+25.72,Proizvodnja brava i okova
+25.73,Proizvodnja alata
+25.91,Proizvodnja čeličnih bačvi i sličnih posuda
+25.92,Proizvodnja lake metalne ambalaže
+25.93,Proizvodnja žice, lanaca i opruga
+25.94,Proizvodnja vijaka i zakovica
+25.99,Proizvodnja ostalih gotovih metalnih proizvoda, d. n.
+26.11,Proizvodnja elektroničkih komponenti
+26.12,Proizvodnja napunjenih elektroničkih ploča
+26.20,Proizvodnja računara i periferne opreme
+26.30,Proizvodnja komunikacijske opreme
+26.40,Proizvodnja elektroničkih proizvoda za široku potrošnju
+26.51,Proizvodnja instrumenata i uređaja za mjerenje, ispitivanje i navigaciju
+26.52,Proizvodnja satova
+26.60,Proizvodnja opreme za zračenje, elektromedicinske i elektroterapijske opreme
+26.70,Proizvodnja optičkih instrumenata i fotografske opreme
+26.80,Proizvodnja magnetnih i optičkih medija
+27.11,Proizvodnja elektromotora, generatora i transformatora
+27.12,Proizvodnja opreme za distribuciju i kontrolu električne energije
+27.20,Proizvodnja baterija i akumulatora
+27.31,Proizvodnja optičkih kablova
+27.32,Proizvodnja ostalih električnih i elektroničkih žica i kablova
+27.33,Proizvodnja opreme za ožičenje
+27.40,Proizvodnja električne rasvjete
+27.51,Proizvodnja električnih aparata za kućanstvo
+27.52,Proizvodnja neelektričnih aparata za kućanstvo
+27.90,Proizvodnja ostale električne opreme
+28.11,Proizvodnja motora i turbina, osim motora za avione i vozila
+28.12,Proizvodnja hidraulične i pneumatske opreme
+28.13,Proizvodnja ostalih pumpi i kompresora
+28.14,Proizvodnja ostalih slavina i ventila
+28.15,Proizvodnja ležajeva, zupčanika i prijenosnih elemenata
+28.21,Proizvodnja peći i plamenika
+28.22,Proizvodnja opreme za dizanje i prenošenje
+28.23,Proizvodnja kancelarijskih mašina i opreme, osim računara
+28.24,Proizvodnja ručnih električnih alata
+28.25,Proizvodnja rashladne i ventilacijske opreme
+28.29,Proizvodnja ostalih mašina za opće namjene, d. n.
+28.30,Proizvodnja poljoprivrednih i šumarskih mašina
+28.41,Proizvodnja mašina za obradu metala
+28.49,Proizvodnja ostalih alatnih mašina
+28.91,Proizvodnja mašina za metalurgiju
+28.92,Proizvodnja mašina za rudnike, kamenolome i građevinarstvo
+28.93,Proizvodnja mašina za preradu hrane, pića i duhana
+28.94,Proizvodnja mašina za tekstil, odjeću i kožu
+28.95,Proizvodnja mašina za papir i karton
+28.96,Proizvodnja mašina za plastiku i gumu
+28.99,Proizvodnja ostalih mašina za posebne namjene, d. n.
+29.10,Proizvodnja motornih vozila
+29.20,Proizvodnja karoserija za motorna vozila; proizvodnja prikolica i poluprikolica
+29.31,Proizvodnja električne i elektroničke opreme za motorna vozila
+29.32,Proizvodnja ostalih dijelova i pribora za motorna vozila
+30.11,Gradnja brodova i plutajućih objekata
+30.12,Gradnja čamaca za razonodu i sport
+30.20,Proizvodnja željezničkih lokomotiva i voznih sredstava
+30.30,Proizvodnja aviona i svemirskih letjelica
+30.40,Proizvodnja vojnih borbenih vozila
+30.91,Proizvodnja motocikala
+30.92,Proizvodnja bicikala i invalidskih kolica
+30.99,Proizvodnja ostalih prijevoznih sredstava, d. n.
+31.01,Proizvodnja kancelarijskog i prodajnog namještaja
+31.02,Proizvodnja kuhinjskog namještaja
+31.03,Proizvodnja madraca
+31.09,Proizvodnja ostalog namještaja
+32.11,Kovanje novca
+32.12,Proizvodnja nakita i srodnih proizvoda
+32.13,Proizvodnja imitacije nakita
+32.20,Proizvodnja muzičkih instrumenata
+32.30,Proizvodnja sportske opreme
+32.40,Proizvodnja igara i igračaka
+32.50,Proizvodnja medicinskih i stomatoloških instrumenata i pribora
+32.91,Proizvodnja metli i četki
+32.99,Ostala prerađivačka industrija, d. n.
+33.11,Popravak metalnih proizvoda
+33.12,Popravak mašina
+33.13,Popravak elektroničke i optičke opreme
+33.14,Popravak električne opreme
+33.15,Popravak i održavanje brodova i čamaca
+33.16,Popravak i održavanje zrakoplova i svemirskih letjelica
+33.17,Popravak i održavanje ostalih prijevoznih sredstava
+33.19,Popravak ostale opreme
+33.20,Instaliranje industrijskih mašina i opreme
+35.11,Proizvodnja električne energije
+35.12,Prijenos električne energije
+35.13,Distribucija električne energije
+35.14,Trgovina električnom energijom
+35.21,Proizvodnja plina
+35.22,Distribucija plinovitih goriva putem mreže
+35.23,Trgovina plinom putem mreže
+35.30,Proizvodnja i distribucija pare i klimatizacija
+36.00,Sakupljanje, pročišćavanje i distribucija vode
+37.00,Uklanjanje otpadnih voda
+38.11,Sakupljanje neopasnog otpada
+38.12,Sakupljanje opasnog otpada
+38.21,Obrada i zbrinjavanje neopasnog otpada
+38.22,Obrada i zbrinjavanje opasnog otpada
+38.31,Rastavljanje olupina
+38.32,Reciklaža sortiranih materijala
+39.00,Djelatnosti sanacije okoliša i ostale usluge upravljanja otpadom
+41.10,Organizacija izvedbe projekata za zgrade
+41.20,Gradnja stambenih i nestambenih zgrada
+42.11,Gradnja cesta i autocesta
+42.12,Gradnja željezničkih pruga i podzemnih željeznica
+42.13,Gradnja mostova i tunela
+42.21,Gradnja cjevovoda za tekućine i plinove
+42.22,Gradnja elektroenergetskih i telekomunikacijskih vodova
+42.91,Gradnja vodnih objekata
+42.99,Gradnja ostalih građevina niskogradnje, d. n.
+43.11,Ruševine i pripremni radovi na gradilištu
+43.12,Pripremni radovi na gradilištu
+43.13,Ispitivanje terena za gradnju
+43.21,Elektroinstalacijski radovi
+43.22,Ugradnja vodovoda, kanalizacije, plina i instalacija za grijanje i klimatizaciju
+43.29,Ostali građevinski instalacijski radovi
+43.31,Žbukanje
+43.32,Ugradnja stolarije
+43.33,Postavljanje podnih i zidnih obloga
+43.34,Bojenje i staklarski radovi
+43.39,Ostali završni građevinski radovi
+43.91,Krovopokrivački radovi
+43.99,Ostali specijalizirani građevinski radovi, d. n.
+45.11,Trgovina automobilima i lakim motornim vozilima
+45.19,Trgovina ostalim motornim vozilima
+45.20,Održavanje i popravak motornih vozila
+45.31,Trgovina dijelovima i priborom za motorna vozila
+45.32,Trgovina dijelovima i priborom za motorna vozila
+45.40,Trgovina, održavanje i popravak motocikala te njihovih dijelova i pribora
+46.11,Posredovanje u trgovini poljoprivrednim sirovinama, živim životinjama, tekstilom i poluproizvodima
+46.12,Posredovanje u trgovini gorivima, rudama, metalima i industrijskim hemikalijama
+46.13,Posredovanje u trgovini drvom i građevinskim materijalom
+46.14,Posredovanje u trgovini mašinama, industrijskom opremom, brodovima i avionima
+46.15,Posredovanje u trgovini namještajem, proizvodima za domaćinstvo i željeznom robom
+46.16,Posredovanje u trgovini tekstilom, odjećom, krznom, obućom i kožnim proizvodima
+46.17,Posredovanje u trgovini hranom, pićima i duhanom
+46.18,Posredovanje specijalizirano za određene proizvode
+46.19,Posredovanje u trgovini raznovrsnim proizvodima
+46.21,Trgovina na veliko žitaricama, sirovim duhanom, sjemenjem i stočnom hranom
+46.22,Trgovina na veliko cvijećem i sadnicama
+46.23,Trgovina na veliko živim životinjama
+46.24,Trgovina na veliko sirovim, neprerađenim kožama
+46.31,Trgovina na veliko voćem i povrćem
+46.32,Trgovina na veliko mesom i mesnim proizvodima
+46.33,Trgovina na veliko mliječnim proizvodima, jajima, jestivim uljima i mastima
+46.34,Trgovina na veliko pićima
+46.35,Trgovina na veliko duhanskim proizvodima
+46.36,Trgovina na veliko šećerom, čokoladom i slatkišima
+46.37,Trgovina na veliko kafom, čajem, kakaom i začinima
+46.38,Trgovina na veliko ostalom hranom, uključujući ribu, ljuskare i mekušce
+46.39,Nespecijalizirana trgovina na veliko hranom, pićima i duhanom
+46.41,Trgovina na veliko tekstilom
+46.42,Trgovina na veliko odjećom i obućom
+46.43,Trgovina na veliko električnim aparatima za domaćinstvo
+46.44,Trgovina na veliko porculanom, staklom i sredstvima za čišćenje
+46.45,Trgovina na veliko parfemima i kozmetikom
+46.46,Trgovina na veliko farmaceutskim proizvodima
+46.47,Trgovina na veliko namještajem, tepisima i rasvjetom
+46.48,Trgovina na veliko satovima i nakitom
+46.49,Trgovina na veliko ostalim proizvodima za domaćinstvo
+46.51,Trgovina na veliko računarima, perifernom opremom i softverom
+46.52,Trgovina na veliko elektroničkom i telekomunikacijskom opremom i dijelovima
+46.61,Trgovina na veliko poljoprivrednim mašinama i opremom
+46.62,Trgovina na veliko alatnim mašinama
+46.63,Trgovina na veliko mašinama za rudarstvo, građevinarstvo i inženjering
+46.64,Trgovina na veliko mašinama za tekstilnu industriju i šivaćim mašinama
+46.65,Trgovina na veliko kancelarijskim namještajem
+46.66,Trgovina na veliko ostalim kancelarijskim mašinama i opremom
+46.69,Trgovina na veliko ostalim mašinama i opremom
+46.71,Trgovina na veliko čvrstim, tečnim i plinovitim gorivima i srodnim proizvodima
+46.72,Trgovina na veliko metalima i metalnim rudama
+46.73,Trgovina na veliko drvom, građevinskim materijalom i sanitarnom opremom
+46.74,Trgovina na veliko željeznom robom, instalacijskim materijalom i opremom za vodovod i grijanje
+46.75,Trgovina na veliko hemijskim proizvodima
+46.76,Trgovina na veliko ostalim poluproizvodima
+46.77,Trgovina na veliko otpadom i ostacima
+46.90,Nespecijalizirana trgovina na veliko
+47.11,Nespecijalizirana trgovina na malo pretežno hranom, pićima i duhanom
+47.19,Ostala nespecijalizirana trgovina na malo
+47.21,Trgovina na malo voćem i povrćem
+47.22,Trgovina na malo mesom i mesnim proizvodima
+47.23,Trgovina na malo ribom, ljuskarima i mekušcima
+47.24,Trgovina na malo hljebom, kolačima i slastičarskim proizvodima
+47.25,Trgovina na malo pićima
+47.26,Trgovina na malo duhanskim proizvodima
+47.29,Ostala trgovina na malo hranom u specijaliziranim prodavnicama
+47.30,Trgovina na malo motornim gorivima u specijaliziranim prodavnicama
+47.41,Trgovina na malo računarima, perifernom opremom i softverom
+47.42,Trgovina na malo telekomunikacijskom opremom
+47.43,Trgovina na malo audio i video opremom
+47.51,Trgovina na malo tekstilom
+47.52,Trgovina na malo željeznom robom, bojama i staklom
+47.53,Trgovina na malo tepisima, podnim i zidnim oblogama
+47.54,Trgovina na malo električnim aparatima za domaćinstvo
+47.59,Trgovina na malo namještajem, rasvjetom i ostalim proizvodima za domaćinstvo
+47.61,Trgovina na malo knjigama
+47.62,Trgovina na malo novinama i pisaćim materijalom
+47.63,Trgovina na malo muzičkim i video zapisima
+47.64,Trgovina na malo sportskom opremom
+47.65,Trgovina na malo igrama i igračkama
+47.71,Trgovina na malo odjećom
+47.72,Trgovina na malo obućom i kožnim proizvodima
+47.73,Trgovina na malo farmaceutskim proizvodima
+47.74,Trgovina na malo medicinskim i ortopedskim proizvodima
+47.75,Trgovina na malo kozmetikom i toaletnim proizvodima
+47.76,Trgovina na malo cvijećem, sadnicama, sjemenjem i kućnim ljubimcima
+47.77,Trgovina na malo satovima i nakitom
+47.78,Ostala trgovina na malo novom robom u specijaliziranim prodavnicama
+47.79,Trgovina na malo rabljenom robom u specijaliziranim prodavnicama
+47.81,Trgovina na malo putem štandova i tržnica hranom, pićima i duhanom
+47.82,Trgovina na malo putem štandova i tržnica tekstilom, odjećom i obućom
+47.89,Trgovina na malo putem štandova i tržnica ostalom robom
+47.91,Trgovina na malo putem pošte ili interneta
+47.99,Ostala trgovina na malo izvan prodavnica, štandova i tržnica
+49.10,Željeznički putnički prijevoz
+49.20,Željeznički teretni prijevoz
+49.31,Gradski i prigradski kopneni putnički prijevoz
+49.32,Taksi služba
+49.39,Ostali kopneni putnički prijevoz, d. n.
+49.41,Cestovni prijevoz robe
+49.42,Usluge preseljenja
+50.10,Pomorski i obalni putnički prijevoz
+50.20,Pomorski i obalni teretni prijevoz
+50.30,Prijevoz unutarnjim vodenim putevima
+51.10,Zračni putnički prijevoz
+51.21,Zračni teretni prijevoz
+52.10,Skladištenje
+52.21,Prateće usluge u kopnenom prijevozu
+52.22,Prateće usluge u vodenom prijevozu
+52.23,Prateće usluge u zračnom prijevozu
+52.24,Rukovanje teretom
+52.29,Ostale prateće djelatnosti u prijevozu
+53.10,Poštanske djelatnosti u okviru univerzalne usluge
+53.20,Ostale poštanske i kurirske djelatnosti
+55.10,Hoteli i sličan smještaj
+55.20,Odmarališta i slični objekti za kraći odmor
+55.30,Kampovi i prostori za kamp-prikolice
+55.90,Ostali smještaj
+56.10,Djelatnosti restorana i ostalih objekata za pripremu i usluživanje hrane
+56.21,Djelatnosti keteringa
+56.29,Ostale djelatnosti pripreme i usluživanja hrane
+56.30,Djelatnosti pripreme i usluživanja pića
+58.11,Izdavanje knjiga
+58.12,Izdavanje imenika i popisa adresa
+58.13,Izdavanje novina
+58.14,Izdavanje časopisa i periodičnih publikacija
+58.19,Ostala izdavačka djelatnost
+58.21,Izdavanje računalnih igara
+58.29,Izdavanje ostalog softvera
+59.11,Proizvodnja filmova, video filmova i televizijskih programa
+59.12,Djelatnosti postprodukcije filmova, video filmova i televizijskih programa
+59.13,Distribucija filmova, video filmova i televizijskih programa
+59.14,Djelatnosti prikazivanja filmova
+59.20,Djelatnosti snimanja zvučnih zapisa i izdavanja muzičkih zapisa
+60.10,Emitiranje radijskog programa
+60.20,Emitiranje televizijskog programa
+61.10,Žične telekomunikacije
+61.20,Bežične telekomunikacije
+61.30,Satelitske telekomunikacije
+61.90,Ostale telekomunikacijske djelatnosti
+62.01,Računalno programiranje
+62.02,Savjetovanje u vezi s računalima
+62.03,Upravljanje računalnom opremom i sistemima
+62.09,Ostale uslužne djelatnosti u vezi s informacijskom tehnologijom i računalima
+63.11,Obrada podataka, usluge hostinga i povezane djelatnosti
+63.12,Internetski portali
+63.91,Djelatnosti novinskih agencija
+63.99,Ostale informacijske uslužne djelatnosti, d. n.
+64.11,Djelatnosti centralne banke
+64.19,Ostalo monetarno posredovanje
+64.20,Djelatnosti holding društava
+64.30,Trustovi, fondovi i slični finansijski subjekti
+64.91,Finansijski leasing
+64.92,Ostalo kreditno posredovanje
+64.99,Ostale finansijske uslužne djelatnosti, osim osiguranja i penzijskih fondova, d. n.
+65.11,Životno osiguranje
+65.12,Neživotno osiguranje
+65.20,Reosiguranje
+65.30,Penzijski fondovi
+66.11,Administracija finansijskih tržišta
+66.12,Posredovanje u trgovanju vrijednosnim papirima i robama
+66.19,Ostale pomoćne djelatnosti u finansijskim uslugama, osim osiguranja i penzijskih fondova
+66.21,Procjena rizika i šteta
+66.22,Djelatnosti zastupnika i brokera osiguranja
+66.29,Ostale pomoćne djelatnosti u osiguranju i penzijskim fondovima
+66.30,Upravljanje fondovima
+68.10,Kupnja i prodaja vlastitih nekretnina
+68.20,Iznajmljivanje i upravljanje vlastitim ili unajmljenim nekretninama
+68.31,Agencije za nekretnine
+68.32,Upravljanje nekretninama uz naplatu ili po ugovoru
+code,description
+69.10,Pravne djelatnosti
+69.20,Računovodstvene, knjigovodstvene i revizorske djelatnosti; porezno savjetovanje
+70.10,Upravljanje društvima
+70.21,Djelatnosti odnosa s javnošću i komunikacija
+70.22,Savjetovanje u vezi s poslovanjem i ostalim upravljanjem
+71.11,Arhitektonske djelatnosti
+71.12,Inženjerske djelatnosti i s njima povezano tehničko savjetovanje
+71.20,Tehničko ispitivanje i analiza
+72.11,Istraživanje i eksperimentalni razvoj u biotehnologiji
+72.19,Ostalo istraživanje i eksperimentalni razvoj u prirodnim, tehničkim i tehnološkim naukama
+72.20,Istraživanje i eksperimentalni razvoj u društvenim i humanističkim naukama
+73.11,Agencije za oglašavanje
+73.12,Posredovanje u prodaji oglasnog prostora i vremena
+73.20,Istraživanje tržišta i ispitivanje javnog mnijenja
+74.10,Specijalizirane dizajnerske djelatnosti
+74.20,Fotografske djelatnosti
+74.30,Prevodilačke djelatnosti i usluge tumača
+74.90,Ostale stručne, naučne i tehničke djelatnosti, d. n.
+75.00,Veterinarske djelatnosti
+77.11,Iznajmljivanje i davanje u zakup automobila i lakih motornih vozila
+77.12,Iznajmljivanje i davanje u zakup teretnih vozila
+77.21,Iznajmljivanje i davanje u zakup opreme za rekreaciju i sport
+77.22,Iznajmljivanje videokaseta i diskova
+77.29,Iznajmljivanje i davanje u zakup ostalih predmeta za ličnu upotrebu i domaćinstvo
+77.31,Iznajmljivanje i davanje u zakup poljoprivrednih mašina i opreme
+77.32,Iznajmljivanje i davanje u zakup mašina i opreme za građevinarstvo
+77.33,Iznajmljivanje i davanje u zakup kancelarijskih mašina i opreme
+77.34,Iznajmljivanje i davanje u zakup plovnih objekata
+77.35,Iznajmljivanje i davanje u zakup zračnih prevoznih sredstava
+77.39,Iznajmljivanje i davanje u zakup ostalih mašina, opreme i materijalnih dobara, d. n.
+78.10,Djelatnosti agencija za zapošljavanje
+78.20,Djelatnosti agencija za privremeno zapošljavanje
+78.30,Ostalo ustupanje ljudskih resursa
+79.11,Djelatnosti putničkih agencija
+79.12,Djelatnosti turoperatora
+79.90,Ostale rezervacijske usluge i povezane djelatnosti
+80.10,Djelatnosti privatne zaštite
+80.20,Usluge zaštite putem sigurnosnih sistema
+80.30,Istražne djelatnosti
+81.10,Upravljanje objektima
+81.21,Opće čišćenje zgrada
+81.22,Ostale djelatnosti čišćenja zgrada i objekata
+81.29,Ostale djelatnosti čišćenja
+81.30,Uređenje i održavanje zelenih površina
+82.11,Kombinirane kancelarijske administrativne usluge
+82.19,Fotokopiranje, priprema dokumenata i ostale specijalizirane kancelarijske pomoćne djelatnosti
+82.20,Djelatnosti pozivnih centara
+82.30,Organizacija sastanaka i poslovnih sajmova
+82.91,Djelatnosti agencija za naplatu potraživanja i kreditnih biroa
+82.92,Djelatnosti pakovanja
+82.99,Ostale poslovne pomoćne uslužne djelatnosti, d. n.
+84.11,Opće djelatnosti javne uprave
+84.12,Upravljanje zdravstvom, obrazovanjem, kulturnim i drugim društvenim uslugama
+84.13,Upravljanje poslovima u vezi s ekonomskom politikom
+84.21,Vanjskopolitičke djelatnosti
+84.22,Djelatnosti odbrane
+84.23,Djelatnosti pravosuđa
+84.24,Djelatnosti javnog reda i sigurnosti
+84.25,Djelatnosti vatrogasne službe
+code,description
+85.10,Predškolsko obrazovanje
+85.20,Osnovno obrazovanje
+85.31,Opće srednje obrazovanje
+85.32,Strukovno i tehničko srednje obrazovanje
+85.41,Obrazovanje nakon srednjeg koje nije visoko
+85.42,Visoko obrazovanje
+85.51,Sportsko i rekreacijsko obrazovanje
+85.52,Obrazovanje u području kulture
+85.53,Djelatnosti vozačkih škola
+85.59,Ostalo obrazovanje, d. n.
+85.60,Pomoćne uslužne djelatnosti u obrazovanju
+86.10,Bolnička djelatnost
+86.21,Djelatnosti opće medicinske prakse
+86.22,Djelatnosti specijalističke medicinske prakse
+86.23,Stomatološka praksa
+86.90,Ostale djelatnosti zdravstvene zaštite
+87.10,Djelatnosti smještaja za njegu
+87.20,Djelatnosti smještaja za osobe s intelektualnim i mentalnim poteškoćama
+87.30,Djelatnosti smještaja za starije osobe i osobe s invaliditetom
+87.90,Ostale djelatnosti smještaja socijalne zaštite
+88.10,Socijalna zaštita bez smještaja za starije osobe i osobe s invaliditetom
+88.91,Dnevna briga o djeci
+88.99,Ostale djelatnosti socijalne zaštite bez smještaja, d. n.
+90.01,Izvođačka umjetnost
+90.02,Pomoćne djelatnosti u izvođačkoj umjetnosti
+90.03,Umjetničko stvaralaštvo
+90.04,Rad umjetničkih objekata
+91.01,Djelatnosti biblioteka i arhiva
+91.02,Djelatnosti muzeja
+91.03,Upravljanje historijskim lokalitetima i građevinama te sličnim znamenitostima
+91.04,Djelatnosti botaničkih i zooloških vrtova i prirodnih rezervata
+92.00,Djelatnosti kockanja i klađenja
+93.11,Upravljanje sportskim objektima
+93.12,Djelatnosti sportskih klubova
+93.13,Fitnes centri
+93.19,Ostale sportske djelatnosti
+93.21,Djelatnosti zabavnih i tematskih parkova
+93.29,Ostale zabavne i rekreacijske djelatnosti
+code,description
+94.11,Djelatnosti poslovnih i poslodavačkih organizacija
+94.12,Djelatnosti strukovnih organizacija
+94.20,Djelatnosti sindikata
+94.91,Djelatnosti vjerskih organizacija
+94.92,Djelatnosti političkih organizacija
+94.99,Djelatnosti ostalih članskih organizacija, d. n.
+95.11,Popravak računara i periferne opreme
+95.12,Popravak komunikacijske opreme
+95.21,Popravak elektroničke opreme za široku potrošnju
+95.22,Popravak kućanskih aparata te opreme za kuću i vrt
+95.23,Popravak obuće i kožnih proizvoda
+95.24,Popravak namještaja i opreme za domaćinstvo
+95.25,Popravak satova i nakita
+95.29,Popravak ostalih ličnih i kućnih predmeta
+96.01,Pranje i hemijsko čišćenje tekstila i krznenih proizvoda
+96.02,Frizerski i drugi tretmani za uljepšavanje
+96.03,Pogrebne i srodne djelatnosti
+96.04,Djelatnosti za njegu i održavanje tijela
+96.09,Ostale lične uslužne djelatnosti, d. n.
+97.00,Djelatnosti domaćinstava kao poslodavaca kućnog osoblja
+98.10,Djelatnosti domaćinstava koja proizvode različite proizvode za vlastite potrebe
+98.20,Djelatnosti domaćinstava koja pružaju različite usluge za vlastite potrebe
+99.00,Djelatnosti eksteritorijalnih organizacija i tijela
