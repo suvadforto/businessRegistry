@@ -46,6 +46,17 @@ class Business(SoftDeleteModel):
         ('inactive', 'Neaktivan'),
         ('suspended', 'Na čekanju'),
     ]
+    BUSINESS_TYPE_CHOICES = [
+    ('osnovno', 'Osnovno'),
+    ('dopunsko', 'Dopunsko'),
+    ('dodatno', 'Dodatno'),
+    ]
+    business_type = models.CharField(
+    max_length=20,
+    choices=BUSINESS_TYPE_CHOICES,
+    default='osnovno',
+    verbose_name="Način obavljanja"
+)
 #New fields 12.02.2026
     start_date = models.DateField(
         blank=True,
@@ -136,10 +147,9 @@ class Business(SoftDeleteModel):
     all_objects = models.Manager()
     
     def clean(self):
+        super().clean()
         errors = {}
         
-        if self.pk and self.activity_code in self.secondary_activities.all():
-            raise ValidationError({'secondary_activities': "Glavna djelatnost ne može biti među dodatnim djelatnostima."})
             
         if self.end_date and self.start_date:
             if self.end_date < self.start_date:

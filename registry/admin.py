@@ -1,11 +1,12 @@
 from registry.utils.pdf import businesses_to_pdf
-
+from django.core.exceptions import ValidationError
+from django import forms
 from django.urls import path
 from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-
+from django.contrib.admin.widgets import AutocompleteSelectMultiple
 from django.conf import settings
 import os
 from django.utils.timezone import now
@@ -129,23 +130,42 @@ class ActivityCodeAdmin(admin.ModelAdmin):
     ordering = ('code',)
 
 
+class BusinessAdminForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        fields = "__all__"
+
+    def clean(self):
+        cleaned_data = super().clean()
+        activity_code = cleaned_data.get("activity_code")
+        secondary = cleaned_data.get("secondary_activities")
+
+        if activity_code and secondary and activity_code in secondary:
+            self.add_error(
+                "secondary_activities",
+                "Glavna djelatnost ne može biti među dodatnim djelatnostima."
+            )
+
+        return cleaned_data
+
 # -------------------------
 # BUSINESS ADMIN
 # -------------------------
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'registration_number', 'city', 'status', 'is_deleted', 'date_registered', 'assigned_clerk')
+    list_display = ('name', 'registration_number', 'city', 'status','business_type', 'date_registered', 'assigned_clerk','is_deleted' )
     search_fields = ('name', 'registration_number', 'tax_number')
-    list_filter = ('status', 'city', 'legal_form', 'assigned_clerk')
-    autocomplete_fields = ('activity_code', 'secondary_activities', 'assigned_clerk')
+    list_filter = ('status', 'city', 'legal_form', 'assigned_clerk', 'business_type',)
+    autocomplete_fields = ('activity_code', 'assigned_clerk')
+    filter_horizontal=('secondary_activities',)
     ordering = ('name',)
 #NEW fieldsets 12.02.2026    
     fieldsets = (
     ('Osnovni Podaci', {
-        'fields': ('name', 'registration_number', 'tax_number', 'status', 'date_registered')
+        'fields': ('name', 'registration_number', 'tax_number', 'status','business_type', 'date_registered')
     }),
     ('Klasifikacija', {
-        'fields': ('industry', 'legal_form', 'activity_code')
+        'fields': ('industry', 'legal_form', 'activity_code','secondary_activities')
     }),
     ('Operativni Podaci', {
         'fields': ('start_date', 'end_date', 'number_of_employees')
@@ -163,7 +183,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
         'fields': ('created_at', 'updated_at')
     }),
     )
-
+    form = BusinessAdminForm
     inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, DocumentInline]
     actions = ['mark_inactive', 'mark_active', 'print_selected_pdf', 'restore_records',]     
         
@@ -186,7 +206,9 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
             return
 
         return businesses_to_pdf(queryset, request.user)
-
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related('activity_code', 'assigned_clerk')
     
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser or request.user.role == 'admin'        
@@ -212,6 +234,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
 
         return actions
         
+    
 # -------------------------
 # OWNER ADMIN
 # -------------------------
