@@ -153,7 +153,7 @@ class BusinessAdminForm(forms.ModelForm):
 # -------------------------
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'registration_number', 'city', 'status','business_type', 'date_registered', 'assigned_clerk','is_deleted' )
+    list_display = ('name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted' )
     search_fields = ('name', 'registration_number', 'tax_number')
     list_filter = ('status', 'city', 'legal_form', 'assigned_clerk', 'business_type',)
     autocomplete_fields = ('activity_code', 'assigned_clerk')
@@ -162,10 +162,10 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
 #NEW fieldsets 12.02.2026    
     fieldsets = (
     ('Osnovni Podaci', {
-        'fields': ('name', 'registration_number', 'tax_number', 'status','business_type', 'date_registered')
+        'fields': ('name', 'registration_number', 'tax_number', 'status', 'date_registered')
     }),
     ('Klasifikacija', {
-        'fields': ('industry', 'legal_form', 'activity_code','secondary_activities')
+        'fields': ('industry', 'business_type','legal_form', 'activity_code','secondary_activities')
     }),
     ('Operativni Podaci', {
         'fields': ('start_date', 'end_date', 'number_of_employees')
@@ -178,10 +178,10 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     }),
     ('Napomene', {
         'fields': ('notes', 'internal_notes')
-    }),
-    ('Sistemska Polja', {
-        'fields': ('created_at', 'updated_at')
-    }),
+    })
+#    ('Sistemska Polja', {
+#        'fields': ('created_at', 'updated_at')
+#    }),
     )
     form = BusinessAdminForm
     inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, DocumentInline]

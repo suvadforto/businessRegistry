@@ -13,7 +13,7 @@ class ActiveManager(models.Manager):
 
 
 class SoftDeleteModel(models.Model):
-    is_deleted = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False, verbose_name="Brisan iz Registra")
     deleted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
@@ -41,6 +41,19 @@ class ActivityCode(models.Model):
         return f"{self.code} – {self.description}"
         
 class Business(SoftDeleteModel):
+    INDUSTRY_CHOICES = [
+    ('trgovina', 'Trgovinska'),
+    ('ugostiteljstvo', 'Ugostiteljska'),
+    ('obrt', 'Obrtnička'),
+    ]
+
+    industry = models.CharField(
+    max_length=50,
+    choices=INDUSTRY_CHOICES,
+    blank=True,
+    null=True,
+    verbose_name="Vrsta djelatnosti"
+    )
     STATUS_CHOICES = [
         ('active', 'Aktivan'),
         ('inactive', 'Neaktivan'),
@@ -121,7 +134,7 @@ class Business(SoftDeleteModel):
     name = models.CharField(max_length=255,verbose_name="Naziv obrta")
     registration_number = models.CharField(max_length=100, unique=True, verbose_name="Broj rješenja")
     tax_number = models.CharField(max_length=100, blank=True, null=True, verbose_name="Porezni id br.")
-    industry = models.CharField(max_length=150, blank=True, null=True,verbose_name="Vrsta obrta")
+#    industry = models.CharField(max_length=150, blank=True, null=True,verbose_name="Vrsta djelatnosti")
     legal_form = models.CharField(max_length=100, blank=True, null=True, verbose_name="Zanimanje")
 
     address = models.TextField(blank=True, null=True, verbose_name="Adresa/Sjedište")
@@ -137,7 +150,7 @@ class Business(SoftDeleteModel):
         default='active'
     )
 
-    date_registered = models.DateField(verbose_name="Datum registracije")
+    date_registered = models.DateField(verbose_name="Datum rješenja/registracije")
     notes = models.TextField(blank=True, null=True, verbose_name="Zabilješke")
 
     created_at = models.DateTimeField(auto_now_add=True)

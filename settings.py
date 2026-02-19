@@ -12,8 +12,11 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'registry.User'
 
-TIME_ZONE = 'UTC'
+
 USE_TZ = True
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'bs'
 
 TIME_ZONE = 'Europe/Sarajevo'
+
+DATE_FORMAT = "d.m.Y"
+DATE_INPUT_FORMATS = ["%d.%m.%Y"]

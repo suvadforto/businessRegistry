@@ -131,9 +131,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'bs'   # or 'sr' or 'sr-latn'
 
 USE_L10N = True
+DATE_FORMAT = "d.m.Y"
+DATE_INPUT_FORMATS = ["%d.%m.%Y."]
 
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Sarajevo'
 
 USE_I18N = True
 
