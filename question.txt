@@ -1,0 +1,10 @@
+We were working on my Django registry project.
+
+I want to implement a "Major Change" button in Django admin for the Business model.
+The idea:
+- Minor edits should just save normally.
+- Major changes (address / registration number) should:
+    1) Store old values in a BusinessHistory model
+    2) Then allow updating the current Business record
+    3) Show history inline in admin
+Please continue from there.

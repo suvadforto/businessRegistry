@@ -14,34 +14,47 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from registry import views
-#from django.contrib import admin
-#from django.urls import path
-
-#urlpatterns = [
-#    path('admin/', admin.site.urls),
-#]
-
-
-from django.conf import settings
-from django.conf.urls.static import static
-
-
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework import routers
+
+from registry import views
 from registry.api import BusinessViewSet
+
+
+# ==========================
+# DRF Router
+# ==========================
 
 router = routers.DefaultRouter()
 router.register(r'businesses', BusinessViewSet)
 
+
+# ==========================
+# URL Patterns
+# ==========================
+
 urlpatterns = [
+    # Admin panel
     path('admin/', admin.site.urls),
+
+    # HTML business list
     path('businesses/', views.business_list, name='business_list'),
-    path('api/', include(router.urls)),  # <-- API endpoint
+
+    # ✅ PDF report
+    path('businesses/report/', views.businesses_report, name='businesses_report'),
+
+    # API endpoints
+    path('api/', include(router.urls)),
 ]
-    
-    
+
+
+# ==========================
+# Media files (development only)
+# ==========================
+
 if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL,

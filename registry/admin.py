@@ -1,7 +1,9 @@
+from django.contrib.admin.widgets import AutocompleteSelect
 from registry.utils.pdf import businesses_to_pdf
 from django.core.exceptions import ValidationError
 from django import forms
 from django.urls import path
+from django.utils.html import format_html
 from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
@@ -23,6 +25,7 @@ from .models import (
     User,
     AuditLog,
     ActivityCode,
+    Profession,
 )
 
 # -------------------------
@@ -128,12 +131,36 @@ class ActivityCodeAdmin(admin.ModelAdmin):
     list_display = ('code', 'description')
     search_fields = ('code', 'description')
     ordering = ('code',)
+@admin.register(Profession)
+class ProfessionAdmin(admin.ModelAdmin):
+    list_display = ('code', 'description')
+    search_fields = ('code', 'description')
+    ordering = ('code',)
+
+
+class WideAutocompleteSelect(AutocompleteSelect):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.attrs.update({'style': 'width:400px;'})  # adjust width as needed
+
+
+##################################################################
 
 
 class BusinessAdminForm(forms.ModelForm):
     class Meta:
         model = Business
         fields = "__all__"
+        widgets = {
+            'activity_code': forms.Select(attrs={'style': 'width: 400px;'}),
+            'profession': forms.Select(attrs={'style': 'width: 400px;'}),
+            #'secondary_activities': forms.SelectMultiple(attrs={'style': 'width: 500px;'}),
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make secondary_activities taller (multiple select)
+        self.fields['secondary_activities'].widget.attrs.update({'size': '15'})
+   
 
     def clean(self):
         cleaned_data = super().clean()
@@ -145,8 +172,12 @@ class BusinessAdminForm(forms.ModelForm):
                 "secondary_activities",
                 "Glavna djelatnost ne može biti među dodatnim djelatnostima."
             )
-
         return cleaned_data
+
+
+
+
+
 
 # -------------------------
 # BUSINESS ADMIN
@@ -155,8 +186,8 @@ class BusinessAdminForm(forms.ModelForm):
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted' )
     search_fields = ('name', 'registration_number', 'tax_number')
-    list_filter = ('status', 'city', 'legal_form', 'assigned_clerk', 'business_type',)
-    autocomplete_fields = ('activity_code', 'assigned_clerk')
+    list_filter = ('status', 'city', 'profession', 'assigned_clerk', 'business_type',)
+    autocomplete_fields = ('activity_code', 'assigned_clerk', 'profession')
     filter_horizontal=('secondary_activities',)
     ordering = ('name',)
 #NEW fieldsets 12.02.2026    
@@ -165,7 +196,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
         'fields': ('name', 'registration_number', 'tax_number', 'status', 'date_registered')
     }),
     ('Klasifikacija', {
-        'fields': ('industry', 'business_type','legal_form', 'activity_code','secondary_activities')
+        'fields': ('industry', 'business_type', 'profession', 'activity_code','secondary_activities')
     }),
     ('Operativni Podaci', {
         'fields': ('start_date', 'end_date', 'number_of_employees')
@@ -224,7 +255,12 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
             request,
             f"{restored} business(es) restored successfully."
         )
-
+#    def export_pdf_link(self, obj):
+#        return format_html(
+#            '<a href="/businesses/report/" target="_blank">PDF</a>'
+#        )
+#    export_pdf_link.short_description = "Export PDF"
+#    list_display = ('name', 'registration_number', 'status', 'export_pdf_link')
     def get_actions(self, request):
         actions = super().get_actions(request)
 

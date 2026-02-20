@@ -36,9 +36,23 @@ class ActivityCode(models.Model):
 
     class Meta:
         ordering = ['code']
+        verbose_name = "Djelatnost"
+        verbose_name_plural = "Djelatnosti"
+    def __str__(self):
+        return f"{self.code} – {self.description}"
+
+class Profession(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    description = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ['code']
+        verbose_name = "Zanimanje"
+        verbose_name_plural = "Zanimanja"
 
     def __str__(self):
         return f"{self.code} – {self.description}"
+
         
 class Business(SoftDeleteModel):
     INDUSTRY_CHOICES = [
@@ -99,6 +113,15 @@ class Business(SoftDeleteModel):
         null=True,
         verbose_name="Broj računa"
     )
+    profession = models.ForeignKey(
+    Profession,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name='businesses',
+    verbose_name="Zanimanje"
+    )
+
     activity_code = models.ForeignKey(
     ActivityCode,
     on_delete=models.SET_NULL,
@@ -135,7 +158,7 @@ class Business(SoftDeleteModel):
     registration_number = models.CharField(max_length=100, unique=True, verbose_name="Broj rješenja")
     tax_number = models.CharField(max_length=100, blank=True, null=True, verbose_name="Porezni id br.")
 #    industry = models.CharField(max_length=150, blank=True, null=True,verbose_name="Vrsta djelatnosti")
-    legal_form = models.CharField(max_length=100, blank=True, null=True, verbose_name="Zanimanje")
+#    legal_form = models.CharField(max_length=100, blank=True, null=True, verbose_name="Zanimanje")
 
     address = models.TextField(blank=True, null=True, verbose_name="Adresa/Sjedište")
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name="Grad")

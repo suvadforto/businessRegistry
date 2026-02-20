@@ -1,0 +1,589 @@
+Sifra,Naziv_zanimanja
+1111.001,Direktor zakonodavnog tijela
+1111.002,Predsjednik zakonodavnog tijela
+1112.001,Direktor organa državne uprave
+1112.002,Načelnik općine
+1112.003,Gradonačelnik
+1112.004,Ministar
+1112.005,Pomoćnik ministra
+1112.006,Sekretar ministarstva
+1211.001,Direktor velikog preduzeća
+1211.002,Izvršni direktor
+1211.003,Generalni direktor
+1212.001,Rukovodilac finansijskog sektora
+1212.002,Finansijski direktor
+1213.001,Rukovodilac sektora za ljudske resurse
+1213.002,HR menadžer
+1219.001,Rukovodilac sektora marketinga
+1219.002,Menadžer prodaje
+1221.001,Rukovodilac proizvodnje
+1222.001,Rukovodilac IT sektora
+1223.001,Rukovodilac istraživanja i razvoja
+1311.001,Direktor malog preduzeća
+1312.001,Vlasnik obrta
+1313.001,Upravnik poljoprivrednog gazdinstva
+2111.001,Fizičar
+2112.001,Meteorolog
+2113.001,Hemijski analitičar
+2114.001,Geolog
+2120.001,Matematičar
+2131.001,Biolog
+2132.001,Agronom
+2133.001,Ekolog
+2141.001,Industrijski inženjer
+2142.001,Građevinski inženjer
+2143.001,Inženjer zaštite okoliša
+2144.001,Mašinski inženjer
+2145.001,Elektroinženjer
+2146.001,Inženjer hemijske tehnologije
+2149.001,Saobraćajni inženjer
+2151.001,Inženjer elektrotehnike
+2152.001,Inženjer elektronike
+2161.001,Arhitekta
+2162.001,Urbanista
+2163.001,Geodet
+2211.001,Doktor medicine
+2212.001,Doktor stomatologije
+2221.001,Medicinska sestra
+2222.001,Medicinski tehničar
+2230.001,Babica
+2310.001,Univerzitetski profesor
+2320.001,Profesor srednje škole
+2330.001,Nastavnik osnovne škole
+2341.001,Učitelj razredne nastave
+2411.001,Racunovođa
+2412.001,Finansijski analitičar
+2413.001,Revizor
+2421.001,Advokat
+2422.001,Notar
+2431.001,Stručnjak za marketing
+2432.001,Stručnjak za odnose s javnošću
+2511.001,Softver inženjer
+2512.001,Programer
+2513.001,Web developer
+2514.001,Administrator baza podataka
+2521.001,Sistemski administrator
+2611.001,Pravnik
+2631.001,Ekonomista
+2632.001,Sociolog
+2633.001,Psiholog
+2634.001,Novinar
+2635.001,Socijalni radnik
+3111.001,Tehničar građevine
+3112.001,Mašinski tehničar
+3113.001,Elektrotehničar
+3114.001,Tehničar za elektroniku
+3121.001,IT tehničar
+3211.001,Laboratorijski tehničar
+3221.001,Farmaceutski tehničar
+3251.001,Zubni tehničar
+3312.001,Kreditni referent
+3322.001,Komercijalista
+3334.001,Agent osiguranja
+3341.001,Kancelarijski službenik
+3342.001,Administrativni referent
+3353.001,Inspektor
+3412.001,Policajac
+3421.001,Sportski trener
+3511.001,Operater IT podrške
+4110.001,Administrativni službenik
+4120.001,Referent za unos podataka
+4211.001,Bankovni službenik
+4222.001,Recepcioner
+4311.001,Knjigovođa
+4412.001,Poštanski službenik
+5120.001,Kuhar
+5131.001,Konobar
+5141.001,Frizer
+5151.001,Domar
+5162.001,Policijski službenik
+5211.001,Prodavač
+5223.001,Blagajnik
+5311.001,Odgojitelj
+5411.001,Vatrogasac
+6111.001,Ratar
+6121.001,Uzgojivač stoke
+6130.001,Voćar
+6210.001,Šumar
+6221.001,Ribar
+7112.001,Zidar
+7115.001,Tesar
+7126.001,Instalater
+7131.001,Fasader
+7212.001,Zavarivač
+7223.001,Tokar
+7231.001,Automehaničar
+7411.001,Električar
+7421.001,Stolar
+7511.001,Mesar
+7531.001,Krojač
+8111.001,Rukovalac rudarskih mašina
+8121.001,Operater metalurške peći
+8131.001,Operater hemijske proizvodnje
+8211.001,Sklapač mašina
+8322.001,Vozač kamiona
+8332.001,Vozač autobusa
+8342.001,Rukovalac građevinskih mašina
+9112.001,Čistač
+9313.001,Pomoćni građevinski radnik
+1113.001,Zamjenik načelnika općine
+1113.002,Zamjenik gradonačelnika
+1214.001,Rukovodilac logistike
+1215.001,Rukovodilac nabavke
+1216.001,Rukovodilac pravne službe
+1217.001,Rukovodilac kvaliteta
+1224.001,Rukovodilac građevinskih projekata
+1225.001,Rukovodilac proizvodnog pogona
+1226.001,Rukovodilac skladišta
+1314.001,Upravnik trgovačke radnje
+1315.001,Upravnik ugostiteljskog objekta
+2111.002,Istraživač fizičar
+2112.002,Klimatolog
+2113.002,Biohemičar
+2114.002,Hidrogeolog
+2120.002,Statističar
+2131.002,Mikrobiolog
+2132.002,Fitopatolog
+2133.002,Stručnjak za zaštitu prirode
+2141.002,Procesni inženjer
+2142.002,Projektant građevinskih konstrukcija
+2143.002,Inženjer zaštite na radu
+2144.002,Konstruktor mašina
+2145.002,Projektant elektroinstalacija
+2146.002,Tehnolog hemijske proizvodnje
+2149.002,Inženjer logistike
+2151.002,Projektant energetskih sistema
+2152.002,Inženjer automatike
+2161.002,Projektant enterijera
+2162.002,Prostorni planer
+2163.002,Katastarski službenik
+2211.002,Specijalista interne medicine
+2211.003,Specijalista hirurgije
+2211.004,Specijalista pedijatrije
+2212.002,Specijalista ortodoncije
+2221.002,Medicinska sestra intenzivne njege
+2222.002,Medicinski tehničar laboratorije
+2230.002,Patronažna sestra
+2310.002,Docent
+2310.003,Vanredni profesor
+2320.002,Profesor matematike
+2320.003,Profesor fizike
+2330.002,Nastavnik informatike
+2341.002,Učitelj produženog boravka
+2411.002,Ovlašteni računovođa
+2412.002,Investicioni analitičar
+2413.002,Interni revizor
+2421.002,Pravni savjetnik
+2422.002,Javni bilježnik
+2431.002,Digitalni marketing stručnjak
+2432.002,Glasnogovornik
+2511.002,Aplikativni inženjer
+2512.002,Frontend developer
+2512.003,Backend developer
+2513.002,Web dizajner
+2514.002,Data administrator
+2521.002,Network administrator
+2611.002,Korporativni pravnik
+2631.002,Finansijski konsultant
+2632.002,Istraživač sociolog
+2633.002,Klinički psiholog
+2634.002,Urednik
+2635.002,Savjetnik za socijalnu zaštitu
+3111.002,Projektantski tehničar građevine
+3112.002,Servisni tehničar mašinstva
+3113.002,Elektroenergetski tehničar
+3114.002,Tehničar automatike
+3121.002,Tehničar za mreže
+3211.002,Medicinski laboratorijski tehničar
+3221.002,Tehničar farmacije
+3251.002,Tehničar dentalne protetike
+3312.002,Hipoteka referent
+3322.002,Trgovački predstavnik
+3334.002,Posrednik u osiguranju
+3341.002,Arhivski službenik
+3342.002,Kadrovski referent
+3353.002,Tržišni inspektor
+3412.002,Kriminalistički inspektor
+3421.002,Fitnes trener
+3511.002,IT podrška korisnicima
+4110.002,Administrativni asistent
+4120.002,Operater za unos podataka
+4211.002,Službenik za kredite
+4222.002,Hotelski recepcioner
+4311.002,Finansijski knjigovođa
+4412.002,Dostavljač pošte
+5120.002,Glavni kuhar
+5131.002,Barmen
+5141.002,Muški frizer
+5151.002,Kućni majstor
+5162.002,Saobraćajni policajac
+5211.002,Trgovac na malo
+5223.002,Operater naplate
+5311.002,Predškolski odgajatelj
+5411.002,Profesionalni vatrogasac
+6111.002,Povrtlar
+6121.002,Uzgajivač peradi
+6130.002,Vinogradar
+6210.002,Čuvar šume
+6221.002,Ribolovac
+7112.002,Građevinski zidar
+7115.002,Drvodjelja
+7126.002,Monter vodovodnih instalacija
+7131.002,Moler
+7212.002,Elektrozavarivač
+7223.002,Bravar
+7231.002,Autolimar
+7411.002,Industrijski električar
+7421.002,Proizvođač namještaja
+7511.002,Mesar u klaonici
+7531.002,Modni krojač
+8111.002,Rudarski tehničar
+8121.002,Livar
+8131.002,Operater u rafineriji
+8211.002,Monter industrijske opreme
+8322.002,Vozač teretnog vozila
+8332.002,Vozač gradskog autobusa
+8342.002,Rukovalac kranom
+9112.002,Spremačica
+9313.002,Pomoćni zidar
+1114.001,Savjetnik u organu uprave
+1114.002,Šef kabineta
+1218.001,Rukovodilac sigurnosti
+1219.003,Menadžer za odnose s klijentima
+1227.001,Rukovodilac tehničkog održavanja
+1228.001,Rukovodilac transporta
+1316.001,Upravnik benzinske stanice
+1317.001,Upravnik hotela
+2111.003,Teorijski fizičar
+2112.003,Sismolog
+2113.003,Analitički hemičar
+2114.003,Inženjer geofizike
+2120.003,Aktuarski analitičar
+2131.003,Genetičar
+2132.003,Zootehničar
+2133.003,Stručnjak za upravljanje otpadom
+2141.003,Inženjer kvaliteta
+2142.003,Nadzorni inženjer
+2143.003,Inženjer zaštite od požara
+2144.003,Projektant mašinskih instalacija
+2145.003,Inženjer rasvjete
+2146.003,Tehnolog prehrambene proizvodnje
+2149.003,Inženjer saobraćaja
+2151.003,Elektroprojektant
+2152.003,Inženjer robotike
+2161.003,Pejzažni arhitekta
+2162.003,Planer urbanog razvoja
+2163.003,Geodetski tehničar
+2211.005,Specijalista anesteziologije
+2211.006,Specijalista radiologije
+2211.007,Specijalista ginekologije
+2212.003,Oralni hirurg
+2221.003,Glavna medicinska sestra
+2222.003,Tehničar hitne pomoći
+2230.003,Medicinska sestra u zajednici
+2310.004,Asistent na fakultetu
+2320.004,Profesor hemije
+2320.005,Profesor biologije
+2330.003,Nastavnik engleskog jezika
+2341.003,Učitelj savjetnik
+2411.003,Porezni savjetnik
+2412.003,Finansijski kontrolor
+2413.003,Eksterni revizor
+2421.003,Advokatski pripravnik
+2422.003,Notarski pripravnik
+2431.003,Specijalista za SEO
+2432.003,PR menadžer
+2511.003,Softverski arhitekta
+2512.004,Full stack developer
+2513.003,UX/UI dizajner
+2514.003,Administrator sistema
+2521.003,Cloud administrator
+2611.003,Pravni zastupnik
+2631.003,Analitičar tržišta
+2632.003,Demograf
+2633.003,Školski psiholog
+2634.003,TV novinar
+2635.003,Stručni saradnik za socijalni rad
+3111.003,Građevinski nadzornik
+3112.003,Tehničar održavanja
+3113.003,Tehničar elektroinstalacija
+3114.003,Mehatroničar
+3121.003,Tehničar za računarske sisteme
+3211.003,Biohemijski tehničar
+3221.003,Farmaceutski laborant
+3251.003,Ortodontski tehničar
+3312.003,Referent za naplatu
+3322.003,Agent prodaje
+3334.003,Osiguravajući agent
+3341.003,Kancelarijski operater
+3342.003,Referent obračuna plata
+3353.003,Poreski inspektor
+3412.003,Saobraćajni inspektor
+3421.003,Trener plivanja
+3511.003,Specijalista IT podrške
+4110.003,Arhivski referent
+4120.003,Operator dokumentacije
+4211.003,Službenik platnog prometa
+4222.003,Recepcioner u klinici
+4311.003,Glavni knjigovođa
+4412.003,Poštanski operater
+5120.003,Pomoćni kuhar
+5131.003,Konobar u restoranu
+5141.003,Frizer stilista
+5151.003,Održavalac objekta
+5162.003,Granični policajac
+5211.003,Prodavač tehničke robe
+5223.003,Blagajnik u supermarketu
+5311.003,Asistent u vrtiću
+5411.003,Komandir vatrogasne jedinice
+6111.003,Proizvođač žitarica
+6121.003,Stočar
+6130.003,Proizvođač sadnog materijala
+6210.003,Šumarski radnik
+6221.003,Ribar na rijeci
+7112.003,Armirač
+7115.003,Stolar građevinski
+7126.003,Monter grijanja
+7131.003,Farbar
+7212.003,Zavarivač plinom
+7223.003,Metalostrugar
+7231.003,Autoelektričar
+7411.003,Elektroserviser
+7421.003,Stolar namještaja
+7511.003,Prerađivač mesa
+7531.003,Krojač tekstila
+8111.003,Rudarski rukovalac bušilicom
+8121.003,Topioničar
+8131.003,Operater hemijskog postrojenja
+8211.003,Monter proizvodne linije
+8322.003,Vozač dostavnog vozila
+8332.003,Vozač međugradskog autobusa
+8342.003,Rukovalac bagerom
+9112.003,Radnik na održavanju čistoće
+9313.003,Pomoćni tesar
+1115.001,Stručni savjetnik u ministarstvu
+1115.002,Koordinator projekata u organu uprave
+1219.004,Menadžer korporativnih komunikacija
+1229.001,Rukovodilac odjela za ljudske resurse
+1318.001,Upravnik maloprodajnog objekta
+1319.001,Upravnik restorana
+2111.004,Astrofizičar
+2112.004,Hidrolog
+2113.004,Organometalni hemičar
+2114.004,Petrogeolog
+2120.004,Analitičar statistike
+2131.004,Botaničar
+2132.004,Agrotehničar
+2133.004,Specijalista za biodiverzitet
+2141.004,Inženjer proizvodnih procesa
+2142.004,Inženjer infrastrukturnih projekata
+2143.004,Inženjer sigurnosti na radu
+2144.004,Inženjer održavanja mašina
+2145.004,Projektant elektroenergetskih sistema
+2146.004,Tehnolog industrijske proizvodnje
+2149.004,Inženjer transporta i logistike
+2151.004,Projektant električnih sistema
+2152.004,Inženjer telekomunikacija
+2161.004,Arhitekta enterijera
+2162.004,Planer saobraćajne infrastrukture
+2163.004,Geodetski inženjer
+2211.008,Specijalista kardiologije
+2211.009,Specijalista dermatologije
+2211.010,Specijalista oftalmologije
+2212.004,Stomatološki hirurg
+2221.004,Glavna medicinska sestra u bolnici
+2222.004,Tehničar radiologije
+2230.004,Babica u porodiljskom centru
+2310.005,Docent univerziteta
+2320.006,Profesor informatike
+2320.007,Profesor stranog jezika
+2330.004,Nastavnik likovne umjetnosti
+2341.004,Učitelj osnovne škole
+2411.004,Ovlašteni finansijski računovođa
+2412.004,Analitičar budžeta
+2413.004,Revizor projekata
+2421.004,Pravni savjetnik za kompanije
+2422.004,Notarski asistent
+2431.004,Stručnjak za digitalni marketing
+2432.004,Menadžer za odnose s medijima
+2511.004,Softverski developer aplikacija
+2512.005,Programer mobilnih aplikacija
+2513.004,Web developer i dizajner
+2514.004,Administrator mrežnih sistema
+2521.004,IT administrator
+2611.004,Pravni konsultant
+2631.004,Finansijski savjetnik
+2632.004,Stručnjak za demografiju
+2633.004,Psiholog savjetnik
+2634.004,Novinar istraživač
+2635.004,Socijalni radnik u zajednici
+3111.004,Tehničar za građevinske projekte
+3112.004,Tehničar održavanja mašina
+3113.004,Tehničar elektroinstalacija
+3114.004,Mehatroničar tehničar
+3121.004,Tehničar za IT sisteme
+3211.004,Laboratorijski tehničar biohemije
+3221.004,Farmaceutski tehničar
+3251.004,Zubni laboratorijski tehničar
+3312.004,Kreditni službenik
+3322.004,Komercijalni agent
+3334.004,Agent osiguravajuće kuće
+3341.004,Kancelarijski referent
+3342.004,Kadrovski službenik
+3353.004,Inspektor tržišne inspekcije
+3412.004,Policijski inspektor
+3421.004,Trener sportskih aktivnosti
+3511.004,Specijalista IT podrške
+4110.004,Administrativni referent
+4120.004,Operator unosa podataka
+4211.004,Bankovni službenik
+4222.004,Recepcioner u hotelu
+4311.004,Glavni knjigovođa
+4412.004,Poštanski službenik
+5120.004,Glavni kuhar u restoranu
+5131.004,Konobar u kafeteriji
+5141.004,Frizer kozmetičar
+5151.004,Održavalac objekata
+5162.004,Policijski službenik u patrolnoj službi
+5211.004,Prodavač u trgovini
+5223.004,Blagajnik u maloprodaji
+5311.004,Odgajatelj u predškolskim ustanovama
+5411.004,Vatrogasac profesionalac
+6111.004,Ratar poljoprivrednog gazdinstva
+6121.004,Stočar govedar
+6130.004,Voćar u plantaži
+6210.004,Šumar na terenu
+6221.004,Ribar u priobalju
+7112.004,Zidar u građevinarstvu
+7115.004,Tesar u građevini
+7126.004,Monter instalacija
+7131.004,Moler farbar
+7212.004,Zavarivač elektrotehnike
+7223.004,Tokar metalnog alata
+7231.004,Automehaničar u servisu
+7411.004,Industrijski električar
+7421.004,Stolar u proizvodnji namještaja
+7511.004,Mesar u industriji mesa
+7531.004,Krojač odjevnih predmeta
+8111.004,Rukovalac rudarskih mašina
+8121.004,Livar radnik
+8131.004,Operater hemijske industrije
+8211.004,Monter industrijske opreme
+8322.004,Vozač teretnog vozila
+8332.004,Vozač autobusa na liniji
+8342.004,Rukovalac građevinskog bagera
+9112.004,Čistač objekata
+9313.004,Pomoćni građevinski radnik
+1116.001,Stručni savjetnik za planiranje
+1116.002,Koordinator razvojnih projekata
+1219.005,Menadžer prodajnog tima
+1229.002,Rukovodilac odjela sigurnosti
+1319.002,Upravnik kafića
+1320.001,Upravnik malog hotela
+2111.005,Nuklearni fizičar
+2112.005,Speleolog
+2113.005,Hemičar u industriji
+2114.005,Geofizičar
+2120.005,Matematički analitičar
+2131.005,Bakteriolog
+2132.005,Agrotehnički inženjer
+2133.005,Stručnjak za ekološku zaštitu
+2141.005,Procesni inženjer proizvodnje
+2142.005,Inženjer građevinskih projekata
+2143.005,Inženjer zaštite okoliša
+2144.005,Projektant mehaničkih instalacija
+2145.005,Elektro inženjer projekata
+2146.005,Tehnolog prehrambene industrije
+2149.005,Inženjer logističkih procesa
+2151.005,Projektant energetskih instalacija
+2152.005,Inženjer automatizacije
+2161.005,Arhitekta pejzaža
+2162.005,Urbanistički planer
+2163.005,Geodetski inženjer tehničar
+2211.011,Specijalista interne medicine bolnice
+2211.012,Specijalista hirurgije bolnice
+2211.013,Specijalista pedijatrije bolnice
+2212.005,Specijalista stomatologije
+2221.005,Medicinska sestra odjela intenzivne njege
+2222.005,Medicinski tehničar odjela laboratorije
+2230.005,Babica u lokalnoj zajednici
+2310.006,Vanredni profesor univerziteta
+2320.008,Profesor srednje škole za informatiku
+2320.009,Profesor hemije i biologije
+2330.005,Nastavnik osnovne škole
+2341.005,Učitelj razredne nastave
+2411.005,Ovlašteni računovođa u firmi
+2412.005,Finansijski analitičar u banci
+2413.005,Interni revizor kompanije
+2421.005,Pravni savjetnik kompanije
+2422.005,Notar u kancelariji
+2431.005,Digitalni marketing menadžer
+2432.005,Glasnogovornik firme
+2511.005,Softver inženjer aplikacija
+2512.006,Programer softverskih sistema
+2513.005,Web dizajner i developer
+2514.005,Administrator IT sistema
+2521.005,Sistemski administrator
+2611.005,Korporativni pravnik
+2631.005,Ekonomista finansija
+2632.005,Sociolog istraživač
+2633.005,Psiholog savjetnik u školi
+2634.005,Novinar za medije
+2635.005,Socijalni radnik za mlade
+3111.005,Tehničar građevinske struke
+3112.005,Mašinski tehničar održavanja
+3113.005,Elektrotehničar za instalacije
+3114.005,Tehničar za automatiku
+3121.005,IT tehničar mreža
+3211.005,Laboratorijski tehničar za biohemiju
+3221.005,Farmaceutski tehničar ljekarne
+3251.005,Zubni tehničar laboratorija
+3312.005,Kreditni službenik banke
+3322.005,Komercijalista firme
+3334.005,Agent osiguravajuće kuće
+3341.005,Administrativni službenik
+3342.005,Kadrovski referent
+3353.005,Inspektor rada
+3412.005,Policijski inspektor kriminalistike
+3421.005,Sportski trener fitnes centra
+3511.005,Operater IT podrške
+4110.005,Administrativni službenik
+4120.005,Operater unosa podataka
+4211.005,Bankovni službenik
+4222.005,Recepcioner u hotelu
+4311.005,Glavni knjigovođa
+4412.005,Poštanski operater
+5120.005,Kuhar restorana
+5131.005,Konobar restorana
+5141.005,Frizer u salonu
+5151.005,Održavalac objekta
+5162.005,Policijski službenik
+5211.005,Prodavač u trgovini
+5223.005,Blagajnik u trgovini
+5311.005,Odgajatelj u vrtiću
+5411.005,Vatrogasac profesionalac
+6111.005,Ratar poljoprivrednik
+6121.005,Stočar
+6130.005,Voćar
+6210.005,Šumar
+6221.005,Ribar
+7112.005,Zidar
+7115.005,Tesar
+7126.005,Monter instalacija
+7131.005,Moler
+7212.005,Zavarivač
+7223.005,Tokar
+7231.005,Automehaničar
+7411.005,Električar
+7421.005,Stolar
+7511.005,Mesar
+7531.005,Krojač
+8111.005,Rukovalac rudarskih mašina
+8121.005,Livar
+8131.005,Operater hemijske proizvodnje
+8211.005,Monter opreme
+8322.005,Vozač kamiona
+8332.005,Vozač autobusa
+8342.005,Rukovalac građevinske mašine
+9112.005,Čistač
+9313.005,Pomoćni radnik
