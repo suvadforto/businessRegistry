@@ -22,8 +22,16 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 
-
-def queryset_to_pdf(queryset, user, fields, title="", logo_path=None, summary=None, order_by=None):
+def queryset_to_pdf(
+    queryset,
+    user,
+    fields,
+    title="",
+    logo_path=None,
+    summary=None,
+    grouped_data=None,
+    order_by=None
+):
     """
     Generic PDF generator for any model queryset.
     Handles:
@@ -92,7 +100,7 @@ def queryset_to_pdf(queryset, user, fields, title="", logo_path=None, summary=No
         logo = Paragraph("", styles["Normal"])
 
     title_info = [
-        Paragraph(title, styles["Heading1"]),
+        Paragraph(title, styles["Heading2"]),
         Spacer(1, 0.1 * cm),
         #Paragraph(f"Izradio: {user.username}", styles["Normal"]),
         Paragraph(f"Datum i vrijme: {now().strftime('%d-%m-%Y %H:%M')}", styles["Normal"]),
@@ -136,7 +144,38 @@ def queryset_to_pdf(queryset, user, fields, title="", logo_path=None, summary=No
         ]))
         elements.append(summary_table)
         elements.append(Spacer(1, 1*cm))
+# ----------------------------
+# Grouped Data Section
+# ----------------------------
+    if grouped_data:
+        elements.append(Paragraph("Pregled po kategoriji", styles["Heading2"]))
+        elements.append(Spacer(1, 0.3 * cm))
 
+        group_table_data = [
+            [
+                Paragraph("Kategorija", table_header_style),
+                Paragraph("Broj", table_header_style),
+            ]
+        ]
+
+        for item in grouped_data:
+            field_value = list(item.values())[0]
+            total = item["total"]
+
+            group_table_data.append([
+                Paragraph(str(field_value), table_cell_style),
+                Paragraph(str(total), table_cell_style),
+            ])
+
+        group_table = Table(group_table_data, colWidths=[10*cm, 3*cm])
+        group_table.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+            ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+            ("ALIGN", (1, 1), (1, -1), "RIGHT"),
+        ]))
+
+        elements.append(group_table)
+        elements.append(Spacer(1, 1 * cm))
     # ----------------------------
     # Table data
     # ----------------------------

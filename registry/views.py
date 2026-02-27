@@ -17,6 +17,7 @@ import logging
 logger = logging.getLogger(__name__)  # Add this at the top of views.py
 
 @login_required
+@login_required
 def businesses_report(request):
     form = BusinessReportForm(request.GET or None)
 
@@ -25,39 +26,61 @@ def businesses_report(request):
     )
 
     selected_columns = [f[0] for f in REPORT_FIELDS]
+    grouped_data = None
 
     if form.is_valid():
-        logger.info(f"Initial queryset count: {queryset.count()}")
 
         status = form.cleaned_data.get("status")
         city = form.cleaned_data.get("city")
         activity_code = form.cleaned_data.get("activity_code")
         date_from = form.cleaned_data.get("date_from")
         date_to = form.cleaned_data.get("date_to")
+        group_by = form.cleaned_data.get("group_by")
 
+        # -------------------------
+        # Filtering
+        # -------------------------
         if status:
             queryset = queryset.filter(status=status)
+
         if city:
             queryset = queryset.filter(city__icontains=city)
+
         if activity_code:
             queryset = queryset.filter(activity_code=activity_code)
+
         if date_from:
             queryset = queryset.filter(date_registered__gte=date_from)
+
         if date_to:
             queryset = queryset.filter(date_registered__lte=date_to)
 
-        logger.info(
-            f"Filtered queryset count: {queryset.count()}, "
-            f"Filters -> status: {status}, city: {city}, "
-            f"activity_code: {activity_code}, date_from: {date_from}, date_to: {date_to}"
-        )
-
-        selected_columns = form.cleaned_data.get("columns") or selected_columns
-
+        # -------------------------
+        # Sorting
+        # -------------------------
         sort_field = form.cleaned_data.get("sort_by")
         if sort_field:
             queryset = queryset.order_by(sort_field)
 
+        # -------------------------
+        # Column selection
+        # -------------------------
+        selected_columns = form.cleaned_data.get("columns") or selected_columns
+
+        # -------------------------
+        # Grouping
+        # -------------------------
+        if group_by:
+            grouped_data = (
+                queryset
+                .values(group_by)
+                .annotate(total=Count("id"))
+                .order_by("-total")
+            )
+
+    # -------------------------
+    # Summary (always computed on filtered queryset)
+    # -------------------------
     summary = queryset.aggregate(
         total_businesses=Count("id"),
         active_businesses=Count("id", filter=Q(status="active")),
@@ -66,20 +89,41 @@ def businesses_report(request):
         total_employees=Coalesce(Sum("number_of_employees"), 0, output_field=IntegerField()),
         avg_employees=Coalesce(Avg("number_of_employees"), 0.0, output_field=FloatField()),
     )
-
+    # -------------------------
+    # Generate PDF
+    # -------------------------
     if "generate" in request.GET:
+
+        # Base title
+        title = "Lista obrta"
+
+        # Auto-adjust title if grouped
+        if form.is_valid():
+            group_by = form.cleaned_data.get("group_by")
+            if group_by:
+                group_labels = dict(form.fields["group_by"].choices)
+                group_label = group_labels.get(group_by)
+                title = f"Lista obrta – Grupisano po {group_label}"
+
         logo_path = os.path.join(
-            settings.BASE_DIR, "registry", "static", "registry", "images", "city_logo.png"
+            settings.BASE_DIR,
+            "registry",
+            "static",
+            "registry",
+            "images",
+            "city_logo.png"
         )
+
         return queryset_to_pdf(
             queryset=queryset,
             user=request.user,
             fields=selected_columns,
-            title="Lista obrta",
+            title=title,   # ✅ dynamic title
             logo_path=logo_path,
             summary=summary,
+            grouped_data=grouped_data,
         )
-
+   
     return render(request, "registry/business_report_form.html", {
         "form": form,
         "summary": summary,

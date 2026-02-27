@@ -83,7 +83,7 @@ def businesses_to_pdf(queryset, user, order_by="name"):
     # HEADER SECTION
     # =====================================================
 
-    elements.append(Paragraph("<b>REGISTAR OBRTA GRADA GORAŽDA</b>", styles["Heading1"]))
+    elements.append(Paragraph("<b>REGISTAR OBRTA GRADA GORAŽDA</b>", styles["Heading2"]))
     elements.append(Spacer(1, 0.2 * cm))
     elements.append(Paragraph("Službeni izvještaj", styles["Normal"]))
     elements.append(Spacer(1, 0.3 * cm))

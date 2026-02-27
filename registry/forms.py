@@ -8,6 +8,14 @@ STATUS_CHOICES = [
     ('active', 'Aktivan'),
     ('inactive', 'Neaktivan'),
 ]
+GROUP_BY_CHOICES = [
+    ("", "Bez grupisanja"),
+    ("city", "Grad"),
+    ("industry", "Vrsta djelatnosti"),
+    ("status", "Status"),
+]
+
+
 
 REPORT_FIELDS = [
     ('name', 'Naziv'),
@@ -15,12 +23,13 @@ REPORT_FIELDS = [
     ('city', 'Grad'),
     ('status', 'Status'),
     ('industry', 'Vrsta djelatnosti'),
-    ('number_of_employees', 'Broj zaposlenih'),
-    ('is_vat_registered', 'PDV obveznik'),
-    ('activity_code', 'Djelatnost'),
-    ('date_registered', 'Datum registracije'),
-    ('end_date', 'Datum zatvaranja'),
+    ('activity_code', 'Glavna djelatnost'),
     ('profession', 'Zanimanje'),
+    ('date_registered', 'Datum registracije'),
+    ('number_of_employees', 'Broj zaposlenih'),
+    ('is_vat_registered', 'PDV obveznik'),  
+    ('end_date', 'Datum zatvaranja'),
+    
 ]
 
 SORT_FIELDS = [
@@ -47,7 +56,11 @@ class BusinessReportForm(forms.Form):
         required=False,
         label="Šifra djelatnosti"
     )
-
+    group_by = forms.ChoiceField(
+    choices=GROUP_BY_CHOICES,
+    required=False,
+    label="Grupiši po"
+    )
     # -------------------------------
     # Bosnian-friendly date inputs
     # -------------------------------
