@@ -1,0 +1,114 @@
+PDF Table Alignment & Styling (to implement later)
+
+Header Styling
+
+Bold font (DejaVuSans-Bold) for all header cells.
+
+Light grey background (colors.lightgrey).
+
+Padding around header text.
+
+Column Alignment (dynamic per type)
+
+Boolean fields → center aligned.
+
+Numeric fields → right aligned.
+
+Text/alphanumeric fields → left aligned (default).
+
+Zebra Striping
+
+Alternate row backgrounds (e.g., colors.whitesmoke) for readability.
+
+Dynamic Column Widths
+
+Already implemented with proportional widths based on number of selected columns.
+
+Summary Table
+
+Keep current alignment and styling (numbers right, text left, boolean centered if any).
+
+Reusable Functions
+
+Consider a small helper to detect field type and return alignment (CENTER, RIGHT, LEFT) dynamically for each column.
+
+# my forms.py bakcup part 
+# registry/forms.py
+from django.conf import settings
+from django import forms
+from .models import Business, ActivityCode
+import datetime
+
+STATUS_CHOICES = [
+    ('active', 'Active'),
+    ('inactive', 'Inactive'),
+]
+
+REPORT_FIELDS = [
+    ('name', 'Name'),
+    ('registration_number', 'Registration Number'),
+    ('city', 'City'),
+    ('status', 'Status'),
+    ('industry', 'Industry'),
+    ('number_of_employees', 'Number of Employees'),
+    ('is_vat_registered', 'VAT Registered'),
+    ('activity_code', 'Activity Code'),
+    ('date_registered', 'Date Registered'),
+    ('end_date', 'Date Closed'),          
+]
+
+SORT_FIELDS = [
+    ('name', 'Name'),
+    ('registration_number', 'Registration Number'),
+    ('city', 'City'),
+    ('status', 'Status'),
+]
+
+REPORT_TYPES = [
+    ('default', 'Regular'),
+    ('date_range', 'Date Range'),
+    ('activity', 'Activity Code'),
+]
+
+class BusinessReportForm(forms.Form):
+    report_type = forms.ChoiceField(choices=REPORT_TYPES, required=False, label="Report Type")
+    status = forms.ChoiceField(choices=[('', 'All')] + STATUS_CHOICES, required=False)
+    city = forms.CharField(max_length=50, required=False)
+    activity_code = forms.ModelChoiceField(queryset=ActivityCode.objects.all(), required=False)
+
+    date_from = forms.DateField(
+        required=False,
+        input_formats=["%Y-%m-%d"],  # Accept browser format
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'min': '1995-01-01',
+            'max': datetime.date.today().strftime('%Y-%m-%d')
+        })
+    )
+
+    date_to = forms.DateField(
+        required=False,
+        input_formats=["%Y-%m-%d"],  # Accept browser format
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'min': '1995-01-01',
+            'max': datetime.date.today().strftime('%Y-%m-%d')
+        })
+    )
+    columns = forms.MultipleChoiceField(
+        choices=REPORT_FIELDS,
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="Columns to include"
+    )
+    sort_by = forms.ChoiceField(choices=[('', 'None')] + SORT_FIELDS, required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        date_from = cleaned_data.get("date_from")
+        date_to = cleaned_data.get("date_to")
+
+        if date_from and date_to and date_from > date_to:
+            self.add_error("date_to", "End date cannot be before start date.")
+        
+        return cleaned_data

@@ -1,4 +1,285 @@
-<form method="get">
-    {{ form.as_p }}
-    <button type="submit" name="generate">Generate PDF</button>
+<!-- business_report_form.html -->
+
+<div align="center"><h2>IZRADA IZVJEŠTAJA</h2></div>
+<!-- Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+
+<!-- Choices.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<form method="get" class="report-form">
+
+    <!-- 🔹 Report Type Selector 
+    <div class="form-section">
+        <label for="report_type"><strong>Vrsta izvještaja (odaberi):</strong></label>
+        <select id="report_type" name="report_type">
+            <option value="default" {% if request.GET.report_type == "default" %}selected{% endif %}>Zadati</option>
+            <option value="date_range" {% if request.GET.report_type == "date_range" %}selected{% endif %}>Po rasponu datuma</option>
+            <option value="activity" {% if request.GET.report_type == "activity" %}selected{% endif %}>Po djelatnosti</option>
+        </select>
+    </div>-->
+
+    <div class="form-grid">
+
+        <!-- Left column: Columns selection -->
+		<fieldset class="form-section">
+			<legend><strong>Odaberi polja u izvještaju:</strong></legend>
+			<div class="checkbox-group">
+				{% for checkbox in form.columns %}
+					<label class="checkbox-pill">
+						{{ checkbox.tag }}
+						<span class="pill-label">{{ checkbox.choice_label }}</span>
+					</label>
+				{% endfor %}
+			</div>
+			{% if form.columns.errors %}
+				<div class="form-error">{{ form.columns.errors }}</div>
+			{% endif %}
+		</fieldset>
+
+        <!-- Right column: Filters -->
+        <div class="filters-column">
+
+            <div class="form-section">
+                <label>{{ form.status.label_tag }}</label>
+                {{ form.status }}
+                {% if form.status.errors %}<div class="form-error">{{ form.status.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-section">
+                <label>{{ form.city.label_tag }}</label>
+                {{ form.city }}
+                {% if form.city.errors %}<div class="form-error">{{ form.city.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-section">
+                <label>{{ form.activity_code.label_tag }}</label>
+                {{ form.activity_code }}
+                {% if form.activity_code.errors %}<div class="form-error">{{ form.activity_code.errors }}</div>{% endif %}
+            </div>
+
+            <!-- Date From: Visible Bosnian input + hidden Django input -->
+            <div class="form-section">
+				<label for="date_from_visible">Datum od:</label>
+                <input type="text" id="date_from_visible" placeholder="dd.mm.yyyy" value="{{ form.date_from.value|default_if_none:'' }}">
+                {{ form.date_from.as_hidden }}
+                {% if form.date_from.errors %}<div class="form-error">{{ form.date_from.errors }}</div>{% endif %}
+            </div>
+
+            <!-- Date To: Visible Bosnian input + hidden Django input -->
+            <div class="form-section">
+                <label for="date_to_visible">Datum do:</label>
+                <input type="text" id="date_to_visible" placeholder="dd.mm.yyyy" value="{{ form.date_to.value|default_if_none:'' }}">
+                {{ form.date_to.as_hidden }}
+                {% if form.date_to.errors %}<div class="form-error">{{ form.date_to.errors }}</div>{% endif %}
+            </div>
+
+            <div class="form-section">
+                <label>{{ form.sort_by.label_tag }}</label>
+                {{ form.sort_by }}
+                {% if form.sort_by.errors %}<div class="form-error">{{ form.sort_by.errors }}</div>{% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+    <button type="submit" name="generate" class="btn-generate">Izvještaj u PDF</button>
+
 </form>
+
+<!-- ----------------------------- STYLES ----------------------------- -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+/* Form wrapper */
+.report-form {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Grid layout */
+.form-grid {
+    display: flex;
+    gap: 40px;
+}
+
+/* Left column */
+.form-grid > fieldset {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+/* Right column */
+.filters-column {
+    flex: 1;
+}
+
+/* Pill-style checkboxes */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 5px 0;
+}
+
+.checkbox-pill {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 6px 12px;
+    transition: 0.2s all;
+    background-color: #f0f0f0;
+    font-size: 14px;
+    user-select: none;
+}
+
+.checkbox-pill input[type="checkbox"] {
+    display: none; /* hide the real checkbox */
+}
+
+.checkbox-pill .pill-label {
+    pointer-events: none; /* clicks go to label/checkbox */
+}
+
+/* Highlight when selected */
+.checkbox-pill input[type="checkbox"]:checked + .pill-label {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 50px;
+    padding: 6px 12px;
+    font-weight: 500;
+}
+
+.checkbox-pill:hover {
+    background-color: #e0e0e0;
+}
+
+/* Section spacing */
+.form-section {
+    margin-bottom: 15px;
+}
+
+/* Inputs and select styling */
+.report-form input[type="text"],
+.report-form select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Error styling */
+.form-error {
+    color: red;
+    margin-top: 3px;
+    font-size: 0.85em;
+}
+
+/* Generate button */
+.btn-generate {
+    padding: 12px 25px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    transition: 0.2s all;
+}
+
+.btn-generate:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Responsive: stack columns */
+@media (max-width: 900px) {
+    .form-grid {
+        flex-direction: column;
+    }
+
+    .checkbox-item {
+        width: 100%;
+    }
+}
+</style>
+
+<!-- ----------------------------- SCRIPT ----------------------------- -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/bs.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+   <!-- -->
+    const columnsSection = document.querySelector('fieldset');
+
+    const dateFromVisible = document.getElementById('date_from_visible');
+    const dateToVisible = document.getElementById('date_to_visible');
+    const dateFromHidden = document.getElementById('id_date_from');
+    const dateToHidden = document.getElementById('id_date_to');
+
+    // Initialize Flatpickr with Bosnian locale
+    flatpickr(dateFromVisible, {
+        dateFormat: "d.m.Y",
+        allowInput: true,
+        locale: "bs"
+    });
+    flatpickr(dateToVisible, {
+        dateFormat: "d.m.Y",
+        allowInput: true,
+        locale: "bs"
+    });
+
+
+    // Convert dd.mm.yyyy -> YYYY-MM-DD before submit
+    function convertToISO(dateStr) {
+        const parts = dateStr.split('.');
+        if (parts.length === 3) {
+            const [day, month, year] = parts;
+            return `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`;
+        }
+        return '';
+    }
+
+    document.querySelector('.report-form').addEventListener('submit', () => {
+        dateFromHidden.value = convertToISO(dateFromVisible.value);
+        dateToHidden.value = convertToISO(dateToVisible.value);
+    });
+
+    
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize searchable select for Activity Code
+    const activitySelect = document.querySelector('#id_activity_code');
+    if (activitySelect) {
+        new Choices(activitySelect, {
+            searchEnabled: true,
+            itemSelectText: '',            // Removes default 'Press to select'
+            placeholder: true,
+            placeholderValue: 'Search Activity Code...',
+            searchResultLimit: 100,        // Show up to 100 results in dropdown
+            shouldSort: false,             // Keep options in original order
+            searchChoices: true,           // Enable filtering of options
+            searchFloor: 1,                // Start searching after 1 character
+            searchFn: (searchValue, choices) => {
+                // Custom search: match anywhere in the text, case-insensitive
+                const value = searchValue.trim().toLowerCase();
+                return choices.filter(choice => choice.label.toLowerCase().includes(value));
+            }
+        });
+    }
+});
+</script>

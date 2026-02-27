@@ -1,8 +1,9 @@
 # views.py
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.db import models
 from django.db.models import Count, Sum, Avg, Q, FloatField, IntegerField
 from django.db.models.functions import Coalesce
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import os
 
@@ -11,24 +12,36 @@ from .forms import BusinessReportForm, REPORT_FIELDS
 from .utils.reporting import queryset_to_pdf
 
 
+# --------------------------
+# 1️⃣ Regular HTML business list
+# --------------------------
+def business_list(request):
+    """Regular HTML view listing businesses."""
+    businesses = Business.objects.all()
+    return render(request, 'registry/business_list.html', {
+        'businesses': businesses
+    })
 
-import logging
 
-logger = logging.getLogger(__name__)  # Add this at the top of views.py
-
+# --------------------------
+# 2️⃣ Generic Businesses PDF Report
+# --------------------------
 @login_required
 def businesses_report(request):
+    """
+    Unified PDF report view: handles default, date-range, and activity_code filters.
+    Columns selection works for all filters.
+    """
     form = BusinessReportForm(request.GET or None)
 
-    queryset = Business.objects.select_related(
-        "activity_code", "profession", "assigned_clerk"
-    )
+    # Optimize queryset
+    queryset = Business.objects.select_related("activity_code", "profession", "assigned_clerk")
 
+    # Default selected columns
     selected_columns = [f[0] for f in REPORT_FIELDS]
 
     if form.is_valid():
-        logger.info(f"Initial queryset count: {queryset.count()}")
-
+        # Filters
         status = form.cleaned_data.get("status")
         city = form.cleaned_data.get("city")
         activity_code = form.cleaned_data.get("activity_code")
@@ -46,18 +59,17 @@ def businesses_report(request):
         if date_to:
             queryset = queryset.filter(date_registered__lte=date_to)
 
-        logger.info(
-            f"Filtered queryset count: {queryset.count()}, "
-            f"Filters -> status: {status}, city: {city}, "
-            f"activity_code: {activity_code}, date_from: {date_from}, date_to: {date_to}"
-        )
-
+        # Columns selection
         selected_columns = form.cleaned_data.get("columns") or selected_columns
 
+        # Sorting
         sort_field = form.cleaned_data.get("sort_by")
         if sort_field:
             queryset = queryset.order_by(sort_field)
 
+    # ----------------------------
+    # Summary statistics
+    # ----------------------------
     summary = queryset.aggregate(
         total_businesses=Count("id"),
         active_businesses=Count("id", filter=Q(status="active")),
@@ -67,6 +79,9 @@ def businesses_report(request):
         avg_employees=Coalesce(Avg("number_of_employees"), 0.0, output_field=FloatField()),
     )
 
+    # ----------------------------
+    # Generate PDF if requested
+    # ----------------------------
     if "generate" in request.GET:
         logo_path = os.path.join(
             settings.BASE_DIR, "registry", "static", "registry", "images", "city_logo.png"
@@ -80,24 +95,29 @@ def businesses_report(request):
             summary=summary,
         )
 
+    # Default HTML page with summary and filter form
     return render(request, "registry/business_report_form.html", {
         "form": form,
         "summary": summary,
     })
 
 
+# --------------------------
+# 3️⃣ Activity Code PDF Report
+# --------------------------
 @login_required
 def business_activity_report(request):
     """
-    PDF report: Count businesses by primary activity code.
-    Supports column selection via BusinessReportForm.
+    Report: Count businesses by primary activity and industry.
+    Supports columns selection via the same BusinessReportForm.
     """
     form = BusinessReportForm(request.GET or None)
     queryset = Business.objects.select_related("activity_code", "profession")
 
-    selected_columns = ["Activity Code", "Total Businesses"]
+    selected_columns = ["Activity Code", "Total Businesses"]  # default for this report
 
     if form.is_valid():
+        # Filters
         status = form.cleaned_data.get("status")
         city = form.cleaned_data.get("city")
         activity_code_filter = form.cleaned_data.get("activity_code")
@@ -115,16 +135,17 @@ def business_activity_report(request):
         if date_to:
             queryset = queryset.filter(date_registered__lte=date_to)
 
+        # Columns selection
         form_columns = form.cleaned_data.get("columns")
         if form_columns:
             selected_columns = form_columns
 
-    # Aggregate businesses by activity_code
+    # Count by activity
     activity_counts = queryset.values("activity_code__code", "activity_code__description") \
                              .annotate(total=Count("id")) \
                              .order_by("activity_code__code")
 
-    # Create temporary objects for PDF generation
+    # Map to temporary objects for PDF
     class SimpleObj:
         def __init__(self, **kwargs):
             for k, v in kwargs.items():
@@ -135,6 +156,7 @@ def business_activity_report(request):
         row = {}
         row["Activity Code"] = f"{act['activity_code__code']} - {act['activity_code__description']}"
         row["Total Businesses"] = act["total"]
+        # Only include selected columns
         row = {k: v for k, v in row.items() if k in selected_columns}
         pdf_qs.append(SimpleObj(**row))
 

@@ -1,6 +1,7 @@
+#pdf.py
 from io import BytesIO
 import os
-
+import datetime
 from django.http import HttpResponse
 from django.utils.timezone import now
 from django.utils.text import capfirst
@@ -165,7 +166,9 @@ def businesses_to_pdf(queryset, user, order_by="name"):
                 value = ""
             elif isinstance(value, bool):
                 value = "Da" if value else "Ne"
-
+            elif isinstance(value, (datetime.date, datetime.datetime)):
+                value = value.strftime("%d.%m.%Y.")
+                
             row.append(Paragraph(str(value), table_cell_style))
 
         data.append(row)
