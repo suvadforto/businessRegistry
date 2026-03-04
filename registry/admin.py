@@ -185,7 +185,7 @@ class BusinessAdminForm(forms.ModelForm):
 # -------------------------
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted' )
+    list_display = ('name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
     search_fields = ('name', 'registration_number', 'tax_number')
     list_filter = ('status', 'city', 'profession', 'assigned_clerk', 'business_type',)
     autocomplete_fields = ('activity_code', 'assigned_clerk', 'profession')
@@ -271,7 +271,6 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
 
         return actions
         
-    
 # -------------------------
 # OWNER ADMIN
 # -------------------------

@@ -27,6 +27,7 @@ def businesses_report(request):
 
     selected_columns = [f[0] for f in REPORT_FIELDS]
     grouped_data = None
+    
 
     if form.is_valid():
 
@@ -100,11 +101,23 @@ def businesses_report(request):
         # Auto-adjust title if grouped
         if form.is_valid():
             group_by = form.cleaned_data.get("group_by")
+            date_from = form.cleaned_data.get("date_from")
+            date_to = form.cleaned_data.get("date_to")
             if group_by:
                 group_labels = dict(form.fields["group_by"].choices)
                 group_label = group_labels.get(group_by)
                 title = f"Lista obrta – Grupisano po {group_label}"
-
+             
+             # -------------------------
+    # Add date range to title
+    # -------------------------
+            if date_from and date_to:
+                title += f" (Period: {date_from.strftime('%d.%m.%Y')} - {date_to.strftime('%d.%m.%Y')})"
+            elif date_from:
+                title += f" (Od: {date_from.strftime('%d.%m.%Y')})"
+            elif date_to:
+                title += f" (Do: {date_to.strftime('%d.%m.%Y')})"
+                
         logo_path = os.path.join(
             settings.BASE_DIR,
             "registry",

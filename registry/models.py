@@ -240,13 +240,15 @@ class BusinessOwner(models.Model):
     owner = models.ForeignKey(
         Owner,
         on_delete=models.CASCADE,
-        related_name='businesses'
+        related_name='businesses',
+        verbose_name = "Vlasnik"
     )
     ownership_percentage = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         blank=True,
-        null=True
+        null=True,
+        verbose_name = "Udio vlasništva"
     )
 
     class Meta:
@@ -270,10 +272,10 @@ class License(SoftDeleteModel):
         related_name='licenses'
     )
 
-    license_type = models.CharField(max_length=150)
-    license_number = models.CharField(max_length=100)
-    issue_date = models.DateField(blank=True, null=True)
-    expiry_date = models.DateField(blank=True, null=True)
+    license_type = models.CharField(max_length=150, verbose_name = "Vrsta dozvole")
+    license_number = models.CharField(max_length=100, verbose_name = "Broj dozvole")
+    issue_date = models.DateField(blank=True, null=True, verbose_name = "Datum izdavanja")
+    expiry_date = models.DateField(blank=True, null=True, verbose_name = "Datum isteka")
 
     status = models.CharField(
         max_length=50,

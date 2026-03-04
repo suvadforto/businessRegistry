@@ -103,7 +103,7 @@ def queryset_to_pdf(
         Paragraph(title, styles["Heading2"]),
         Spacer(1, 0.1 * cm),
         #Paragraph(f"Izradio: {user.username}", styles["Normal"]),
-        Paragraph(f"Datum i vrijme: {now().strftime('%d-%m-%Y %H:%M')}", styles["Normal"]),
+        Paragraph(f"Datum: {now().strftime('%d-%m-%Y')}", styles["Normal"]),
     ]
 
     header_table = Table([[logo, title_info]], colWidths=[3.5 * cm, 18 * cm])
@@ -254,8 +254,22 @@ def queryset_to_pdf(
     # ----------------------------
     def add_page_number(canvas, doc):
         canvas.setFont("DejaVuSans", 8)
-        canvas.drawRightString(page_size[0] - 2 * cm, 1.5 * cm, f"Strana {doc.page}")
-        canvas.drawString(2 * cm, 1.5 * cm, f"Izradio: {user.username}")
+
+        # Get full name if available
+        full_name = user.get_full_name()
+        display_name = full_name if full_name else user.username
+
+        canvas.drawRightString(
+            page_size[0] - 2 * cm,
+            1.5 * cm,
+            f"Strana {doc.page}"
+        )
+
+        canvas.drawString(
+            2 * cm,
+            1.5 * cm,
+            f"Izradio: {display_name}"
+        )
 
     doc.build(elements, onFirstPage=add_page_number, onLaterPages=add_page_number)
 
