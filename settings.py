@@ -15,6 +15,15 @@ AUTH_USER_MODEL = 'registry.User'
 
 USE_TZ = True
 LANGUAGE_CODE = 'bs'
+USE_I18N = True
+LANGUAGES = [
+    ('bs', 'Bosanski'),
+]
+USE_I18N = True
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 TIME_ZONE = 'Europe/Sarajevo'
 

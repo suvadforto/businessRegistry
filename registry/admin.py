@@ -1,4 +1,6 @@
 #admin.py
+from django.contrib.admin import ChoicesFieldListFilter
+from django.contrib import messages
 from django.contrib.admin.widgets import AutocompleteSelect
 from registry.utils.pdf import businesses_to_pdf
 from django.core.exceptions import ValidationError
@@ -187,14 +189,14 @@ class BusinessAdminForm(forms.ModelForm):
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
     search_fields = ('name', 'registration_number', 'tax_number')
-    list_filter = ('status', 'city', 'profession', 'assigned_clerk', 'business_type',)
+    list_filter = ('status', ('industry', ChoicesFieldListFilter), 'business_type', 'profession', 'assigned_clerk', )
     autocomplete_fields = ('activity_code', 'assigned_clerk', 'profession')
     filter_horizontal=('secondary_activities',)
     ordering = ('name',)
 #NEW fieldsets 12.02.2026    
     fieldsets = (
     ('Osnovni Podaci', {
-        'fields': ('name', 'registration_number', 'tax_number', 'status', 'date_registered')
+        'fields': ('name', 'registration_number', 'date_registered', 'status','tax_number' )
     }),
     ('Klasifikacija', {
         'fields': ('industry', 'business_type', 'profession', 'activity_code','secondary_activities')
@@ -270,7 +272,32 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
             actions.pop('restore_records', None)
 
         return actions
-        
+    def response_add(self, request, obj, post_url_continue=None):
+        response = super().response_add(request, obj, post_url_continue)
+
+        # Clear default Django message
+        storage = messages.get_messages(request)
+        for _ in storage:
+            pass
+
+        # Add Bosnian message
+        messages.success(request, f'Obrt "{obj.name}" je uspješno dodan.')
+
+        return response
+
+
+    def response_change(self, request, obj):
+        response = super().response_change(request, obj)
+
+        # Clear default Django message
+        storage = messages.get_messages(request)
+        for _ in storage:
+            pass
+
+        # Add Bosnian message
+        messages.success(request, f'Obrt "{obj.name}" je uspješno izmijenjen.')
+
+        return response    
 # -------------------------
 # OWNER ADMIN
 # -------------------------

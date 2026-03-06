@@ -10,7 +10,7 @@ STATUS_CHOICES = [
 ]
 GROUP_BY_CHOICES = [
     ("", "Bez grupisanja"),
-    ("city", "Grad"),
+    #("city", "Grad"),
     ("industry", "Vrsta djelatnosti"),
     ("status", "Status"),
 ]
@@ -20,7 +20,7 @@ GROUP_BY_CHOICES = [
 REPORT_FIELDS = [
     ('name', 'Naziv'),
     ('registration_number', 'Broj rješenja'),
-    ('city', 'Grad'),
+    #('city', 'Grad'),
     ('status', 'Status'),
     ('industry', 'Vrsta djelatnosti'),
     ('activity_code', 'Glavna djelatnost'),
@@ -45,6 +45,11 @@ class BusinessReportForm(forms.Form):
     status = forms.ChoiceField(
         choices=[('', 'Svi')] + STATUS_CHOICES,
         required=False
+    )
+    industry = forms.ChoiceField(
+        choices=[('', 'Sve')] + list(Business._meta.get_field('industry').choices),
+        required=False,
+        label="Vrsta djelatnosti"
     )
     city = forms.CharField(
         max_length=50,

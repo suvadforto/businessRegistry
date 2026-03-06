@@ -36,7 +36,7 @@ msgstr "Nedavne aktivnosti"
 msgid "Add %(name)s"
 msgstr "Dodaj objekat klase %(name)s"
 msgid "Go"
-msgstr "Počni1"
+msgstr "Uradi"
 
 msgid "View"
 msgstr "Pregled"
@@ -69,3 +69,23 @@ msgstr ""
 msgid "Srpski (latinica)"
 msgstr ""
 
+msgid "The %(name)s \"%(obj)s\" was added successfully."
+msgstr "%(name)s \"%(obj)s\" je uspješno dodan."
+
+msgid "The %(name)s \"%(obj)s\" was changed successfully."
+msgstr "%(name)s \"%(obj)s\" je uspješno izmijenjen."
+
+msgid "The %(name)s \"%(obj)s\" was deleted successfully."
+msgstr "%(name)s \"%(obj)s\" je uspješno obrisan."
+
+msgid "Successfully deleted %(count)d %(items)s."
+msgstr "Uspješno obrisano %(count)d zapisa."
+
+msgid "Are you sure?"
+msgstr "Da li ste sigurni?"
+
+msgid "Yes, I'm sure"
+msgstr "Da, siguran sam"
+
+msgid "No, take me back"
+msgstr "Ne, vrati me nazad"

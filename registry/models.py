@@ -202,12 +202,11 @@ class Business(SoftDeleteModel):
             
     class Meta:
         verbose_name = _("Obrt")
-        verbose_name_plural = _("Obrti")
+        verbose_name_plural = _("Poslovanja")
         
     def __str__(self):
         return f"{self.name} ({self.registration_number})"
         
-
 
 class Owner(SoftDeleteModel):
     first_name = models.CharField(max_length=100, verbose_name="Ime Vlasnika")
@@ -296,8 +295,8 @@ class License(SoftDeleteModel):
 
 class Inspection(models.Model):
     RESULT_CHOICES = [
-        ('passed', 'Passed'),
-        ('failed', 'Failed'),
+        ('passed', 'Prošao'),
+        ('failed', 'Nije Prošao'),
     ]
 
     business = models.ForeignKey(
@@ -306,10 +305,10 @@ class Inspection(models.Model):
         related_name='inspections'
     )
 
-    inspection_date = models.DateField()
-    inspector_name = models.CharField(max_length=150)
-    result = models.CharField(max_length=50, choices=RESULT_CHOICES)
-    remarks = models.TextField(blank=True, null=True)
+    inspection_date = models.DateField(verbose_name="Datum")
+    inspector_name = models.CharField(max_length=150, verbose_name="Inspektor")
+    result = models.CharField(max_length=50, choices=RESULT_CHOICES, verbose_name="Nalaz")
+    remarks = models.TextField(blank=True, null=True, verbose_name="Komentar")
     class Meta:
         verbose_name = "Inspekcija"
         verbose_name_plural = "Inspekcije"
@@ -379,4 +378,3 @@ class AuditLog(models.Model):
 
 
 
-# Create your models here.

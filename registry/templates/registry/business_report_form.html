@@ -44,12 +44,16 @@
                 {{ form.status }}
                 {% if form.status.errors %}<div class="form-error">{{ form.status.errors }}</div>{% endif %}
             </div>
-
-            <div class="form-section">
+			<div class="form-section">
+				<label>{{ form.industry.label_tag }}</label>
+				{{ form.industry }}
+				{% if form.industry.errors %}<div class="form-error">{{ form.industry.errors }}</div>{% endif %}
+			</div>
+           <!-- <div class="form-section">
                 <label>{{ form.city.label_tag }}</label>
                 {{ form.city }}
                 {% if form.city.errors %}<div class="form-error">{{ form.city.errors }}</div>{% endif %}
-            </div>
+            </div>-->
 
             <div class="form-section">
                 <label>{{ form.activity_code.label_tag }}</label>

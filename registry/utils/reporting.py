@@ -159,19 +159,31 @@ def queryset_to_pdf(
         ]
 
         for item in grouped_data:
-            field_value = list(item.values())[0]
+            field_name = list(item.keys())[0]   # e.g. "industry"
+            field_value = item[field_name]
             total = item["total"]
+
+            # Convert choice values to labels automatically
+            try:
+                field = queryset.model._meta.get_field(field_name)
+                if field.choices:
+                    field_value = dict(field.choices).get(field_value, field_value)
+            except Exception:
+                pass
 
             group_table_data.append([
                 Paragraph(str(field_value), table_cell_style),
                 Paragraph(str(total), table_cell_style),
             ])
 
-        group_table = Table(group_table_data, colWidths=[10*cm, 3*cm])
+        # CREATE the table (this line was missing)
+        group_table = Table(group_table_data, colWidths=[10 * cm, 3 * cm])
+
         group_table.setStyle(TableStyle([
             ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
             ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
-            ("ALIGN", (1, 1), (1, -1), "RIGHT"),
+            ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ]))
 
         elements.append(group_table)
@@ -268,7 +280,7 @@ def queryset_to_pdf(
         canvas.drawString(
             2 * cm,
             1.5 * cm,
-            f"Izradio: {display_name}"
+            f"Izradio: {display_name}" + " "+now().strftime("%d.%m.%Y")
         )
 
     doc.build(elements, onFirstPage=add_page_number, onLaterPages=add_page_number)
