@@ -1,0 +1,352 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+
+<style>
+
+/* ---------- dashboard ---------- */
+
+.dashboard-wrapper{
+    margin-bottom:40px;
+}
+
+/* ---------- stat cards ---------- */
+
+.dashboard-stats{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:5px;
+    padding:10px 15px;
+    min-width:130px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.05);
+}
+
+.stat-card-title{
+    font-size:12px;
+    color:#666;
+}
+
+.stat-card-value{
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* ---------- charts ---------- */
+
+.dashboard-charts{
+    display:flex;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.chart-box{
+    width:240px;
+    height:240px;
+}
+
+.chart-box h3{
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+canvas{
+    position:relative;
+}
+
+</style>
+
+
+<div class="dashboard-wrapper">
+
+<h2>Statistika obrta</h2>
+
+<!-- Stat cards -->
+
+<div class="dashboard-stats">
+
+<div class="stat-card">
+<div class="stat-card-title">Ukupno</div>
+<div class="stat-card-value" id="totalBusinesses">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-card-title">Aktivni</div>
+<div class="stat-card-value" id="activeBusinesses">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-card-title">Neaktivni</div>
+<div class="stat-card-value" id="inactiveBusinesses">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-card-title">Na čekanju</div>
+<div class="stat-card-value" id="suspendedBusinesses">0</div>
+</div>
+
+</div>
+
+
+<!-- Charts -->
+
+<div class="dashboard-charts">
+
+<div class="chart-box">
+<h3>Djelatnosti</h3>
+<canvas id="industryChart"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Status</h3>
+<canvas id="statusChart"></canvas>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- Default Django Admin content appears AFTER charts -->
+{{ block.super }}
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+<script>
+
+/* label mappings */
+
+const industryLabelsMap={
+'trgovina':'Trgovinska',
+'ugostiteljstvo':'Ugostiteljska',
+'obrt':'Obrtnička'
+};
+
+const statusLabelsMap={
+'active':'Aktivan',
+'inactive':'Neaktivan',
+'suspended':'Na čekanju'
+};
+
+
+/* number animation */
+
+function animateValue(id,start,end,duration){
+
+let obj=document.getElementById(id);
+let range=end-start;
+let current=start;
+
+if(range===0){
+obj.innerText=end;
+return;
+}
+
+let increment=end>start?1:-1;
+let stepTime=Math.abs(Math.floor(duration/range));
+
+let timer=setInterval(function(){
+
+current+=increment;
+obj.innerText=current;
+
+if(current==end){
+clearInterval(timer);
+}
+
+},stepTime);
+
+}
+
+
+/* center text plugin */
+
+const centerTextPlugin={
+id:'centerText',
+
+beforeDraw(chart){
+
+const {width,height,ctx}=chart;
+
+const total=chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+
+ctx.restore();
+ctx.font="bold 16px sans-serif";
+ctx.textBaseline="middle";
+ctx.textAlign="center";
+ctx.fillStyle="#333";
+
+ctx.fillText(total,width/2,height/2);
+
+ctx.save();
+
+}
+
+};
+
+
+/* industry chart */
+
+fetch("/admin/business-stats/")
+.then(response=>response.json())
+.then(data=>{
+
+const displayLabels=data.labels.map(l=>industryLabelsMap[l]||l);
+
+new Chart(document.getElementById('industryChart'),{
+
+type:'doughnut',
+
+data:{
+labels:displayLabels,
+datasets:[{
+
+data:data.data,
+
+hoverOffset:6,
+
+borderWidth:2,
+borderColor:"#fff",
+
+backgroundColor:[
+'#4e79a7',
+'#f28e2b',
+'#59a14f'
+]
+
+}]
+},
+
+plugins:[ChartDataLabels,centerTextPlugin],
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+cutout:'60%',
+
+plugins:{
+legend:{display:false},
+
+datalabels:{
+color:'#fff',
+font:{weight:'bold',size:10},
+
+formatter:function(value,context){
+
+const data=context.chart.data.datasets[0].data;
+const total=data.reduce((a,b)=>a+b,0);
+
+const percent=Math.round((value/total)*100);
+
+return percent+"%";
+}
+
+}
+
+}
+
+}
+
+});
+
+});
+
+
+/* status chart */
+
+fetch("/admin/business-status-stats/")
+.then(response=>response.json())
+.then(data=>{
+
+const displayLabels=data.labels.map(l=>statusLabelsMap[l]||l);
+
+let active=0;
+let inactive=0;
+let suspended=0;
+
+data.labels.forEach((label,i)=>{
+
+if(label==="active") active=data.data[i];
+if(label==="inactive") inactive=data.data[i];
+if(label==="suspended") suspended=data.data[i];
+
+});
+
+const total=active+inactive+suspended;
+
+animateValue("totalBusinesses",0,total,600);
+animateValue("activeBusinesses",0,active,600);
+animateValue("inactiveBusinesses",0,inactive,600);
+animateValue("suspendedBusinesses",0,suspended,600);
+
+
+new Chart(document.getElementById('statusChart'),{
+
+type:'doughnut',
+
+data:{
+labels:displayLabels,
+datasets:[{
+
+data:data.data,
+
+hoverOffset:6,
+
+borderWidth:2,
+borderColor:"#fff",
+
+backgroundColor:[
+'#2ecc71',
+'#e74c3c',
+'#f1c40f'
+]
+
+}]
+},
+
+plugins:[ChartDataLabels,centerTextPlugin],
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+cutout:'60%',
+
+plugins:{
+legend:{display:false},
+
+datalabels:{
+color:'#fff',
+font:{weight:'bold',size:10},
+
+formatter:function(value,context){
+
+const data=context.chart.data.datasets[0].data;
+const total=data.reduce((a,b)=>a+b,0);
+
+const percent=Math.round((value/total)*100);
+
+return percent+"%";
+}
+
+}
+
+}
+
+}
+
+});
+
+});
+
+</script>
+
+{% endblock %}

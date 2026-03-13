@@ -1,4 +1,8 @@
 #admin.py
+from django.contrib.admin import site
+from django.http import JsonResponse
+
+from django.db.models import Count
 from django.contrib.admin import ChoicesFieldListFilter
 from django.contrib import messages
 from django.contrib.admin.widgets import AutocompleteSelect
@@ -11,7 +15,7 @@ from django.shortcuts import redirect
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from django.contrib.admin.widgets import AutocompleteSelectMultiple
+#from django.contrib.admin.widgets import AutocompleteSelectMultiple
 from django.conf import settings
 import os
 from django.utils.timezone import now
@@ -30,6 +34,51 @@ from .models import (
     ActivityCode,
     Profession,
 )
+
+def business_stats(request):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    data = (
+        Business.objects
+        .values('industry')
+        .annotate(count=Count('id'))
+    )
+
+    labels = []
+    counts = []
+
+    for item in data:
+        labels.append(item['industry'])
+        counts.append(item['count'])
+
+    return JsonResponse({
+        "labels": labels,
+        "data": counts
+    })
+
+
+def business_status_stats(request):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    data = (
+        Business.objects
+        .values('status')
+        .annotate(count=Count('id'))
+    )
+
+    labels = []
+    counts = []
+
+    for item in data:
+        labels.append(item['status'])
+        counts.append(item['count'])
+
+    return JsonResponse({
+        "labels": labels,
+        "data": counts
+    })
 
 # -------------------------
 # SOFT DELETE ADMIN MIXIN
@@ -380,5 +429,24 @@ class AuditLogAdmin(admin.ModelAdmin):
         return False
 
 
+def dashboard_data(request):
+
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    businesses = Business.objects.all().values(
+        "industry",
+        "status",
+        "date_registered"
+    )
+
+    return JsonResponse(list(businesses), safe=False)
 
 
+admin_urls = [
+    path("dashboard-data/", admin.site.admin_view(dashboard_data)),
+    path("business-stats/", admin.site.admin_view(business_stats)),
+    path("business-status-stats/", admin.site.admin_view(business_status_stats)),
+]
+
+admin.site.get_urls = (lambda original: lambda: admin_urls + original())(admin.site.get_urls)
