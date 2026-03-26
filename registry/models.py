@@ -84,7 +84,21 @@ class Business(SoftDeleteModel):
     choices=BUSINESS_TYPE_CHOICES,
     default='osnovno',
     verbose_name="Način obavljanja"
-)
+    )
+    OBRT_TYPE_CHOICES = [
+    ('obrt', 'Obrt'),
+    ('stari_zanat', 'Stari zanat'),
+    ('domaca_radinost', 'Domaća radinost'),
+    ('srodna_djelatnost', 'Srodna djelatnost'),
+    ]
+
+    obrt_type = models.CharField(
+    max_length=50,
+    choices=OBRT_TYPE_CHOICES,
+    blank=True,
+    null=True,
+    verbose_name="Vrsta obrta"
+    )
 #New fields 12.02.2026
     start_date = models.DateField(
         blank=True,
@@ -97,7 +111,12 @@ class Business(SoftDeleteModel):
         null=True,
         verbose_name="Datum prestanka rada"
     )
-
+    ending_registration_number = models.CharField(
+    max_length=100,
+    blank=True,
+    null=True,
+    verbose_name="Broj rješenja o prestanku"
+    )
     number_of_employees = models.PositiveIntegerField(
         blank=True,
         null=True,
@@ -194,7 +213,10 @@ class Business(SoftDeleteModel):
 
         if self.assigned_clerk and self.assigned_clerk.role != 'clerk':
             errors['assigned_clerk'] = "Dodijeljeni korisnik mora biti službenik (clerk)."
-
+        if self.industry == 'obrt' and not self.obrt_type:
+            errors['obrt_type'] = "Morate odabrati vrstu obrta za obrtničku djelatnost."
+        if self.industry != 'obrt':
+            self.obrt_type = None
         if errors:
             raise ValidationError(errors)
     
@@ -295,8 +317,8 @@ class License(SoftDeleteModel):
 
 class Inspection(models.Model):
     RESULT_CHOICES = [
-        ('passed', 'Prošao'),
-        ('failed', 'Nije Prošao'),
+        ('passed', 'Ispunjavva'),
+        ('failed', 'Ne ispunjava'),
     ]
 
     business = models.ForeignKey(
@@ -306,7 +328,8 @@ class Inspection(models.Model):
     )
 
     inspection_date = models.DateField(verbose_name="Datum")
-    inspector_name = models.CharField(max_length=150, verbose_name="Inspektor")
+    #inspector_name = models.CharField(max_length=150, verbose_name="Inspektor")
+    requirements_number = models.CharField(max_length=150, verbose_name="Br. Rješenja o uslovnosti")
     result = models.CharField(max_length=50, choices=RESULT_CHOICES, verbose_name="Nalaz")
     remarks = models.TextField(blank=True, null=True, verbose_name="Komentar")
     class Meta:

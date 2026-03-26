@@ -29,12 +29,16 @@ msgstr ""
 #: .\project\settings.py:144
 msgid "Bosanski"
 msgstr "Bosanski"
+msgid "Please correct the error below."
+msgstr "Molimo ispravite grešku ispod."
 
 msgid "Recent actions"
 msgstr "Nedavne aktivnosti"
 
 msgid "Add %(name)s"
-msgstr "Dodaj objekat klase %(name)s"
+msgstr "Dodaj %(name)s"
+#msgid "Add %(name)s"
+#msgstr "Dodaj objekat klase %(name)s"
 msgid "Go"
 msgstr "Uradi"
 

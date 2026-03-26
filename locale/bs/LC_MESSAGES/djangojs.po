@@ -1,0 +1,13 @@
+msgid "Remove all"
+msgstr "Ukloni sve"
+msgid "Hold down \"Control\", or \"Command\" on a Mac, to select more than one."
+msgstr "Držite Ctrl (ili Command na Macu) za odabir više opcija."
+
+msgid "%(count)s selected options not visible"
+msgstr "%(count)s odabranih opcija nije vidljivo"
+
+msgid " (click to clear)"
+msgstr " (kliknite za poništavanje)"
+
+msgid "Available Additional Activities"
+msgstr "Dostupne Dodatne djelatnosti"

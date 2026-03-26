@@ -200,32 +200,51 @@ class WideAutocompleteSelect(AutocompleteSelect):
 
 
 class BusinessAdminForm(forms.ModelForm):
+
     class Meta:
         model = Business
         fields = "__all__"
         widgets = {
             'activity_code': forms.Select(attrs={'style': 'width: 400px;'}),
             'profession': forms.Select(attrs={'style': 'width: 400px;'}),
-            #'secondary_activities': forms.SelectMultiple(attrs={'style': 'width: 500px;'}),
         }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Make secondary_activities taller (multiple select)
         self.fields['secondary_activities'].widget.attrs.update({'size': '15'})
-   
 
     def clean(self):
         cleaned_data = super().clean()
+
+        industry = cleaned_data.get("industry")
+        obrt_type = cleaned_data.get("obrt_type")
+
         activity_code = cleaned_data.get("activity_code")
         secondary = cleaned_data.get("secondary_activities")
+        end_date = cleaned_data.get("end_date")
+        ending_registration_number = cleaned_data.get("ending_registration_number")
+        if end_date and not ending_registration_number:
+            self.add_error(
+                "ending_registration_number",
+                "Unesite broj rješenja o prestanku ako je datum prestanka definisan."
+            )
+            
+        if industry == "obrt" and not obrt_type:
+            self.add_error(
+                "obrt_type",
+                "Morate odabrati vrstu obrta."
+            )
+
+        if industry != "obrt":
+            cleaned_data["obrt_type"] = None
 
         if activity_code and secondary and activity_code in secondary:
             self.add_error(
                 "secondary_activities",
                 "Glavna djelatnost ne može biti među dodatnim djelatnostima."
             )
-        return cleaned_data
 
+        return cleaned_data
 
 
 
@@ -248,10 +267,10 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
         'fields': ('name', 'registration_number', 'date_registered', 'status','tax_number' )
     }),
     ('Klasifikacija', {
-        'fields': ('industry', 'business_type', 'profession', 'activity_code','secondary_activities')
+        'fields': ('industry', 'obrt_type','business_type', 'profession', 'activity_code','secondary_activities')
     }),
     ('Operativni Podaci', {
-        'fields': ('start_date', 'end_date', 'number_of_employees')
+        'fields': ('start_date', 'end_date', 'ending_registration_number','number_of_employees')
     }),
     ('Finansije i Porezi', {
         'fields': ('is_vat_registered', 'bank_account')
@@ -267,9 +286,19 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
 #    }),
     )
     form = BusinessAdminForm
+    class Media:
+        js = (
+                'admin/js/vendor/jquery/jquery.js',
+                'admin/js/i18n.js',  # 👈 important
+                'admin/js/obrt_toggle.js',
+                
+                'admin/js/obrt_toggle.js',              # then your custom script
+            )
+            
+        
     inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, DocumentInline]
     actions = ['mark_inactive', 'mark_active', 'print_selected_pdf', 'restore_records',]     
-        
+    
         
     @admin.action(description="Označi odabrane obrte kao Neaktivan")
     def mark_inactive(self, request, queryset):
