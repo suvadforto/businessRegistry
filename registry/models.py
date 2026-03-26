@@ -328,8 +328,8 @@ class Inspection(models.Model):
     )
 
     inspection_date = models.DateField(verbose_name="Datum")
-    #inspector_name = models.CharField(max_length=150, verbose_name="Inspektor")
-    requirements_number = models.CharField(max_length=150, verbose_name="Br. Rješenja o uslovnosti")
+    inspector_name = models.CharField(max_length=150, verbose_name="Inspektor")
+    #requirements_number = models.CharField(max_length=150, verbose_name="Br. Rješenja o uslovnosti")
     result = models.CharField(max_length=50, choices=RESULT_CHOICES, verbose_name="Nalaz")
     remarks = models.TextField(blank=True, null=True, verbose_name="Komentar")
     class Meta:
