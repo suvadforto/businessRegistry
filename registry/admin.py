@@ -29,6 +29,7 @@ from .models import (
     License,
     Inspection,
     Document,
+    Assessment,
     User,
     AuditLog,
     ActivityCode,
@@ -171,6 +172,16 @@ class InspectionInline(admin.TabularInline):
     fields = ('inspection_date', 'inspector_name', 'result')
     show_change_link = True
 
+class AssessmentInline(admin.TabularInline):
+    model = Assessment
+    extra = 0
+    fields = ('document_number', 'assessment_date', 'result', 'document_file', 'file_link')
+    readonly_fields = ('file_link',)
+
+    def file_link(self, obj):
+        if obj.document_file:
+            return format_html('<a href="{}" target="_blank">Pregled</a>', obj.document_file.url)
+        return "-"
 
 class DocumentInline(admin.TabularInline):
     model = Document
@@ -289,14 +300,14 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     class Media:
         js = (
                 'admin/js/vendor/jquery/jquery.js',
-                'admin/js/i18n.js',  # 👈 important
+                '/admin/jsi18n/',  # 👈 important
                 'admin/js/obrt_toggle.js',
                 
                 'admin/js/obrt_toggle.js',              # then your custom script
             )
             
         
-    inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, DocumentInline]
+    inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, AssessmentInline, DocumentInline]
     actions = ['mark_inactive', 'mark_active', 'print_selected_pdf', 'restore_records',]     
     
         
@@ -406,6 +417,12 @@ class InspectionAdmin(RoleBasedAdminMixin, admin.ModelAdmin):
     list_filter = ('result',)
     autocomplete_fields = ('business',)
 
+#assessment admin
+@admin.register(Assessment)
+class AssessmentAdmin(RoleBasedAdminMixin, admin.ModelAdmin):
+    list_display = ('business', 'document_number', 'assessment_date', 'result')
+    list_filter = ('result',)
+    autocomplete_fields = ('business',)
 
 # -------------------------
 # DOCUMENT ADMIN

@@ -65,7 +65,7 @@ class Business(SoftDeleteModel):
     industry = models.CharField(
     max_length=50,
     choices=INDUSTRY_CHOICES,
-    blank=True,
+    #blank=True,
     null=True,
     verbose_name="Vrsta djelatnosti"
     )
@@ -337,6 +337,56 @@ class Inspection(models.Model):
         verbose_name_plural = "Inspekcije"
     def __str__(self):
         return f"{self.business.name} – {self.inspection_date}"
+
+
+class Assessment(models.Model):
+    RESULT_CHOICES = [
+        ('compliant', 'Ispunjava uslove'),
+        ('non_compliant', 'Ne ispunjava uslove'),
+    ]
+
+    business = models.ForeignKey(
+        Business,
+        on_delete=models.CASCADE,
+        related_name='assessments'
+    )
+
+    document_number = models.CharField(
+        max_length=100,
+        verbose_name="Broj rješenja"
+    )
+
+    assessment_date = models.DateField(
+        verbose_name="Datum procjene"
+    )
+
+    result = models.CharField(
+        max_length=50,
+        choices=RESULT_CHOICES,
+        verbose_name="Mišljenje"
+    )
+
+    document_file = models.FileField(
+        upload_to='assessments/%Y/%m/',
+        blank=True,
+        null=True,
+        verbose_name="Dokument"
+    )
+
+    notes = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Napomena"
+    )
+
+    class Meta:
+        verbose_name = "Procjena uslova"
+        verbose_name_plural = "Procjene uslova"
+
+    def __str__(self):
+        return f"{self.business.name} – {self.document_number}"
+
+
 
 class Document(models.Model):
     business = models.ForeignKey(
