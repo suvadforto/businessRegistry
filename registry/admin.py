@@ -266,8 +266,12 @@ class BusinessAdminForm(forms.ModelForm):
 # -------------------------
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
-    search_fields = ('name', 'registration_number', 'tax_number')
+    list_display = ('name', 'owner_name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
+    search_fields = ('name', 'registration_number', 'tax_number','ownerships__owner__first_name',
+    'ownerships__owner__last_name','ownerships__owner__personal_id',)
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(request, queryset, search_term)
+        return queryset.distinct(), True
     list_filter = ('status', ('industry', ChoicesFieldListFilter), 'business_type', 'profession', 'assigned_clerk', )
     autocomplete_fields = ('activity_code', 'assigned_clerk', 'profession')
     filter_horizontal=('secondary_activities',)
@@ -310,7 +314,14 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, AssessmentInline, DocumentInline]
     actions = ['mark_inactive', 'mark_active', 'print_selected_pdf', 'restore_records',]     
     
-        
+    def owner_name(self, obj):
+        owner_rel = obj.ownerships.first()
+        if owner_rel and owner_rel.owner:
+            return f"{owner_rel.owner.first_name} {owner_rel.owner.last_name}"
+        return "-"
+    
+    owner_name.short_description = "Vlasnik"    
+    owner_name.admin_order_field = 'ownerships__owner__last_name'
     @admin.action(description="Označi odabrane obrte kao Neaktivan")
     def mark_inactive(self, request, queryset):
         queryset.update(status='inactive')
@@ -329,9 +340,14 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
             return
 
         return businesses_to_pdf(queryset, request.user)
+#    def get_queryset(self, request):
+#        qs = super().get_queryset(request)
+#        return qs.select_related('activity_code', 'assigned_clerk')
+               
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.select_related('activity_code', 'assigned_clerk')
+        return qs.select_related('activity_code', 'assigned_clerk')\
+                 .prefetch_related('ownerships__owner')   
     
     def has_change_permission(self, request, obj=None):
         return request.user.is_superuser or request.user.role == 'admin'        

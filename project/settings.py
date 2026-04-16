@@ -24,7 +24,7 @@ LOCALE_PATHS = [
 
 #BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
-MEDIA_ROOT = r"\\TREZOR\d$\registryShared"
+MEDIA_ROOT = r"\\TREZOR\registryShared"
 #MEDIA_ROOT = BASE_DIR / 'media'
 
 
