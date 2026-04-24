@@ -267,6 +267,10 @@ class BusinessAdminForm(forms.ModelForm):
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'owner_name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
+    list_per_page = 25          # how many items per page
+    list_max_show_all = 100     # limit for "Show all"
+    show_full_result_count = False 
+    
     search_fields = ('name', 'registration_number', 'tax_number','ownerships__owner__first_name',
     'ownerships__owner__last_name','ownerships__owner__personal_id',)
     def get_search_results(self, request, queryset, search_term):
