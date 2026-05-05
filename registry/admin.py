@@ -266,7 +266,7 @@ class BusinessAdminForm(forms.ModelForm):
 # -------------------------
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'owner_name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
+    list_display = ('owner_name','name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
     list_per_page = 25          # how many items per page
     list_max_show_all = 100     # limit for "Show all"
     show_full_result_count = False 
@@ -286,7 +286,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
         'fields': ('name', 'registration_number', 'date_registered', 'status','tax_number' )
     }),
     ('Klasifikacija', {
-        'fields': ('industry', 'obrt_type','business_type', 'profession', 'activity_code','secondary_activities')
+        'fields': ('industry', 'obrt_type','business_type', 'profession', 'activity_code','secondary_activities','is_foreign_trade',)
     }),
     ('Operativni Podaci', {
         'fields': ('start_date', 'end_date', 'ending_registration_number','number_of_employees')
@@ -321,7 +321,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     def owner_name(self, obj):
         owner_rel = obj.ownerships.first()
         if owner_rel and owner_rel.owner:
-            return f"{owner_rel.owner.first_name} {owner_rel.owner.last_name}"
+            return f"{owner_rel.owner.last_name} {owner_rel.owner.first_name}"
         return "-"
     
     owner_name.short_description = "Vlasnik"    

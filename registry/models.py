@@ -78,6 +78,7 @@ class Business(SoftDeleteModel):
     ('osnovno', 'Osnovno'),
     ('dopunsko', 'Dopunsko'),
     ('dodatno', 'Dodatno'),
+    ('paušalno', 'Paušalno'),
     ]
     business_type = models.CharField(
     max_length=20,
@@ -170,7 +171,10 @@ class Business(SoftDeleteModel):
             related_name='assigned_businesses',
             verbose_name="Dodijeljeni službenik"
     )
-
+    is_foreign_trade = models.BooleanField(
+        default=False,
+        verbose_name="Obavlja obrt u vanjskotrgovinskom poslovanju"
+    )
     
 #END OF NEW FIELDS 
                 
