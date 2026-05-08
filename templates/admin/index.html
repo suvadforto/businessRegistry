@@ -44,6 +44,8 @@
     display:flex;
     gap:40px;
     flex-wrap:wrap;
+	justify-content:flex-start;
+    align-items:flex-start;
 }
 
 .chart-box{
@@ -106,6 +108,11 @@ canvas{
 <div class="chart-box">
 <h3>Status</h3>
 <canvas id="statusChart"></canvas>
+</div>
+
+<div class="chart-box">
+<h3>Spol vlasnika</h3>
+<canvas id="genderChart"></canvas>
 </div>
 
 </div>
@@ -347,6 +354,75 @@ return percent+"%";
 
 });
 
+/* gender chart */
+
+fetch("/admin/owner-gender-stats/")
+.then(response=>response.json())
+.then(data=>{
+
+new Chart(document.getElementById('genderChart'),{
+
+type:'doughnut',
+
+data:{
+labels:data.labels,
+
+datasets:[{
+
+data:data.data,
+
+hoverOffset:6,
+
+borderWidth:2,
+borderColor:"#fff",
+
+backgroundColor:[
+'#3498db',
+'#e84393'
+
+/**/
+
+
+]
+
+}]
+},
+
+plugins:[ChartDataLabels,centerTextPlugin],
+
+options:{
+responsive:true,
+maintainAspectRatio:false,
+cutout:'60%',
+
+plugins:{
+legend:{display:false},
+
+datalabels:{
+color:'#fff',
+font:{weight:'bold',size:10},
+
+formatter:function(value,context){
+
+const data=context.chart.data.datasets[0].data;
+const total=data.reduce((a,b)=>a+b,0);
+
+const percent=Math.round((value/total)*100);
+
+return percent+"%";
+}
+
+}
+
+}
+
+}
+
+});
+
+});
+
 </script>
+
 
 {% endblock %}

@@ -1,0 +1,104 @@
+class BusinessAdminForm(forms.ModelForm):
+
+    class Meta:
+        model = Business
+        fields = "__all__"
+        widgets = {
+            'activity_code': forms.Select(attrs={'style': 'width: 400px;'}),
+            'profession': forms.Select(attrs={'style': 'width: 400px;'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['secondary_activities'].widget.attrs.update({'size': '15'})
+
+        industry = None
+
+        if self.instance and self.instance.pk:
+            industry = self.instance.industry
+        else:
+            industry = self.data.get('industry')
+
+        if industry != 'obrt':
+            self.fields['obrt_type'].required = False
+            self.fields['obrt_type'].widget.attrs['disabled'] = True
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        industry = cleaned_data.get("industry")
+        obrt_type = cleaned_data.get("obrt_type")
+
+        activity_code = cleaned_data.get("activity_code")
+        secondary = cleaned_data.get("secondary_activities")
+
+        if industry == "obrt" and not obrt_type:
+            self.add_error(
+                "obrt_type",
+                "Morate odabrati vrstu obrta."
+            )
+
+        if industry != "obrt":
+            cleaned_data["obrt_type"] = None
+
+        if activity_code and secondary and activity_code in secondary:
+            self.add_error(
+                "secondary_activities",
+                "Glavna djelatnost ne može biti među dodatnim djelatnostima."
+            )
+
+        return cleaned_data
+		
+		
+		
+########
+reporting.py old version parts for grouping
+if grouped_data:
+        elements.append(Paragraph("Pregled po kategoriji", styles["Heading2"]))
+        elements.append(Spacer(1, 0.3 * cm))
+
+        group_table_data = [
+            [
+                Paragraph("Kategorija", table_header_style),
+                Paragraph("Broj", table_header_style),
+            ]
+        ]
+
+        for item in grouped_data:
+            field_name = list(item.keys())[0]   # e.g. "industry"
+            field_value = item[field_name]
+            total = item["total"]
+
+            
+            
+            try:
+                field = queryset.model._meta.get_field(field_name)
+                if field.choices:
+                    field_value = dict(field.choices).get(field_value, field_value)
+            except Exception:
+                # ✅ Handle related / special fields manually
+
+                if field_name == "ownerships__owner__sex":
+                    field_value = dict([
+                        ('M', 'Muški'),
+                        ('F', 'Ženski'),
+                    ]).get(field_value, field_value)
+
+                elif field_name == "status":
+                    field_value = dict(queryset.model.STATUS_CHOICES).get(field_value, field_value)
+
+                elif field_name == "industry":
+                    field_value = dict(queryset.model.INDUSTRY_CHOICES).get(field_value, field_value)
+            # Convert choice values to labels automatically
+#            try:
+#                field = queryset.model._meta.get_field(field_name)
+#                if field.choices:
+#                    field_value = dict(field.choices).get(field_value, field_value)
+#            except Exception:
+#                pass
+
+            group_table_data.append([
+                Paragraph(str(field_value), table_cell_style),
+                Paragraph(str(total), table_cell_style),
+            ])

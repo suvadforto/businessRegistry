@@ -1,8 +1,9 @@
 # registry/forms.py
 from django.conf import settings
 from django import forms
-from .models import Business, ActivityCode
+from .models import Business, ActivityCode, Profession, Owner
 import datetime
+
 
 STATUS_CHOICES = [
     ('active', 'Aktivan'),
@@ -10,6 +11,7 @@ STATUS_CHOICES = [
 ]
 GROUP_BY_CHOICES = [
     ("", "Bez grupisanja"),
+    ('ownerships__owner__sex', 'Spol vlasnika'),
     #("city", "Grad"),
     ("industry", "Vrsta djelatnosti"),
     ("status", "Status"),
@@ -18,7 +20,10 @@ GROUP_BY_CHOICES = [
 
 
 REPORT_FIELDS = [
+    ('owner_full_name', 'Vlasnik'),
     ('name', 'Naziv'),
+    ('owner_sex', 'Spol vlasnika'),
+    ('assessment_result', 'Procjena uslova'),
     ('registration_number', 'Broj rješenja'),
     #('city', 'Grad'),
     ('status', 'Status'),
@@ -34,6 +39,7 @@ REPORT_FIELDS = [
 
 SORT_FIELDS = [
     ('name', 'Naziv'),
+    ('owner_full_name', 'Vlasnik'),
     ('registration_number', 'Matični broj'),
     ('city', 'Grad'),
     ('status', 'Status'),
@@ -42,10 +48,24 @@ SORT_FIELDS = [
 
 class BusinessReportForm(forms.Form):
     
+    SEX_CHOICES = [
+    ('', '--- Svi ---'),
+    ('M', 'Muški'),
+    ('F', 'Ženski'),
+    ]
+
+    sex = forms.ChoiceField(
+        choices=SEX_CHOICES,
+        required=False,
+        label="Spol vlasnika"
+    )
+    
+    
     status = forms.ChoiceField(
         choices=[('', 'Svi')] + STATUS_CHOICES,
         required=False
     )
+    
     industry = forms.ChoiceField(
         choices=[('', 'Sve')] + list(Business._meta.get_field('industry').choices),
         required=False,
@@ -55,6 +75,11 @@ class BusinessReportForm(forms.Form):
         max_length=50,
         required=False,
         label="Grad"
+    )
+    profession = forms.ModelChoiceField(
+        queryset=Profession.objects.all(),
+        required=False,
+        label="Zanimanje"
     )
     activity_code = forms.ModelChoiceField(
         queryset=ActivityCode.objects.all(),

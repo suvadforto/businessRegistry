@@ -27,6 +27,7 @@ def queryset_to_pdf(
     user,
     fields,
     title="",
+    field_labels=None,
     logo_path=None,
     summary=None,
     grouped_data=None,
@@ -159,17 +160,33 @@ def queryset_to_pdf(
         ]
 
         for item in grouped_data:
-            field_name = list(item.keys())[0]   # e.g. "industry"
+            field_name = next(k for k in item.keys() if k != "total")
             field_value = item[field_name]
             total = item["total"]
 
-            # Convert choice values to labels automatically
             try:
                 field = queryset.model._meta.get_field(field_name)
                 if field.choices:
                     field_value = dict(field.choices).get(field_value, field_value)
+
             except Exception:
-                pass
+                # Handle related / special fields manually
+
+                if field_name == "ownerships__owner__sex":
+                    field_value = {
+                        'M': 'Muški',
+                        'F': 'Ženski',
+                    }.get(field_value, field_value)
+
+                elif field_name == "status":
+                    field_value = dict(queryset.model.STATUS_CHOICES).get(field_value, field_value)
+
+                elif field_name == "industry":
+                    field_value = dict(queryset.model.INDUSTRY_CHOICES).get(field_value, field_value)
+
+            # Optional: handle empty values
+            if not field_value:
+                field_value = "Nije definisano"
 
             group_table_data.append([
                 Paragraph(str(field_value), table_cell_style),
@@ -195,24 +212,50 @@ def queryset_to_pdf(
         queryset = queryset.order_by(order_by)
 
     model = queryset.model
-    headers = [Paragraph(capfirst(model._meta.get_field(f).verbose_name), table_header_style)
-               for f in fields]
+    #headers = [Paragraph(capfirst(model._meta.get_field(f).verbose_name), table_header_style)
+     #          for f in fields]
+    
+    headers = []
+    #for f in fields:
+    #    try:
+    #        label = capfirst(model._meta.get_field(f).verbose_name)
+    #    except Exception:
+    #        label = capfirst(f.replace("_", " "))
+    #    headers.append(Paragraph(label, table_header_style))
+    for f in fields:
+        fallback = capfirst(f.replace("_", " "))
+        label = field_labels.get(f, fallback) if field_labels else fallback
+        headers.append(Paragraph(label, table_header_style))
     data = [headers]
-
     for obj in queryset:
         row = []
         for field in fields:
+#            value = getattr(obj, field, "")
             value = getattr(obj, field, "")
-            display_method = f"get_{field}_display"
-            if hasattr(obj, display_method):
-                value = getattr(obj, display_method)()
-            if value is None:
-                value = ""
+
+            if callable(value):
+                value = value()
+            try:
+                model_field = obj._meta.get_field(field)
+
+                display_method = f"get_{field}_display"
+
+                if hasattr(obj, display_method):
+                    value = getattr(obj, display_method)()
+
+            except Exception:
+                pass
+
+            # Formatting
+            if value in [None, ""]:
+                value = "-"
+
             elif isinstance(value, bool):
                 value = "Da" if value else "Ne"
+
             elif isinstance(value, (datetime.date, datetime.datetime)):
                 value = value.strftime("%d.%m.%Y.")
-                
+               
             row.append(Paragraph(str(value), table_cell_style))
         data.append(row)
 

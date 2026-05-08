@@ -7,14 +7,17 @@ from django.db.models.functions import Coalesce
 from django.conf import settings
 import os
 import logging
-
+from django.db.models import Min
 from .models import Business
 from .forms import BusinessReportForm, REPORT_FIELDS
 from .utils.reporting import queryset_to_pdf
 
 
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
+SORT_MAPPING = {
+    "owner_full_name": "owner_last_name",
+}
 
 @login_required
 def businesses_report(request):
@@ -24,6 +27,8 @@ def businesses_report(request):
         "activity_code",
         "profession",
         "assigned_clerk",
+    ).prefetch_related(
+        "ownerships__owner"   # 👈 ADD THIS
     )
 
     selected_columns = [f[0] for f in REPORT_FIELDS]
@@ -38,6 +43,8 @@ def businesses_report(request):
         date_to = form.cleaned_data.get("date_to")
         group_by = form.cleaned_data.get("group_by")
         industry = form.cleaned_data.get("industry")
+        profession = form.cleaned_data.get("profession")
+        sex = form.cleaned_data.get("sex")
 
         # -------------------------
         # Filtering
@@ -52,6 +59,8 @@ def businesses_report(request):
         if city:
             queryset = queryset.filter(city__icontains=city)
 
+        if profession:
+            queryset = queryset.filter(profession=profession)
         if activity_code:
             queryset = queryset.filter(activity_code=activity_code)
 
@@ -60,20 +69,36 @@ def businesses_report(request):
 
         if date_to:
             queryset = queryset.filter(date_registered__lte=date_to)
-
+        if sex:
+            queryset = queryset.filter(ownerships__owner__sex=sex)
         # -------------------------
         # Sorting
         # -------------------------
 
+        #sort_field = form.cleaned_data.get("sort_by")
+        #if sort_field:
+         #   queryset = queryset.order_by(sort_field)
+            
         sort_field = form.cleaned_data.get("sort_by")
+
         if sort_field:
-            queryset = queryset.order_by(sort_field)
+            sort_field = SORT_MAPPING.get(sort_field, sort_field)
+
+            if sort_field == "owner_last_name":
+                queryset = queryset.annotate(
+                    owner_last_name=Min("ownerships__owner__last_name")
+                ).order_by("owner_last_name")
+            else:
+                queryset = queryset.order_by(sort_field)
 
         # -------------------------
         # Column selection
         # -------------------------
 
-        selected_columns = form.cleaned_data.get("columns") or selected_columns
+        #selected_columns = form.cleaned_data.get("columns") or selected_columns
+        selected_columns = form.cleaned_data.get("columns") or [f[0] for f in REPORT_FIELDS]
+
+        field_labels = dict(REPORT_FIELDS)
 
         # -------------------------
         # Grouping
@@ -151,7 +176,14 @@ def businesses_report(request):
             activity_code = form.cleaned_data.get("activity_code")
             if activity_code:
                 filters.append(f"Šifra djelatnosti: {activity_code.code}")
-
+            # Profession
+            profession = form.cleaned_data.get("profession")
+            if profession:
+                filters.append(f"Zanimanje: {profession}")
+            sex = form.cleaned_data.get("sex")
+            if sex:
+                sex_label = dict(form.fields["sex"].choices).get(sex)
+                filters.append(f"Spol vlasnika: {sex_label}")
             # Date range
             if date_from and date_to:
                 filters.append(
@@ -182,6 +214,7 @@ def businesses_report(request):
             logo_path=logo_path,
             summary=summary,
             grouped_data=grouped_data,
+            field_labels=field_labels, 
         )
 
     return render(
@@ -205,6 +238,8 @@ def business_activity_report(request):
     queryset = Business.objects.select_related(
         "activity_code",
         "profession"
+    ).prefetch_related(
+    "ownerships__owner"
     )
 
     selected_columns = ["Activity Code", "Total Businesses"]
@@ -217,9 +252,12 @@ def business_activity_report(request):
         date_from = form.cleaned_data.get("date_from")
         date_to = form.cleaned_data.get("date_to")
         industry_filter = form.cleaned_data.get("industry")
+        sex = form.cleaned_data.get("sex")
 
         if industry_filter:
             queryset = queryset.filter(industry=industry_filter)
+        if sex:
+            queryset = queryset.filter(ownerships__owner__sex=sex)
 
         if status:
             queryset = queryset.filter(status=status)
@@ -287,3 +325,4 @@ def business_activity_report(request):
         title="Activity Code Report",
         logo_path=logo_path,
     )
+    

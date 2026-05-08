@@ -2,7 +2,7 @@
 from django.contrib.admin import site
 from django.http import JsonResponse
 
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.contrib.admin import ChoicesFieldListFilter
 from django.contrib import messages
 from django.contrib.admin.widgets import AutocompleteSelect
@@ -266,7 +266,7 @@ class BusinessAdminForm(forms.ModelForm):
 # -------------------------
 @admin.register(Business)
 class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
-    list_display = ('owner_name','name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
+    list_display = ('owner_full_name','name', 'registration_number', 'status','business_type', 'industry','date_registered', 'is_deleted')
     list_per_page = 25          # how many items per page
     list_max_show_all = 100     # limit for "Show all"
     show_full_result_count = False 
@@ -276,6 +276,7 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(request, queryset, search_term)
         return queryset.distinct(), True
+        
     list_filter = ('status', ('industry', ChoicesFieldListFilter), 'business_type', 'profession', 'assigned_clerk', )
     autocomplete_fields = ('activity_code', 'assigned_clerk', 'profession')
     filter_horizontal=('secondary_activities',)
@@ -318,14 +319,14 @@ class BusinessAdmin(RoleBasedAdminMixin,SoftDeleteAdminMixin, admin.ModelAdmin):
     inlines = [BusinessOwnerInline, LicenseInline, InspectionInline, AssessmentInline, DocumentInline]
     actions = ['mark_inactive', 'mark_active', 'print_selected_pdf', 'restore_records',]     
     
-    def owner_name(self, obj):
-        owner_rel = obj.ownerships.first()
-        if owner_rel and owner_rel.owner:
-            return f"{owner_rel.owner.last_name} {owner_rel.owner.first_name}"
-        return "-"
+    #def owner_name(self, obj):
+     #   owner_rel = obj.ownerships.first()
+      #  if owner_rel and owner_rel.owner:
+       #     return f"{owner_rel.owner.last_name} {owner_rel.owner.first_name}"
+        #return "-"
     
-    owner_name.short_description = "Vlasnik"    
-    owner_name.admin_order_field = 'ownerships__owner__last_name'
+  #  owner_full_name.short_description = "Vlasnik"    
+  #  owner_full_name.admin_order_field = 'ownerships__owner__last_name'
     @admin.action(description="Označi odabrane obrte kao Neaktivan")
     def mark_inactive(self, request, queryset):
         queryset.update(status='inactive')
@@ -508,11 +509,54 @@ def dashboard_data(request):
 
     return JsonResponse(list(businesses), safe=False)
 
+def owner_gender_stats(request):
 
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    businesses = (
+        Business.objects
+        .prefetch_related('ownerships__owner')
+        .all()
+    )
+
+    male = 0
+    female = 0
+    unknown = 0
+
+    for business in businesses:
+        owners = [bo.owner for bo in business.ownerships.all() if bo.owner]
+
+        if not owners:
+            unknown += 1
+            continue
+
+        # decide business sex category
+        sexes = {o.sex for o in owners}
+
+        if sexes == {'M'}:
+            male += 1
+        elif sexes == {'F'}:
+            female += 1
+        elif 'M' in sexes and 'F' in sexes:
+            unknown += 1  # mixed ownership
+        elif 'M' in sexes:
+            male += 1
+        elif 'F' in sexes:
+            female += 1
+        else:
+            unknown += 1
+
+    return JsonResponse({
+        "labels": ["Muški", "Ženski", "Nedefinisano"],
+        "data": [male, female, unknown]
+    })
+    
 admin_urls = [
     path("dashboard-data/", admin.site.admin_view(dashboard_data)),
     path("business-stats/", admin.site.admin_view(business_stats)),
     path("business-status-stats/", admin.site.admin_view(business_status_stats)),
+    path("owner-gender-stats/", admin.site.admin_view(owner_gender_stats)),
 ]
 
 admin.site.get_urls = (lambda original: lambda: admin_urls + original())(admin.site.get_urls)

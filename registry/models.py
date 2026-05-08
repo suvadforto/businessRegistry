@@ -175,7 +175,27 @@ class Business(SoftDeleteModel):
         default=False,
         verbose_name="Obavlja obrt u vanjskotrgovinskom poslovanju"
     )
-    
+    @property
+    def assessment_result(self):
+        assessment = self.assessments.order_by('-assessment_date').first()
+
+        if assessment:
+            return assessment.get_result_display()
+
+        return "-"
+    @property
+    def owner_sex(self):
+        owner_rel = self.ownerships.first()
+        if owner_rel and owner_rel.owner:
+            return owner_rel.owner.get_sex_display()
+        return "-"
+    @property
+    def owner_full_name(self):
+        owner_rel = self.ownerships.select_related("owner").first()
+        owner = owner_rel.owner if owner_rel else None
+        return f"{owner.last_name} {owner.first_name}" if owner else "-"
+    owner_full_name.fget.short_description = "Vlasnik"
+    owner_full_name.fget.admin_order_field = 'ownerships__owner__last_name'
 #END OF NEW FIELDS 
                 
     name = models.CharField(max_length=255,verbose_name="Naziv obrta")
@@ -235,6 +255,18 @@ class Business(SoftDeleteModel):
         
 
 class Owner(SoftDeleteModel):
+    SEX_CHOICES = [
+        ('M', 'Muški'),
+        ('F', 'Ženski'),
+    ]
+
+    sex = models.CharField(
+        max_length=1,
+        choices=SEX_CHOICES,
+        blank=True,
+        null=True,
+        verbose_name="Spol"
+    )
     first_name = models.CharField(max_length=100, verbose_name="Ime Vlasnika")
     last_name = models.CharField(max_length=100, verbose_name="Prezime Vlasnika")
     personal_id = models.CharField(max_length=100, blank=True, null=True, verbose_name="JMBG")

@@ -26,7 +26,7 @@ urlpatterns = [
     path('businesses/', views.businesses_report, name='business_list'),
     path('businesses/report/', views.businesses_report, name='businesses_report'),
     path('businesses/activity/', views.business_activity_report, name='business_activity_report'),
-
+    #path("admin/owner-gender-stats/", views.owner_gender_stats, name="owner_gender_stats"),
     # API endpoints
     path('api/', include(router.urls)),
 ]

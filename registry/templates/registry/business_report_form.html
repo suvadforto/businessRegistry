@@ -43,11 +43,25 @@
                 <label>{{ form.status.label_tag }}</label>
                 {{ form.status }}
                 {% if form.status.errors %}<div class="form-error">{{ form.status.errors }}</div>{% endif %}
-            </div>
+            </div>			
 			<div class="form-section">
 				<label>{{ form.industry.label_tag }}</label>
 				{{ form.industry }}
 				{% if form.industry.errors %}<div class="form-error">{{ form.industry.errors }}</div>{% endif %}
+			</div>
+			<div class="form-section">
+				<label>{{ form.sex.label_tag }}</label>
+				{{ form.sex }}
+				{% if form.sex.errors %}
+					<div class="form-error">{{ form.sex.errors }}</div>
+				{% endif %}
+			</div>
+			<div class="form-section">
+				<label>{{ form.profession.label_tag }}</label>
+				{{ form.profession }}
+				{% if form.profession.errors %}
+					<div class="form-error">{{ form.profession.errors }}</div>
+				{% endif %}
 			</div>
            <!-- <div class="form-section">
                 <label>{{ form.city.label_tag }}</label>
@@ -289,6 +303,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const value = searchValue.trim().toLowerCase();
                 return choices.filter(choice => choice.label.toLowerCase().includes(value));
             }
+        });
+    }
+	const professionSelect = document.querySelector('#id_profession');
+    if (professionSelect) {
+        new Choices(professionSelect, {
+            searchEnabled: true,
+            itemSelectText: '',
+            placeholder: true,
+            placeholderValue: 'Search Profession...',
+            shouldSort: false,
         });
     }
 });
