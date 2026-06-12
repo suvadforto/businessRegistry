@@ -2,7 +2,7 @@
 -- PostgreSQL database cluster dump
 --
 
-\restrict zoNYqjQ0N9qilmlODfo9pm9QMS30RV2nVouvYGXLhrxZdZmOtKffVl68e5dfHsg
+\restrict 8d0KaipGaZ6xy52A7SlZEjN4cPYUuu8pLxEHUSBHmlwbFsdxKGUZLt9OnFXQEW0
 
 SET default_transaction_read_only = off;
 
@@ -37,7 +37,7 @@ ALTER ROLE registry_user SET "TimeZone" TO 'UTC';
 
 
 
-\unrestrict zoNYqjQ0N9qilmlODfo9pm9QMS30RV2nVouvYGXLhrxZdZmOtKffVl68e5dfHsg
+\unrestrict 8d0KaipGaZ6xy52A7SlZEjN4cPYUuu8pLxEHUSBHmlwbFsdxKGUZLt9OnFXQEW0
 
 --
 -- Databases
@@ -53,7 +53,7 @@ ALTER ROLE registry_user SET "TimeZone" TO 'UTC';
 -- PostgreSQL database dump
 --
 
-\restrict 4Fh1MMc8YMBr6o6nqsAmh6tKTMrM6z9kieyolh4MtS5V9S6Km3GLURB7uHwlHUH
+\restrict Dj5a6RF0iAZb7zU7jQKSYpFhrE9BOHbhBBjH1thV0OV1S0xalT0tmuqAbpevfHE
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -74,7 +74,7 @@ SET row_security = off;
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 4Fh1MMc8YMBr6o6nqsAmh6tKTMrM6z9kieyolh4MtS5V9S6Km3GLURB7uHwlHUH
+\unrestrict Dj5a6RF0iAZb7zU7jQKSYpFhrE9BOHbhBBjH1thV0OV1S0xalT0tmuqAbpevfHE
 
 --
 -- Database "business_registry" dump
@@ -84,7 +84,7 @@ SET row_security = off;
 -- PostgreSQL database dump
 --
 
-\restrict JAJriRorrwkKAlWEjwZjrPgCE7PJidbdfRRLkyScbJ7k81eZ6AFXveVdGX6hcdA
+\restrict lMGrkQBS4aj8dx7YFryYixoAquh3f5v4yim9Lo1hCLeQsMe2jwUgZj3N2SvUBbc
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -110,9 +110,9 @@ CREATE DATABASE business_registry WITH TEMPLATE = template0 ENCODING = 'UTF8' LO
 
 ALTER DATABASE business_registry OWNER TO postgres;
 
-\unrestrict JAJriRorrwkKAlWEjwZjrPgCE7PJidbdfRRLkyScbJ7k81eZ6AFXveVdGX6hcdA
+\unrestrict lMGrkQBS4aj8dx7YFryYixoAquh3f5v4yim9Lo1hCLeQsMe2jwUgZj3N2SvUBbc
 \connect business_registry
-\restrict JAJriRorrwkKAlWEjwZjrPgCE7PJidbdfRRLkyScbJ7k81eZ6AFXveVdGX6hcdA
+\restrict lMGrkQBS4aj8dx7YFryYixoAquh3f5v4yim9Lo1hCLeQsMe2jwUgZj3N2SvUBbc
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -435,6 +435,7 @@ CREATE TABLE public.registry_business (
     profession_id bigint,
     obrt_type character varying(50),
     ending_registration_number character varying(100),
+    is_foreign_trade boolean NOT NULL,
     CONSTRAINT registry_business_number_of_employees_check CHECK ((number_of_employees >= 0))
 );
 
@@ -617,7 +618,8 @@ CREATE TABLE public.registry_owner (
     email character varying(254),
     created_at timestamp with time zone NOT NULL,
     deleted_at timestamp with time zone,
-    is_deleted boolean NOT NULL
+    is_deleted boolean NOT NULL,
+    sex character varying(1)
 );
 
 
@@ -1236,6 +1238,807 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 384	2026-04-24 14:42:10.555228+02	90	Obrtnička radnja "Zlatar časovničar Hadžimešić" (03-1-17-1-1598/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Nermin Had\\u017eime\\u0161i\\u0107 \\u2192 Obrtni\\u010dka radnja \\"Zlatar \\u010dasovni\\u010dar Had\\u017eime\\u0161i\\u0107\\" (03-1-17-1-1598/25)"}}]	7	1
 385	2026-04-24 14:49:47.684825+02	95	Almedin Hukić	1	[{"added": {}}]	12	1
 386	2026-04-24 14:52:05.241765+02	91	Ugostiteljska radnja caffe bar "Pub" (03-1-18-1-395/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Almedin Huki\\u0107 \\u2192 Ugostiteljska radnja caffe bar \\"Pub\\" (03-1-18-1-395/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja caffe bar \\"Pub\\" \\u2013 03-1-18-1-364/25"}}]	7	1
+387	2026-04-24 14:58:59.807427+02	96	Muhidin Heto	1	[{"added": {}}]	12	1
+388	2026-04-24 15:00:55.085144+02	92	Ugostiteljska radnja caffe bar "HETO" (03-1-18-1-441/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Muhidin Heto \\u2192 Ugostiteljska radnja caffe bar \\"HETO\\" (03-1-18-1-441/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja caffe bar \\"HETO\\" \\u2013 03-1-18-2-64/25"}}]	7	1
+389	2026-04-24 15:07:44.187422+02	8	SUR „AL TONNO“ (03-1-22-258/08)	3		7	1
+390	2026-04-24 15:09:18.058866+02	8	Jasmin Ahmetspahić	2	[{"changed": {"fields": ["Ime Vlasnika", "Prezime Vlasnika", "Adresa"]}}]	12	1
+391	2026-04-24 15:10:11.300648+02	8	Jasmin Ahmetspahić	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+392	2026-04-24 15:10:50.946369+02	9	Ugostiteljska radnja  pizzeria „TEMPO DI PIZZA“ (03-1-18-516/25)	2	[{"changed": {"fields": ["Naziv obrta", "Zanimanje"]}}, {"changed": {"name": "Vlasnik", "object": "Jasmin Ahmetspahi\\u0107 \\u2192 Ugostiteljska radnja  pizzeria \\u201eTEMPO DI PIZZA\\u201c (03-1-18-516/25)", "fields": ["Udio vlasni\\u0161tva"]}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja  pizzeria \\u201eTEMPO DI PIZZA\\u201c \\u2013 03-1-18-1-470/25"}}]	7	1
+393	2026-04-27 08:26:39.504793+02	97	Adel Bogdanić	1	[{"added": {}}]	12	1
+394	2026-04-27 08:27:43.051981+02	93	Ugostiteljska radnja fast food "NUR" (03-1-18-1-880/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Adel Bogdani\\u0107 \\u2192 Ugostiteljska radnja fast food \\"NUR\\" (03-1-18-1-880/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja fast food \\"NUR\\" \\u2013 03-1-18-1-852/25"}}]	7	1
+395	2026-04-27 08:31:49.263455+02	94	Ugostiteljska radnja fast food "Alf" (03-1-18-1-939/25)	1	[{"added": {}}]	7	1
+396	2026-04-27 08:33:16.29836+02	98	Mirela Drkenda	1	[{"added": {}}]	12	1
+397	2026-04-27 08:34:10.439009+02	94	Ugostiteljska radnja fast food "Alf" (03-1-18-1-939/25)	2	[{"added": {"name": "Vlasnik", "object": "Mirela Drkenda \\u2192 Ugostiteljska radnja fast food \\"Alf\\" (03-1-18-1-939/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja fast food \\"Alf\\" \\u2013 03-1-18-1-802/25"}}]	7	1
+398	2026-04-27 08:52:20.248533+02	95	Ugostiteljska radnja fast food "DONER HAUS" (03-1-18-1-1139/25)	1	[{"added": {}}]	7	1
+399	2026-04-27 08:53:25.569338+02	99	Senka Zuko	1	[{"added": {}}]	12	1
+400	2026-04-27 08:54:35.788608+02	95	Ugostiteljska radnja fast food "DONER HAUS" (03-1-18-1-1139/25)	2	[{"added": {"name": "Vlasnik", "object": "Senka Zuko \\u2192 Ugostiteljska radnja fast food \\"DONER HAUS\\" (03-1-18-1-1139/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja fast food \\"DONER HAUS\\" \\u2013 03-1-18-1-1113/25"}}]	7	1
+401	2026-04-27 08:59:30.9198+02	100	Senada Ćato	1	[{"added": {}}]	12	1
+402	2026-04-27 09:00:21.261392+02	96	Ugostiteljska radnja pečenjarnica "Quart" (03-1-18-1-1149/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Senada \\u0106ato \\u2192 Ugostiteljska radnja pe\\u010denjarnica \\"Quart\\" (03-1-18-1-1149/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja pe\\u010denjarnica \\"Quart\\" \\u2013 03-1-18-1-1058/25"}}]	7	1
+403	2026-04-27 09:08:36.481946+02	93	Ugostiteljska radnja fast food "NUR" (03-1-18-1-1163/25)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja fast food \\"NUR\\" \\u2013 03-1-18-1-1132"}}]	7	1
+404	2026-04-27 09:12:22.180663+02	95	Ugostiteljska radnja fast food-pizzeria "DONER HAUS" (03-1-18-1-1280/25)	2	[{"changed": {"fields": ["Naziv obrta", "Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Zabilje\\u0161ke"]}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja fast food-pizzeria \\"DONER HAUS\\" \\u2013 03-1-18-1-1253/25"}}]	7	1
+405	2026-04-27 09:13:00.714406+02	95	Ugostiteljska radnja fast food-pizzeria "DONER HAUS" (03-1-18-1-1280/25)	2	[{"changed": {"name": "Vlasnik", "object": "Senka Zuko \\u2192 Ugostiteljska radnja fast food-pizzeria \\"DONER HAUS\\" (03-1-18-1-1280/25)", "fields": ["Udio vlasni\\u0161tva"]}}]	7	1
+406	2026-04-27 09:13:51.744322+02	93	Ugostiteljska radnja fast food "NUR" (03-1-18-1-1163/25)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+407	2026-04-27 09:14:05.664265+02	93	Ugostiteljska radnja fast food "NUR" (03-1-18-1-1163/25)	2	[]	7	1
+408	2026-04-27 09:19:22.521751+02	101	Sajma Bogdanić	1	[{"added": {}}]	12	1
+409	2026-04-27 09:20:07.857194+02	97	Ugostiteljska radnja fast food "Ena" (03-1-18-1-1394/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sajma Bogdani\\u0107 \\u2192 Ugostiteljska radnja fast food \\"Ena\\" (03-1-18-1-1394/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja fast food \\"Ena\\" \\u2013 03-1-18-1-1325/25"}}]	7	1
+410	2026-04-27 09:27:25.739925+02	102	Sadeta Džebo	1	[{"added": {}}]	12	1
+411	2026-04-27 09:30:00.425919+02	98	Ugostiteljska radnja aščinica-ćevabdžinica "Kutak" (03-1-18-1-1608/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sadeta D\\u017eebo \\u2192 Ugostiteljska radnja a\\u0161\\u010dinica-\\u0107evabd\\u017einica \\"Kutak\\" (03-1-18-1-1608/25)"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja a\\u0161\\u010dinica-\\u0107evabd\\u017einica \\"Kutak\\" \\u2013 03-1-18-1-1443/24"}}, {"added": {"name": "Procjena uslova", "object": "Ugostiteljska radnja a\\u0161\\u010dinica-\\u0107evabd\\u017einica \\"Kutak\\" \\u2013 03-1-18-1-1566/25"}}]	7	1
+412	2026-04-27 09:32:07.118242+02	98	Ugostiteljska radnja aščinica-ćevabdžinica "Kutak" (03-1-18-1-1608/25)	2	[]	7	1
+413	2026-04-27 09:36:16.668329+02	103	Emir Kuljuh	1	[{"added": {}}]	12	1
+414	2026-04-27 09:36:33.243314+02	99	TR "PARK" (03-1-20-1-404/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Emir Kuljuh \\u2192 TR \\"PARK\\" (03-1-20-1-404/17)"}}]	7	1
+415	2026-04-27 09:39:42.137872+02	99	TR "PARK" (03-1-20-1-766/17)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+416	2026-04-27 09:50:07.51573+02	104	Maja Kamenica-Hodžić	1	[{"added": {}}]	12	1
+417	2026-04-27 09:50:14.415217+02	100	TR "Dressmania" (03-1-20-1-1187/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Maja Kamenica-Hod\\u017ei\\u0107 \\u2192 TR \\"Dressmania\\" (03-1-20-1-1187/17)"}}]	7	1
+418	2026-04-27 11:05:56.53688+02	105	Armin Bičo	1	[{"added": {}}]	12	1
+419	2026-04-27 11:06:14.06702+02	101	TR "A&S TRADE" (03-1-20-1-1392/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Armin Bi\\u010do \\u2192 TR \\"A&S TRADE\\" (03-1-20-1-1392/17)"}}]	7	1
+420	2026-04-27 11:19:50.44522+02	106	Emira Bećirović	1	[{"added": {}}]	12	1
+421	2026-04-27 11:19:57.521979+02	102	TR "Obuci se ba" (03-1-20-1-1794/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Emira Be\\u0107irovi\\u0107 \\u2192 TR \\"Obuci se ba\\" (03-1-20-1-1794/17)"}}]	7	1
+422	2026-04-27 11:23:36.567804+02	107	Edin Rašidović	1	[{"added": {}}]	12	1
+423	2026-04-27 11:23:42.148407+02	103	TR "SELLY S NEW STYLE" (03-1-20-1-1797/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Edin Ra\\u0161idovi\\u0107 \\u2192 TR \\"SELLY S NEW STYLE\\" (03-1-20-1-1797/17)"}}]	7	1
+424	2026-04-27 11:25:05.101139+02	5	STR” H&S” (02/II-20-446/99)	3		7	1
+425	2026-04-27 11:31:28.661446+02	108	Meliha Gadžo-Pjano	1	[{"added": {}}]	12	1
+426	2026-04-27 11:31:33.4935+02	104	TR"BEAUTY CORNER" (03-1-20-1-1826/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Meliha Gad\\u017eo-Pjano \\u2192 TR\\"BEAUTY CORNER\\" (03-1-20-1-1826/17)"}}]	7	1
+427	2026-04-27 11:35:29.759522+02	109	Aldina Gabela	1	[{"added": {}}]	12	1
+428	2026-04-27 11:35:48.343672+02	105	TR "UNIQUE" (03-1-20-1-1867/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Aldina Gabela \\u2192 TR \\"UNIQUE\\" (03-1-20-1-1867/17)"}}]	7	1
+429	2026-04-27 11:43:06.22402+02	101	TR "A&S TRADE" (03-1-20-1-1872/17)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Glavna djelatnost", "Zabilje\\u0161ke"]}}]	7	1
+430	2026-04-27 11:45:33.412256+02	110	Haris Kamenica	1	[{"added": {}}]	12	1
+431	2026-04-27 11:45:39.479612+02	106	TR "B art" (03-1-20-1-2011/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Haris Kamenica \\u2192 TR \\"B art\\" (03-1-20-1-2011/17)"}}]	7	1
+432	2026-04-27 11:50:57.049414+02	111	Azemina Zuko	1	[{"added": {}}]	12	1
+433	2026-04-27 11:51:01.766464+02	107	TR "Elegant" (03-1-20-1-2013/17)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Azemina Zuko \\u2192 TR \\"Elegant\\" (03-1-20-1-2013/17)"}}]	7	1
+434	2026-04-27 11:52:38.148227+02	106	TR "B art" (03-1-20-1-2011/17)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+435	2026-04-27 11:56:36.948066+02	108	Trgovac pojedinac "ELMIN" (03-1-20-1-331/18)	1	[{"added": {}}]	7	1
+436	2026-04-27 11:57:25.977201+02	112	Sanela Turkušić	1	[{"added": {}}]	12	1
+437	2026-04-27 11:57:35.631816+02	108	Trgovac pojedinac "ELMIN" (03-1-20-1-331/18)	2	[{"added": {"name": "Vlasnik", "object": "Sanela Turku\\u0161i\\u0107 \\u2192 Trgovac pojedinac \\"ELMIN\\" (03-1-20-1-331/18)"}}]	7	1
+438	2026-04-27 12:00:09.486786+02	113	Hilmo Turkušić	1	[{"added": {}}]	12	1
+439	2026-04-27 12:00:16.461972+02	109	Trgovac pojedinac "AJŠA" (03-1-20-1-434/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Hilmo Turku\\u0161i\\u0107 \\u2192 Trgovac pojedinac \\"AJ\\u0160A\\" (03-1-20-1-434/18)"}}]	7	1
+440	2026-04-27 12:00:46.143407+02	109	Trgovac pojedinac "AJŠA" (03-1-20-1-434/18)	2	[]	7	1
+441	2026-04-27 12:05:03.166681+02	99	TR "PARK" (03-1-20-1-546/18)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Glavna djelatnost", "Dodatne djelatnosti", "Zabilje\\u0161ke"]}}]	7	1
+442	2026-04-27 12:05:33.378333+02	99	TR "PARK" (03-1-20-1-546/18)	2	[]	7	1
+443	2026-04-27 12:49:34.805157+02	114	Ismira Kulović	1	[{"added": {}}]	12	1
+444	2026-04-27 12:51:02.771479+02	114	Ismira Kulović	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+445	2026-04-27 12:51:14.708797+02	110	TR "SECOND HAND" (03-1-20-1-711/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ismira Kulovi\\u0107 \\u2192 TR \\"SECOND HAND\\" (03-1-20-1-711/18)"}}]	7	1
+446	2026-04-27 12:55:15.41692+02	110	TR "SECOND HAND" (03-1-20-1-711/18)	2	[{"changed": {"fields": ["Datum po\\u010detka rada"]}}]	7	1
+447	2026-04-27 12:55:42.965207+02	110	TR "SECOND HAND" (03-1-20-1-711/18)	2	[]	7	1
+448	2026-04-27 13:05:58.441649+02	115	Hajra Dragolj	1	[{"added": {}}]	12	1
+449	2026-04-27 13:06:04.26849+02	111	TR "KEA" (03-1-20-1-701/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Hajra Dragolj \\u2192 TR \\"KEA\\" (03-1-20-1-701/18)"}}]	7	1
+450	2026-04-27 13:07:27.5856+02	105	TR "UNIQUE" (03-1-20-1-1867/17)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+451	2026-04-27 13:09:47.283156+02	103	TR "SELLY S NEW STYLE" (03-1-20-1-986/18)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te"]}}]	7	1
+452	2026-04-27 13:11:46.607152+02	103	TR "SELLY S NEW STYLE" (03-1-20-1-986/18)	2	[{"changed": {"fields": ["Zabilje\\u0161ke"]}}]	7	1
+453	2026-04-27 13:12:08.480394+02	103	TR "SELLY S NEW STYLE" (03-1-20-1-986/18)	2	[]	7	1
+454	2026-04-27 13:14:45.919607+02	103	TR "SELLY S NEW STYLE" (03-1-20-1-986/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku", "Zabilje\\u0161ke"]}}]	7	1
+455	2026-04-27 13:15:31.655926+02	103	TR "SELLY S NEW STYLE" (03-1-20-1-986/18)	2	[]	7	1
+456	2026-04-27 13:16:12.518695+02	99	TR "PARK" (03-1-20-1-546/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+457	2026-04-27 13:16:27.588266+02	99	TR "PARK" (03-1-20-1-546/18)	2	[]	7	1
+458	2026-04-27 14:08:15.339164+02	116	Armin Žigo	1	[{"added": {}}]	12	1
+459	2026-04-27 14:08:26.063867+02	112	TR "MATRIX" (03-1-20-1-1035/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Armin \\u017digo \\u2192 TR \\"MATRIX\\" (03-1-20-1-1035/18)"}}]	7	1
+460	2026-04-27 14:11:55.049479+02	113	Trgovac pojedinac "MEDA" (03-1-20-1-1116/18)	1	[{"added": {}}]	7	1
+461	2026-04-27 14:14:18.209847+02	113	Trgovac pojedinac "MEDA" (03-1-20-1-1116/18)	2	[{"changed": {"fields": ["Adresa/Sjedi\\u0161te"]}}]	7	1
+462	2026-04-27 14:16:05.570008+02	117	Mediha Turkušić	1	[{"added": {}}]	12	1
+463	2026-04-27 14:16:14.957123+02	113	Trgovac pojedinac "MEDA" (03-1-20-1-1116/18)	2	[{"added": {"name": "Vlasnik", "object": "Mediha Turku\\u0161i\\u0107 \\u2192 Trgovac pojedinac \\"MEDA\\" (03-1-20-1-1116/18)"}}]	7	1
+464	2026-04-27 14:20:27.619674+02	118	Azema Salković	1	[{"added": {}}]	12	1
+465	2026-04-27 14:20:33.664773+02	114	Trgovac pojedinac "Aladin" (03-1-20-1-1496/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Azema Salkovi\\u0107 \\u2192 Trgovac pojedinac \\"Aladin\\" (03-1-20-1-1496/18)"}}]	7	1
+466	2026-04-27 14:22:18.02459+02	114	Trgovac pojedinac "Aladin" (03-1-20-1-1496/18)	2	[]	7	1
+467	2026-04-27 14:25:45.878214+02	119	Memsura Kamenica	1	[{"added": {}}]	12	1
+468	2026-04-27 14:25:52.371519+02	115	TR "B art" (03-1-20-1-1672/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Memsura Kamenica \\u2192 TR \\"B art\\" (03-1-20-1-1672/18)"}}]	7	1
+469	2026-04-27 14:27:35.645525+02	101	TR "A&S TRADE" (03-1-20-1-1872/17)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+470	2026-04-27 14:30:43.826706+02	120	Amra Kamenica	1	[{"added": {}}]	12	1
+471	2026-04-27 14:30:55.9091+02	116	TR "JOY" (03-1-20-1-2146/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amra Kamenica \\u2192 TR \\"JOY\\" (03-1-20-1-2146/18)"}}]	7	1
+472	2026-04-27 14:32:00.750093+02	116	TR "JOY" (03-1-20-1-2146/18)	2	[]	7	1
+473	2026-04-27 14:34:16.220515+02	121	Emir Zuko	1	[{"added": {}}]	12	1
+474	2026-04-27 14:34:28.186089+02	117	TR "MOBITELI" (03-1-20-1-123/19)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Emir Zuko \\u2192 TR \\"MOBITELI\\" (03-1-20-1-123/19)"}}]	7	1
+475	2026-04-27 14:36:15.13628+02	109	Trgovac pojedinac "AJŠA" (03-1-20-1-434/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+476	2026-04-28 08:26:44.215315+02	122	Samira Karauzović	1	[{"added": {}}]	12	1
+477	2026-04-28 08:26:55.778421+02	118	TR "SIEMPE" (03-1-20-1-695/19)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Samira Karauzovi\\u0107 \\u2192 TR \\"SIEMPE\\" (03-1-20-1-695/19)"}}]	7	1
+478	2026-04-28 08:29:13.151845+02	102	TR "Obuci se ba" (03-1-20-1-1794/17)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+479	2026-04-28 08:29:24.211334+02	102	TR "Obuci se ba" (03-1-20-1-1794/17)	2	[]	7	1
+480	2026-04-28 08:31:04.608069+02	115	TR "B art" (03-1-20-1-1672/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+481	2026-04-28 08:34:10.692188+02	113	Trgovac pojedinac "MEDA" (03-1-20-1-1116/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+482	2026-04-28 08:35:18.350213+02	100	TR "Dressmania" (03-1-20-1-1187/17)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+483	2026-04-28 08:41:40.048986+02	123	Din Hadžimešić	1	[{"added": {}}]	12	1
+484	2026-04-28 08:41:44.615392+02	119	TR "FILIGRAN" (03-1-20-1-1437/19)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Din Had\\u017eime\\u0161i\\u0107 \\u2192 TR \\"FILIGRAN\\" (03-1-20-1-1437/19)"}}]	7	1
+485	2026-04-28 08:45:03.320808+02	124	Mevludin Dolo	1	[{"added": {}}]	12	1
+486	2026-04-28 08:45:09.395704+02	120	TR "DAMIR" (03-1-20-1-1664/19)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Mevludin Dolo \\u2192 TR \\"DAMIR\\" (03-1-20-1-1664/19)"}}]	7	1
+487	2026-04-28 08:46:10.275458+02	114	Trgovac pojedinac "Aladin" (03-1-20-1-1496/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+488	2026-04-28 08:46:18.254051+02	114	Trgovac pojedinac "Aladin" (03-1-20-1-1496/18)	2	[]	7	1
+489	2026-04-28 09:35:40.481081+02	125	Zikrija Oruč	1	[{"added": {}}]	12	1
+490	2026-04-28 09:35:47.524824+02	121	TR "ZIKRIJA" (03-1-20-1-1759/19)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Zikrija Oru\\u010d \\u2192 TR \\"ZIKRIJA\\" (03-1-20-1-1759/19)"}}]	7	1
+491	2026-04-28 11:00:02.535569+02	110	TR "SECOND HAND" (03-1-20-1-711/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+492	2026-04-28 11:00:12.466581+02	110	TR "SECOND HAND" (03-1-20-1-711/18)	2	[]	7	1
+493	2026-04-28 11:03:03.527095+02	126	Zibija Korda	1	[{"added": {}}]	12	1
+494	2026-04-28 11:03:24.446058+02	122	TR "ZIBIJA" (03-1-16-1-556/20)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Zibija Korda \\u2192 TR \\"ZIBIJA\\" (03-1-16-1-556/20)"}}]	7	1
+495	2026-04-28 11:05:27.686711+02	122	TR "ZIBIJA" (03-1-16-1-556/20)	2	[{"changed": {"fields": ["Zabilje\\u0161ke"]}}]	7	1
+496	2026-04-28 11:05:39.155173+02	122	TR "ZIBIJA" (03-1-16-1-556/20)	2	[{"changed": {"name": "Vlasnik", "object": "Zibija Korda \\u2192 TR \\"ZIBIJA\\" (03-1-16-1-556/20)", "fields": ["Udio vlasni\\u0161tva"]}}]	7	1
+497	2026-04-28 11:08:15.84092+02	379	47.24 – Trgovina na malo slatkišima	2	[{"changed": {"fields": ["Description"]}}]	14	1
+498	2026-04-28 11:11:40.280526+02	127	Azra Čelik	1	[{"added": {}}]	12	1
+499	2026-04-28 11:12:02.972684+02	123	TR "GIFT SHOP" (03-1-16-1-566/20)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Azra \\u010celik \\u2192 TR \\"GIFT SHOP\\" (03-1-16-1-566/20)"}}]	7	1
+500	2026-04-28 11:16:06.455315+02	128	Sanela Čolo	1	[{"added": {}}]	12	1
+501	2026-04-28 11:16:15.719065+02	124	TR N&N" (03-1-16-1-633/20)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sanela \\u010colo \\u2192 TR N&N\\" (03-1-16-1-633/20)"}}]	7	1
+502	2026-04-29 08:22:03.761229+02	129	Trgo Samira	1	[{"added": {}}]	12	1
+503	2026-04-29 08:22:10.43377+02	125	TR "AIDA" (03-1-16-1-941/20)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Trgo Samira \\u2192 TR \\"AIDA\\" (03-1-16-1-941/20)"}}]	7	1
+504	2026-04-29 08:22:45.663459+02	129	Samira Trgo	2	[{"changed": {"fields": ["Ime Vlasnika", "Prezime Vlasnika"]}}]	12	1
+505	2026-04-29 08:22:48.817866+02	125	TR "AIDA" (03-1-16-1-941/20)	2	[]	7	1
+506	2026-04-29 08:28:35.874149+02	130	Dina Čeljo	1	[{"added": {}}]	12	1
+507	2026-04-29 08:28:43.406102+02	126	TR "DINA" (03-1-16-1-949/20)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Dina \\u010celjo \\u2192 TR \\"DINA\\" (03-1-16-1-949/20)"}}]	7	1
+508	2026-04-29 08:30:32.104679+02	112	TR "MATRIX" (03-1-20-1-1035/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+509	2026-04-29 08:38:44.087779+02	131	Salem Halilović	1	[{"added": {}}]	12	1
+510	2026-04-29 08:39:10.057402+02	127	TR "MARKET VOĆARNA HALILOVIĆ" (03-1-16-1-1156/20)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Salem Halilovi\\u0107 \\u2192 TR \\"MARKET VO\\u0106ARNA HALILOVI\\u0106\\" (03-1-16-1-1156/20)"}}]	7	1
+511	2026-04-29 08:39:56.529671+02	127	TR "MARKET VOĆARNA HALILOVIĆ" (03-1-16-1-1156/20)	2	[]	7	1
+512	2026-04-29 08:42:55.861223+02	104	TR"BEAUTY CORNER" (03-1-16-1-9/21)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+513	2026-04-29 08:43:37.141484+02	104	TR"BEAUTY CORNER" (03-1-16-1-9/21)	2	[]	7	1
+514	2026-04-29 08:52:19.375368+02	132	Eldina Pušilo	1	[{"added": {}}]	12	1
+515	2026-04-29 08:52:25.572355+02	128	TR "E&E" (03-1-16-1-36/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Eldina Pu\\u0161ilo \\u2192 TR \\"E&E\\" (03-1-16-1-36/21)"}}]	7	1
+516	2026-04-29 08:57:06.665978+02	133	Sabina Talović	1	[{"added": {}}]	12	1
+517	2026-04-29 08:57:12.463038+02	129	TR "MAK" (03-1-16-1-293/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sabina Talovi\\u0107 \\u2192 TR \\"MAK\\" (03-1-16-1-293/21)"}}]	7	1
+518	2026-04-29 09:00:03.985675+02	134	Sadika Ahmetspahić	1	[{"added": {}}]	12	1
+621	2026-05-05 08:11:11.411047+02	156	Elvira Šabanović	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+519	2026-04-29 09:00:09.764294+02	130	TR "E&I SHOP" (03-1-16-1-384/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sadika Ahmetspahi\\u0107 \\u2192 TR \\"E&I SHOP\\" (03-1-16-1-384/21)"}}]	7	1
+520	2026-04-29 09:00:49.211959+02	130	TR "E&I SHOP" (03-1-16-1-384/21)	2	[]	7	1
+521	2026-04-29 09:01:07.996373+02	3	TR „E&I SHOP“ (03-1-16-1-384)	3		7	1
+522	2026-04-29 09:01:50.723232+02	129	TR "MAK" (03-1-16-1-293/21)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+523	2026-04-29 09:01:57.640436+02	129	TR "MAK" (03-1-16-1-293/21)	2	[]	7	1
+524	2026-04-29 09:03:09.165452+02	121	TR "ZIKRIJA" (03-1-20-1-1759/19)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+525	2026-04-29 09:05:33.545389+02	108	Trgovac pojedinac "ELMIN" (03-1-20-1-331/18)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+526	2026-04-29 09:05:46.741985+02	108	Trgovac pojedinac "ELMIN" (03-1-20-1-331/18)	2	[]	7	1
+527	2026-04-29 09:08:51.562487+02	135	Amra Delić	1	[{"added": {}}]	12	1
+528	2026-04-29 09:09:50.383889+02	131	TR "LOZJE" (03-1-16-1-906/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amra Deli\\u0107 \\u2192 TR \\"LOZJE\\" (03-1-16-1-906/21)"}}]	7	1
+529	2026-04-29 09:18:42.081902+02	388	47.52 – Trgovina na malo metalnom robom, bojama i staklom	2	[{"changed": {"fields": ["Description"]}}]	14	1
+530	2026-04-29 09:20:22.266429+02	136	Samra Bašić	1	[{"added": {}}]	12	1
+531	2026-04-29 09:21:03.106011+02	132	TR "ALENKO" (03-1-16-1-1343/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Samra Ba\\u0161i\\u0107 \\u2192 TR \\"ALENKO\\" (03-1-16-1-1343/21)"}}]	7	1
+532	2026-04-29 09:21:36.933877+02	132	TR "ALENKO" (03-1-16-1-1343/21)	2	[]	7	1
+533	2026-04-29 09:32:48.841712+02	137	Aida Borović	1	[{"added": {}}]	12	1
+534	2026-04-29 09:41:10.673811+02	133	TR baby shop "JUNIOR" (03-1-16-1-1521/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Aida Borovi\\u0107 \\u2192 TR baby shop \\"JUNIOR\\" (03-1-16-1-1521/21)"}}]	7	1
+535	2026-04-29 09:45:21.103449+02	123	TR "GIFT SHOP" (03-1-16-1-1589/21)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+536	2026-04-29 09:45:29.698277+02	123	TR "GIFT SHOP" (03-1-16-1-1589/21)	2	[]	7	1
+537	2026-04-29 09:49:08.929724+02	123	TR "GIFT SHOP" (03-1-16-1-1589/21)	2	[]	7	1
+538	2026-04-29 09:52:19.411892+02	2	TR “DET-DAIRE” (02/II-20-1/99)	3		7	1
+539	2026-04-29 11:10:55.110041+02	1	OR "FOTOPRŠEŠ" (02-1-33-388/19)	3		7	1
+540	2026-04-29 11:22:53.215651+02	138	Senija Džaferović	1	[{"added": {}}]	12	1
+541	2026-04-29 11:23:02.88828+02	134	TR "QUART" (03-1-16-1-1598/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Senija D\\u017eaferovi\\u0107 \\u2192 TR \\"QUART\\" (03-1-16-1-1598/21)"}}]	7	1
+542	2026-04-29 11:25:37.704251+02	131	TR "LOZJE" (03-1-16-1-1622/21)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+543	2026-04-29 11:29:37.933663+02	139	Edina Laković	1	[{"added": {}}]	12	1
+544	2026-04-29 11:29:42.530252+02	135	TR "Second hand LD" (03-1-16-1-669/21)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Edina Lakovi\\u0107 \\u2192 TR \\"Second hand LD\\" (03-1-16-1-669/21)"}}]	7	1
+545	2026-04-29 12:47:13.50491+02	4	„ALDI“ (03-1-20-113/55)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 \\u201eALDI\\u201c"}}]	7	2
+546	2026-04-29 12:47:21.751659+02	4	„ALDI“ (03-1-20-113/55)	2	[{"deleted": {"name": "Dokument", "object": "pdf \\u2013 \\u201eALDI\\u201c"}}]	7	2
+547	2026-04-30 09:37:56.338968+02	140	Erdžana Krakonja	1	[{"added": {}}]	12	1
+548	2026-04-30 09:38:05.167694+02	136	TR "Baby Shop Džejla" (03-1-16-1-491/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Erd\\u017eana Krakonja \\u2192 TR \\"Baby Shop D\\u017eejla\\" (03-1-16-1-491/22)"}}]	7	1
+549	2026-04-30 09:42:01.005152+02	402	47.76 – Trgovina na malo cvijećem, sadnicama, sjemenjem, gnojivom, kućnim ljubimcima i hranom za kućne ljubimce	2	[{"changed": {"fields": ["Description"]}}]	14	1
+550	2026-04-30 09:43:16.425101+02	137	TR "Pet shop Arka" (03-1-16-1-542/22)	1	[{"added": {}}]	7	1
+551	2026-04-30 09:44:16.218674+02	141	Ilda Hadžimusić	1	[{"added": {}}]	12	1
+552	2026-04-30 09:44:41.992943+02	137	TR "Pet shop Arka" (03-1-16-1-542/22)	2	[{"added": {"name": "Vlasnik", "object": "Ilda Had\\u017eimusi\\u0107 \\u2192 TR \\"Pet shop Arka\\" (03-1-16-1-542/22)"}}]	7	1
+553	2026-04-30 09:45:14.720915+02	137	TR "Pet shop Arka" (03-1-16-1-542/22)	2	[]	7	1
+554	2026-04-30 09:48:34.898492+02	142	Lejla Zorlak	1	[{"added": {}}]	12	1
+555	2026-04-30 09:48:42.707113+02	138	TR "Kids fashion i nakit Lejla" (03-1-16-1-523/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Lejla Zorlak \\u2192 TR \\"Kids fashion i nakit Lejla\\" (03-1-16-1-523/22)"}}]	7	1
+556	2026-04-30 09:49:29.710683+02	138	TR "Kids fashion i nakit Lejla" (03-1-16-1-523/22)	2	[{"changed": {"fields": ["Adresa/Sjedi\\u0161te"]}}]	7	1
+557	2026-04-30 09:52:18.293817+02	143	Mediha Turkušić	1	[{"added": {}}]	12	1
+558	2026-04-30 09:52:36.063319+02	139	Trgovac pojedinac "MEDA" (03-1-16-1-547/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Mediha Turku\\u0161i\\u0107 \\u2192 Trgovac pojedinac \\"MEDA\\" (03-1-16-1-547/22)"}}]	7	1
+559	2026-04-30 09:54:33.849838+02	139	Trgovac pojedinac "MEDA" (03-1-16-1-547/22)	2	[{"changed": {"fields": ["Adresa/Sjedi\\u0161te"]}}]	7	1
+560	2026-04-30 10:29:53.02688+02	144	Azema Salković	1	[{"added": {}}]	12	1
+561	2026-04-30 10:30:07.560618+02	140	Trgovac pojedinac "Aladin" (03-1-16-1-571/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Azema Salkovi\\u0107 \\u2192 Trgovac pojedinac \\"Aladin\\" (03-1-16-1-571/22)"}}]	7	1
+562	2026-04-30 10:30:56.373516+02	144	Azema Salković	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+563	2026-04-30 10:30:58.843156+02	140	Trgovac pojedinac "Aladin" (03-1-16-1-571/22)	2	[]	7	1
+564	2026-04-30 10:50:15.933144+02	145	Sanela Turkušić	1	[{"added": {}}]	12	1
+565	2026-04-30 10:50:49.582824+02	145	Sanela Turkušić	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+566	2026-04-30 10:50:58.729863+02	141	Trgovac pojedinac "ELMIN" (03-1-16-1-619/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sanela Turku\\u0161i\\u0107 \\u2192 Trgovac pojedinac \\"ELMIN\\" (03-1-16-1-619/22)"}}]	7	1
+567	2026-04-30 10:51:30.786314+02	141	Trgovac pojedinac "ELMIN" (03-1-16-1-619/22)	2	[]	7	1
+568	2026-04-30 10:55:22.502329+02	146	Sadžida Hamzić	1	[{"added": {}}]	12	1
+569	2026-04-30 10:55:27.662704+02	142	TR "MOBILEX" (03-1-16-1-706/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sad\\u017eida Hamzi\\u0107 \\u2192 TR \\"MOBILEX\\" (03-1-16-1-706/22)"}}]	7	1
+570	2026-04-30 10:55:55.752219+02	142	TR "MOBILEX" (03-1-16-1-706/22)	2	[]	7	1
+571	2026-04-30 11:08:13.070585+02	136	TR "Baby Shop Džejla" (03-1-16-1-085/22)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+572	2026-04-30 11:12:29.48105+02	128	TR "E&E" (03-1-16-1-1669/21)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Zabilje\\u0161ke"]}}]	7	1
+573	2026-04-30 11:40:46.491649+02	147	Kenan Mlatišuma	1	[{"added": {}}]	12	1
+574	2026-04-30 11:40:50.720599+02	143	TR "B&M" (03-1-16-1-1665/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Kenan Mlati\\u0161uma \\u2192 TR \\"B&M\\" (03-1-16-1-1665/22)"}}]	7	1
+575	2026-04-30 11:41:57.102281+02	136	TR "Baby Shop Džejla" (03-1-16-1-085/22)	2	[{"changed": {"fields": ["Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+576	2026-04-30 11:42:13.266923+02	136	TR "Baby Shop Džejla" (03-1-16-1-085/22)	2	[]	7	1
+577	2026-04-30 11:45:38.982149+02	148	Džan Hadžimešić	1	[{"added": {}}]	12	1
+578	2026-04-30 11:45:43.508859+02	144	TR "ZLATARA REFAN" (03-1-16-1-1813/22)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "D\\u017ean Had\\u017eime\\u0161i\\u0107 \\u2192 TR \\"ZLATARA REFAN\\" (03-1-16-1-1813/22)"}}]	7	1
+579	2026-04-30 11:48:26.349026+02	142	TR "MOBILEX" (03-1-16-1-1910/22)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Dodatne djelatnosti", "Zabilje\\u0161ke"]}}]	7	1
+580	2026-04-30 12:04:42.34334+02	142	TR "MOBILEX" (03-1-16-1-1910/22)	2	[]	7	1
+581	2026-05-04 13:58:31.632347+02	149	Nisveta Kamenica	1	[{"added": {}}]	12	1
+582	2026-05-04 13:58:35.84121+02	145	TR "NISVETA" (03-1-16-1-750/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Nisveta Kamenica \\u2192 TR \\"NISVETA\\" (03-1-16-1-750/25)"}}]	7	1
+583	2026-05-04 14:00:02.021809+02	145	TR "NISVETA" (03-1-16-1-750/25)	2	[{"changed": {"fields": ["Datum rje\\u0161enja/registracije"]}}]	7	1
+584	2026-05-04 14:03:16.511927+02	130	TR "E&I SHOP" (03-1-16-1-308/23)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+585	2026-05-04 14:03:43.261855+02	130	TR "E&I SHOP" (03-1-16-1-308/23)	2	[]	7	1
+586	2026-05-04 14:04:38.024643+02	128	TR "E&E" (03-1-16-1-1669/21)	2	[{"changed": {"fields": ["Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+587	2026-05-04 14:04:50.297136+02	128	TR "E&E" (03-1-16-1-1669/21)	2	[{"changed": {"fields": ["Status"]}}]	7	1
+588	2026-05-04 14:05:36.266845+02	104	TR"BEAUTY CORNER" (03-1-16-1-9/21)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+589	2026-05-04 14:05:44.178399+02	104	TR"BEAUTY CORNER" (03-1-16-1-9/21)	2	[]	7	1
+590	2026-05-04 14:14:02.81323+02	150	Nedžad Pušilo	1	[{"added": {}}]	12	1
+591	2026-05-04 14:14:07.345924+02	146	TR "PRLJA" (03-1-16-1-418/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ned\\u017ead Pu\\u0161ilo \\u2192 TR \\"PRLJA\\" (03-1-16-1-418/23)"}}]	7	1
+592	2026-05-04 14:18:15.668161+02	151	Nejra Papračanin	1	[{"added": {}}]	12	1
+593	2026-05-04 14:18:22.261545+02	147	TR "MIX SHOP" (03-1-16-1-472/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Nejra Papra\\u010danin \\u2192 TR \\"MIX SHOP\\" (03-1-16-1-472/23)"}}]	7	1
+594	2026-05-04 14:19:00.761993+02	147	TR "MIX SHOP" (03-1-16-1-472/23)	2	[]	7	1
+595	2026-05-04 14:22:11.135231+02	152	Elvis Bukva	1	[{"added": {}}]	12	1
+596	2026-05-04 14:22:26.003038+02	148	TR " BEV PLAST" (03-1-16-1-488/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elvis Bukva \\u2192 TR \\" BEV PLAST\\" (03-1-16-1-488/23)"}}]	7	1
+597	2026-05-04 14:23:33.157636+02	140	Trgovac pojedinac "Aladin" (03-1-16-1-571/22)	2	[{"changed": {"fields": ["Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+598	2026-05-04 14:23:41.82709+02	140	Trgovac pojedinac "Aladin" (03-1-16-1-571/22)	2	[{"changed": {"fields": ["Status"]}}]	7	1
+599	2026-05-04 14:23:55.922369+02	140	Trgovac pojedinac "Aladin" (03-1-16-1-571/22)	2	[]	7	1
+600	2026-05-04 14:24:43.179421+02	139	Trgovac pojedinac "MEDA" (03-1-16-1-547/22)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+601	2026-05-04 14:25:55.504743+02	132	TR "ALENKO" (03-1-16-1-1343/21)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+602	2026-05-04 14:47:49.148613+02	153	Tarik Kadrić	1	[{"added": {}}]	12	1
+603	2026-05-04 14:47:54.372565+02	149	TR "DARIS" (03-1-16-1-1065/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Tarik Kadri\\u0107 \\u2192 TR \\"DARIS\\" (03-1-16-1-1065/23)"}}]	7	1
+604	2026-05-04 14:48:35.915721+02	149	TR "DARIS" (03-1-16-1-1065/23)	2	[]	7	1
+605	2026-05-04 14:49:32.479439+02	137	TR "Pet shop Arka" (03-1-16-1-542/22)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+606	2026-05-04 14:49:43.223495+02	137	TR "Pet shop Arka" (03-1-16-1-542/22)	2	[]	7	1
+607	2026-05-04 14:50:53.611185+02	148	TR " BEV PLAST" (03-1-16-1-488/23)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+608	2026-05-04 14:50:59.352879+02	148	TR " BEV PLAST" (03-1-16-1-488/23)	2	[]	7	1
+609	2026-05-04 14:54:16.113059+02	154	Jasmin Bukva	1	[{"added": {}}]	12	1
+610	2026-05-04 14:54:20.268459+02	150	TR "ALENKO" (03-1-16-1-1576/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Jasmin Bukva \\u2192 TR \\"ALENKO\\" (03-1-16-1-1576/23)"}}]	7	1
+611	2026-05-04 14:54:37.860994+02	150	TR "ALENKO" (03-1-16-1-1576/23)	2	[]	7	1
+612	2026-05-04 14:55:26.159189+02	141	Trgovac pojedinac "ELMIN" (03-1-16-1-619/22)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+613	2026-05-04 14:55:35.709931+02	141	Trgovac pojedinac "ELMIN" (03-1-16-1-619/22)	2	[]	7	1
+614	2026-05-04 14:56:45.784789+02	138	TR "Kids fashion i nakit Lejla" (03-1-16-1-523/22)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+615	2026-05-04 14:57:00.478522+02	138	TR "Kids fashion i nakit Lejla" (03-1-16-1-523/22)	2	[]	7	1
+616	2026-05-04 15:01:27.21622+02	155	Sanja Muhić Kuljuh	1	[{"added": {}}]	12	1
+617	2026-05-04 15:02:03.183227+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sanja Muhi\\u0107 Kuljuh \\u2192 Trgovinska djelatnost \\"SCE\\" (03-1-16-1-1155/24)"}}]	7	1
+618	2026-05-04 15:03:03.710921+02	125	TR "AIDA" (03-1-16-1-941/20)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+619	2026-05-04 15:16:37.340929+02	135	TR "Second hand LD" (03-1-16-1-38/25)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+620	2026-05-05 08:11:03.115241+02	156	Elvira Šabanović	1	[{"added": {}}]	12	1
+1007	2026-06-08 13:13:39.360518+02	190	Admir Žuga	1	[{"added": {}}]	12	1
+622	2026-05-05 08:11:16.124173+02	152	TR "MD prestige boutique" (03-1-16-1-489/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elvira \\u0160abanovi\\u0107 \\u2192 TR \\"MD prestige boutique\\" (03-1-16-1-489/25)"}}]	7	1
+623	2026-05-05 08:19:48.814516+02	157	Elvira Radmilović	1	[{"added": {}}]	12	1
+624	2026-05-05 08:19:56.735501+02	153	TR "ELEKTRONSKA PRODAVNICA ZAZA" (03-1-16-1-682/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elvira Radmilovi\\u0107 \\u2192 TR \\"ELEKTRONSKA PRODAVNICA ZAZA\\" (03-1-16-1-682/25)"}}]	7	1
+625	2026-05-05 08:23:24.792411+02	120	TR "DAMIR" (03-1-16-1-660/25)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Glavna djelatnost", "Zabilje\\u0161ke"]}}]	7	1
+626	2026-05-05 08:24:33.321295+02	3	TR „E&I SHOP“ (03-1-16-1-384)	2	[{"changed": {"fields": ["Status"]}}]	7	1
+627	2026-05-05 08:25:03.622308+02	130	TR "E&I SHOP" (03-1-16-1-308/23)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+628	2026-05-05 08:29:14.564622+02	158	Sabiha Terović	1	[{"added": {}}]	12	1
+629	2026-05-05 08:29:20.339998+02	154	TR second hand shop "SABININA SVAŠTARIJA" (03-1-16-1-825/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sabiha Terovi\\u0107 \\u2192 TR second hand shop \\"SABININA SVA\\u0160TARIJA\\" (03-1-16-1-825/25)"}}]	7	1
+630	2026-05-05 08:32:03.042336+02	159	Amela Hasović	1	[{"added": {}}]	12	1
+631	2026-05-05 08:32:07.636613+02	155	TR "BUTIK AMELA" (03-1-16-1-1029/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amela Hasovi\\u0107 \\u2192 TR \\"BUTIK AMELA\\" (03-1-16-1-1029/25)"}}]	7	1
+632	2026-05-05 08:32:39.478809+02	155	TR "BUTIK AMELA" (03-1-16-1-1029/25)	2	[]	7	1
+633	2026-05-05 08:35:59.442183+02	149	TR "DARIS" (03-1-16-1-1047/25)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Adresa/Sjedi\\u0161te", "Zabilje\\u0161ke"]}}]	7	1
+634	2026-05-05 08:37:17.163524+02	134	TR "QUART" (03-1-16-1-1598/21)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+635	2026-05-05 08:39:28.257006+02	143	TR "B&M" (03-1-16-1-1665/22)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku", "Zabilje\\u0161ke"]}}]	7	1
+636	2026-05-05 08:41:56.673394+02	147	TR "MIX SHOP" (03-1-16-1-1264/25)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Zabilje\\u0161ke"]}}]	7	1
+637	2026-05-05 08:46:33.939105+02	149	TR "DARIS" (03-1-16-1-1389/25)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Zabilje\\u0161ke"]}}]	7	1
+638	2026-05-06 15:04:57.059637+02	85	Mustafa Čutuna	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+639	2026-05-06 15:05:16.057965+02	85	Mustafa Čutuna	2	[]	12	2
+640	2026-05-07 07:56:19.134212+02	51	Enela Adžem	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+641	2026-05-07 07:56:24.323095+02	6	ZLATKA ADŽEM	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+642	2026-05-07 07:56:29.559859+02	7	SALIH AGANOVIĆ	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+643	2026-05-07 07:56:45.567388+02	134	Sadika Ahmetspahić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+644	2026-05-07 07:56:50.7306+02	2	Osman Ahmović	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+645	2026-05-07 07:56:56.105942+02	9	SENAD ALETA	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+646	2026-05-07 07:57:01.598127+02	4	Senada Alić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+647	2026-05-07 07:57:06.737543+02	10	ELVIR ALIĆ	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+648	2026-05-07 07:57:12.794868+02	4	Senada Alić	2	[]	12	2
+649	2026-05-07 07:57:18.344432+02	10	ELVIR ALIĆ	2	[]	12	2
+650	2026-05-07 07:57:23.265668+02	5	Sedin Alihodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+651	2026-05-07 07:57:32.095484+02	21	Alma Babić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+652	2026-05-07 07:57:39.182904+02	47	Azra Babić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+653	2026-05-07 07:58:11.478174+02	22	Jasmin Babić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+654	2026-05-07 07:58:19.109727+02	70	Amar Baljević	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+655	2026-05-07 07:58:25.499035+02	62	Nerma Bardak	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+656	2026-05-07 07:58:57.677258+02	34	Ifeta Bašić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+657	2026-05-07 07:59:03.101465+02	80	Nedim Bašić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+658	2026-05-07 07:59:10.486841+02	136	Samra Bašić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+659	2026-05-07 07:59:52.315015+02	80	Nedim Bašić	2	[]	12	2
+660	2026-05-07 08:00:02.238121+02	136	Samra Bašić	2	[]	12	2
+661	2026-05-07 08:00:09.842821+02	106	Emira Bećirović	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+662	2026-05-07 08:02:49.686716+02	21	Alma Babić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+663	2026-05-07 08:04:30.377402+02	21	Alma Babić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+664	2026-05-07 08:05:27.099049+02	21	Alma Babić	2	[]	12	2
+665	2026-05-07 08:06:08.200649+02	37	Adna Bezdrob	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+666	2026-05-07 08:06:14.36698+02	37	Adna Bezdrob	2	[]	12	2
+667	2026-05-07 08:06:28.19395+02	105	Armin Bičo	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+668	2026-05-07 08:06:37.121862+02	97	Adel Bogdanić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+669	2026-05-07 08:06:43.243419+02	101	Sajma Bogdanić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+670	2026-05-07 08:07:10.37087+02	137	Aida Borović	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+671	2026-05-07 08:07:21.680636+02	15	Naser Brezac	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+672	2026-05-07 08:07:28.006526+02	28	Aldin Bukva	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+673	2026-05-07 08:07:39.821646+02	75	Edmir Bukva	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+674	2026-05-07 08:11:27.43667+02	12	Obrtnička-autolimarska radnja "KIĆO" (03-1-17-1971/25)	2	[{"changed": {"fields": ["Vrsta obrta"]}}, {"added": {"name": "Vlasnik", "object": "Edmir Bukva \\u2192 Obrtni\\u010dka-autolimarska radnja \\"KI\\u0106O\\" (03-1-17-1971/25)"}}]	7	2
+675	2026-05-07 08:11:56.276279+02	12	Obrtnička-autolimarska radnja "KIĆO" (03-1-17-1971/25)	2	[{"deleted": {"name": "Vlasnik", "object": "Edmir Bukva \\u2192 Obrtni\\u010dka-autolimarska radnja \\"KI\\u0106O\\" (03-1-17-1971/25)"}}]	7	2
+676	2026-05-07 08:12:34.029914+02	11	Edmir Bukva	3		12	2
+677	2026-05-07 08:14:35.399476+02	75	Edmir Bukva	2	[]	12	2
+678	2026-05-07 08:14:46.179481+02	152	Elvis Bukva	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+679	2026-05-07 08:20:01.291858+02	154	Jasmin Bukva	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+680	2026-05-07 08:20:09.397519+02	65	Sejo Čavčić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+1100	2026-06-10 08:55:37.467817+02	222	Amela Halilović	1	[{"added": {}}]	12	1
+681	2026-05-07 08:20:17.812995+02	127	Azra Čelik	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+682	2026-05-07 08:20:38.967443+02	130	Dina Čeljo	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+683	2026-05-07 08:20:46.534219+02	128	Sanela Čolo	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+684	2026-05-07 08:23:29.138785+02	21	Obrtnička radnja "NextGen CNC-CNC nove generacije" (03-1-17-1-1744/24)	2	[{"changed": {"name": "Vlasnik", "object": "Alma Babi\\u0107 \\u2192 Obrtni\\u010dka radnja \\"NextGen CNC-CNC nove generacije\\" (03-1-17-1-1744/24)", "fields": ["Udio vlasni\\u0161tva"]}}, {"deleted": {"name": "Vlasnik", "object": "Jasmin Babi\\u0107 \\u2192 Obrtni\\u010dka radnja \\"NextGen CNC-CNC nove generacije\\" (03-1-17-1-1744/24)"}}]	7	2
+685	2026-05-07 08:25:41.249926+02	41	Sevda Čvorak	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+686	2026-05-07 08:25:57.396283+02	100	Senada Ćato	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+687	2026-05-07 08:26:21.769625+02	35	Enver Ćulesker	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+688	2026-05-07 08:26:41.646742+02	83	Fikreta Ćurovac	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+689	2026-05-07 08:28:06.961554+02	8	Jasmin Ahmetspahić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+690	2026-05-07 08:32:09.069438+02	88	Adis Delahmet	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+691	2026-05-07 08:38:07.275153+02	135	Amra Delić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+692	2026-05-07 08:43:38.097029+02	38	Sead Deljo	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+693	2026-05-07 08:43:57.942823+02	90	Alma Devišević	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+694	2026-05-07 08:44:08.824622+02	26	Safet Devlić	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+695	2026-05-07 08:44:18.181596+02	124	Mevludin Dolo	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+696	2026-05-07 08:44:24.552761+02	115	Hajra Dragolj	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+697	2026-05-07 08:45:08.050708+02	115	Hajra Dragolj	2	[]	12	2
+698	2026-05-07 08:45:26.322599+02	48	Nedžiba Drakovac	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+699	2026-05-07 08:47:41.455461+02	98	Mirela Drkenda	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+700	2026-05-07 08:47:50.424372+02	138	Senija Džaferović	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+701	2026-05-07 08:47:57.754974+02	79	Almir Džanković	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+702	2026-05-07 08:48:07.66024+02	102	Sadeta Džebo	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+703	2026-05-07 08:49:04.794462+02	102	Sadeta Džebo	2	[]	12	2
+704	2026-05-07 08:49:17.619564+02	56	Senad Džino	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+705	2026-05-07 08:58:30.886623+02	109	Aldina Gabela	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+706	2026-05-07 08:58:44.685987+02	105	TR "UNIQUE" (03-1-20-1-1867/17)	2	[]	7	1
+707	2026-05-07 08:59:04.61773+02	126	Zibija Korda	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+708	2026-05-07 08:59:44.186219+02	125	Zikrija Oruč	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+709	2026-05-07 08:59:47.139744+02	121	TR "ZIKRIJA" (03-1-20-1-1759/19)	2	[]	7	1
+710	2026-05-07 09:00:03.934136+02	122	TR "ZIBIJA" (03-1-16-1-556/20)	2	[]	7	1
+711	2026-05-07 09:00:20.186838+02	148	Džan Hadžimešić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+712	2026-05-07 09:00:21.765015+02	144	TR "ZLATARA REFAN" (03-1-16-1-1813/22)	2	[]	7	1
+713	2026-05-07 09:00:42.778571+02	2	Osman Ahmović	2	[]	12	1
+714	2026-05-07 09:00:46.066939+02	2	TR “DET-DAIRE” (02/II-20-1/99)	2	[]	7	1
+715	2026-05-07 09:01:07.311361+02	3	Sadika Ahmetspahić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+716	2026-05-07 09:01:08.89954+02	3	TR „E&I SHOP“ (03-1-16-1-384)	2	[]	7	1
+717	2026-05-07 09:01:25.565286+02	133	TR baby shop "JUNIOR" (03-1-16-1-1521/21)	2	[]	7	1
+718	2026-05-07 09:01:48.030479+02	128	Sanela Čolo	2	[]	12	1
+719	2026-05-07 09:01:49.873285+02	124	TR N&N" (03-1-16-1-633/20)	2	[]	7	1
+720	2026-05-07 09:02:28.582573+02	158	Sabiha Terović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+721	2026-05-07 09:02:31.352651+02	154	TR second hand shop "SABININA SVAŠTARIJA" (03-1-16-1-825/25)	2	[]	7	1
+722	2026-05-07 09:02:48.133056+02	108	Meliha Gadžo-Pjano	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+723	2026-05-07 09:02:49.526571+02	104	TR"BEAUTY CORNER" (03-1-16-1-9/21)	2	[]	7	1
+724	2026-05-07 09:03:06.385216+02	113	Hilmo Turkušić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+725	2026-05-07 09:03:09.185044+02	109	Trgovac pojedinac "AJŠA" (03-1-20-1-434/18)	2	[]	7	1
+726	2026-05-07 09:03:26.41743+02	144	Azema Salković	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+727	2026-05-07 09:03:27.949801+02	140	Trgovac pojedinac "Aladin" (03-1-16-1-571/22)	2	[]	7	1
+728	2026-05-07 09:03:52.948196+02	118	Azema Salković	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+729	2026-05-07 09:03:54.393621+02	114	Trgovac pojedinac "Aladin" (03-1-20-1-1496/18)	2	[]	7	1
+730	2026-05-07 09:04:08.702524+02	145	Sanela Turkušić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+731	2026-05-07 09:04:10.249448+02	141	Trgovac pojedinac "ELMIN" (03-1-16-1-619/22)	2	[]	7	1
+732	2026-05-07 09:04:25.195117+02	112	Sanela Turkušić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+733	2026-05-07 09:04:27.474249+02	108	Trgovac pojedinac "ELMIN" (03-1-20-1-331/18)	2	[]	7	1
+734	2026-05-07 09:04:46.995683+02	143	Mediha Turkušić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+735	2026-05-07 09:04:49.236786+02	139	Trgovac pojedinac "MEDA" (03-1-16-1-547/22)	2	[]	7	1
+736	2026-05-07 09:05:04.645989+02	117	Mediha Turkušić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+737	2026-05-07 09:05:06.601715+02	113	Trgovac pojedinac "MEDA" (03-1-20-1-1116/18)	2	[]	7	1
+738	2026-05-07 09:05:32.7509+02	155	Sanja Muhić Kuljuh	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+739	2026-05-07 09:05:35.830783+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	2	[]	7	1
+740	2026-05-07 09:06:00.914216+02	8	Jasmin Ahmetspahić	2	[]	12	1
+741	2026-05-07 09:06:03.263689+02	9	Ugostiteljska radnja  pizzeria „TEMPO DI PIZZA“ (03-1-18-516/25)	2	[]	7	1
+742	2026-05-07 09:06:26.175988+02	98	Ugostiteljska radnja aščinica-ćevabdžinica "Kutak" (03-1-18-1-1608/25)	2	[]	7	1
+743	2026-05-07 09:12:19.090434+02	128	Sanela Čolo	2	[]	12	1
+744	2026-05-07 09:21:02.63533+02	109	Aldina Gabela	2	[]	12	1
+745	2026-05-07 09:21:29.561834+02	81	Senad Garaplija	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+746	2026-05-07 09:21:49.918127+02	91	Kerim Gušo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+747	2026-05-07 09:22:09.216236+02	123	Din Hadžimešić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+748	2026-05-07 09:22:25.253381+02	148	Džan Hadžimešić	2	[]	12	1
+749	2026-05-07 09:22:39.394059+02	94	Nermin Hadžimešić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+750	2026-05-07 09:23:09.724746+02	141	Ilda Hadžimusić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+751	2026-05-07 09:28:16.188239+02	36	Ilda Hadžimusić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+752	2026-05-07 09:28:29.354978+02	141	Ilda Hadžimusić	2	[]	12	1
+753	2026-05-07 09:28:49.718754+02	36	Ilda Hadžimusić	2	[]	12	1
+754	2026-05-07 09:29:10.808536+02	78	Enis Halilović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+755	2026-05-07 09:29:23.227461+02	131	Salem Halilović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+756	2026-05-07 09:29:39.883322+02	42	Sinan Halilović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+757	2026-05-07 09:30:03.674417+02	146	Sadžida Hamzić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+758	2026-05-07 09:30:23.882624+02	159	Amela Hasović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+759	2026-05-07 09:30:37.202128+02	96	Muhidin Heto	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+760	2026-05-07 09:30:52.732119+02	40	Samra Hodo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+761	2026-05-07 09:33:23.581468+02	52	Elmin Hodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+762	2026-05-07 09:33:39.00019+02	29	Elvis Hodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+763	2026-05-07 09:33:54.667828+02	72	Munira Hodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+764	2026-05-07 09:34:17.952299+02	53	Semir Hodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+765	2026-05-07 09:34:29.039774+02	33	Senad Hodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+766	2026-05-07 09:34:40.088515+02	33	Senad Hodžić	2	[]	12	1
+767	2026-05-07 09:34:51.566973+02	58	Ćamila Hrelja	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+768	2026-05-07 09:35:02.169833+02	39	Miralem Hrelja	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+769	2026-05-07 09:35:16.241097+02	67	Emina Hubjer	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+770	2026-05-07 09:35:37.722245+02	67	Emina Hubjer	2	[]	12	1
+771	2026-05-07 09:35:56.038375+02	95	Almedin Hukić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+772	2026-05-07 09:36:10.359582+02	13	Kerim Imamović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+773	2026-05-07 09:36:20.219321+02	64	Sakib Islamagić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+774	2026-05-07 09:36:35.488209+02	55	Elma Kadrić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+775	2026-05-07 09:36:48.555828+02	30	Kemal Kadrić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+776	2026-05-07 09:37:01.191106+02	153	Tarik Kadrić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+777	2026-05-07 09:37:14.082719+02	120	Amra Kamenica	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+778	2026-05-07 09:37:31.84448+02	110	Haris Kamenica	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+779	2026-05-07 09:37:44.194399+02	119	Memsura Kamenica	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+780	2026-05-07 09:37:55.742798+02	149	Nisveta Kamenica	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+781	2026-05-07 09:38:12.567856+02	104	Maja Kamenica-Hodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+782	2026-05-07 09:38:25.366245+02	73	Armin Kanlić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+783	2026-05-07 09:38:44.516646+02	74	Emina Karauzović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+784	2026-05-07 09:38:57.849142+02	122	Samira Karauzović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+785	2026-05-07 09:39:12.349595+02	44	Adis Klovo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+786	2026-05-07 09:39:30.218585+02	45	Zlata Klovo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+787	2026-05-07 09:39:43.315871+02	61	Božidarka Knežević	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+788	2026-05-07 09:39:54.336471+02	126	Zibija Korda	2	[]	12	1
+789	2026-05-07 09:40:03.25759+02	66	Selma Korjenić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+790	2026-05-07 09:40:15.298851+02	17	Marija Kovačević	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+791	2026-05-07 09:40:27.787562+02	140	Erdžana Krakonja	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+792	2026-05-07 09:40:40.049649+02	84	Enisa Kulović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+793	2026-05-07 09:40:49.164103+02	114	Ismira Kulović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+794	2026-05-07 09:41:03.704957+02	103	Emir Kuljuh	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+795	2026-05-07 09:41:11.012689+02	12	Zlatko Kuljuh	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+796	2026-05-07 09:41:17.795617+02	82	Amin Laković	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+797	2026-05-07 09:41:23.981361+02	139	Edina Laković	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+798	2026-05-07 09:41:30.767433+02	139	Edina Laković	2	[]	12	1
+799	2026-05-07 09:41:37.950071+02	87	Mirsad Ligata	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+800	2026-05-07 09:41:44.799697+02	27	Sinan Ligata	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+801	2026-05-07 09:41:51.24489+02	27	Sinan Ligata	2	[]	12	1
+802	2026-05-07 09:41:58.692608+02	57	Aldin Mahmutović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+803	2026-05-07 09:42:28.315519+02	46	Mladen Mandić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+804	2026-05-07 09:42:54.780475+02	57	Aldin Mahmutović	2	[]	12	1
+805	2026-05-07 09:43:01.713343+02	49	Emir Mičivoda	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+806	2026-05-07 09:43:15.686818+02	14	Ajla Mirvić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+807	2026-05-07 09:44:08.36268+02	147	Kenan Mlatišuma	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+808	2026-05-07 09:44:23.253523+02	50	Vedad Mršo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+809	2026-05-07 09:44:31.821108+02	71	Elvir Muhić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+810	2026-05-07 09:44:37.952426+02	155	Sanja Muhić Kuljuh	2	[]	12	1
+811	2026-05-07 09:44:48.355378+02	32	Sedina Mujezinović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+812	2026-05-07 09:45:15.588591+02	31	Sedina Mujezinović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+813	2026-05-07 09:45:28.364842+02	77	Amina Oković	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+814	2026-05-07 09:45:37.152446+02	18	Ahmed Pozder	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+815	2026-05-07 09:45:53.235239+02	77	Amina Oković	2	[]	12	1
+816	2026-05-07 09:46:02.496369+02	92	Adisa Omerhodžić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+817	2026-05-07 09:46:11.044194+02	125	Zikrija Oruč	2	[]	12	1
+818	2026-05-07 09:46:18.148335+02	92	Adisa Omerhodžić	2	[]	12	1
+819	2026-05-07 09:46:28.833208+02	151	Nejra Papračanin	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+820	2026-05-07 09:46:37.24781+02	63	Emina Pirija	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+821	2026-05-07 09:46:44.037113+02	63	Emina Pirija	2	[]	12	1
+822	2026-05-07 09:46:51.805397+02	18	Ahmed Pozder	2	[]	12	1
+823	2026-05-07 09:46:59.915594+02	16	Azra Prljača	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+824	2026-05-07 09:47:12.050509+02	1	Enver Pršeš	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+825	2026-05-07 09:47:20.713401+02	24	Amna Pušilo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+826	2026-05-07 09:47:31.65569+02	132	Eldina Pušilo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+827	2026-05-07 09:47:41.565873+02	150	Nedžad Pušilo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+828	2026-05-07 09:47:51.820976+02	25	Vildan Pušilo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+829	2026-05-07 09:48:01.818104+02	157	Elvira Radmilović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+830	2026-05-07 09:48:14.008555+02	157	Elvira Radmilović	2	[]	12	1
+831	2026-05-07 09:48:25.059634+02	107	Edin Rašidović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+832	2026-05-07 09:48:35.396375+02	60	Irma Riđević	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+833	2026-05-07 09:48:48.580812+02	60	Irma Riđević	2	[]	12	1
+834	2026-05-07 09:48:58.538977+02	144	Azema Salković	2	[]	12	1
+835	2026-05-07 09:49:08.529437+02	68	Kerim Sijerčić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+836	2026-05-07 09:49:24.91906+02	59	Edin Sirčić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+837	2026-05-07 09:49:35.681528+02	23	Latif Sirčić	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+838	2026-05-07 09:49:45.327897+02	93	Alsaid Sozan	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+839	2026-05-07 09:49:54.874692+02	43	Denira Spahović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+840	2026-05-07 09:50:08.056593+02	156	Elvira Šabanović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+841	2026-05-07 09:50:21.004952+02	89	Selma Šuman	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+842	2026-05-07 09:50:30.824148+02	133	Sabina Talović	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+843	2026-05-07 09:50:41.091345+02	54	Denis Tatarin	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+844	2026-05-07 09:50:54.523083+02	158	Sabiha Terović	2	[]	12	1
+845	2026-05-07 09:51:06.564074+02	129	Samira Trgo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+846	2026-05-07 09:51:15.122917+02	113	Hilmo Turkušić	2	[]	12	1
+847	2026-05-07 09:51:25.452973+02	143	Mediha Turkušić	2	[]	12	1
+848	2026-05-07 09:51:35.741234+02	145	Sanela Turkušić	2	[]	12	1
+849	2026-05-07 09:51:48.338448+02	142	Lejla Zorlak	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+850	2026-05-07 09:51:57.343032+02	76	Sanin Zuban	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+851	2026-05-07 09:52:10.326909+02	86	Armela Zuko	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+852	2026-05-07 10:53:04.352854+02	86	Armela Zuko	2	[]	12	1
+853	2026-05-07 10:53:14.056792+02	69	Bahra Žuga	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+854	2026-05-07 10:53:30.883603+02	116	Armin Žigo	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+855	2026-05-07 10:53:42.442098+02	99	Senka Zuko	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+856	2026-05-07 10:53:52.973032+02	19	Hamza Zuko	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+857	2026-05-07 10:54:03.86721+02	20	Hamza Zuko	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+858	2026-05-07 10:54:17.338179+02	111	Azemina Zuko	2	[{"changed": {"fields": ["Spol"]}}]	12	1
+859	2026-05-07 10:54:26.619411+02	86	Armela Zuko	2	[]	12	1
+860	2026-05-08 09:16:27.485602+02	78	Enis Halilović	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+861	2026-05-08 09:30:08.344421+02	143	TR "B&M" (03-1-16-1-1665/22)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"B&M\\""}}]	7	1
+862	2026-05-08 09:37:15.149229+02	147	TR "MIX SHOP" (03-1-16-1-1264/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"MIX SHOP\\""}}]	7	1
+863	2026-05-08 09:38:42.137992+02	154	TR second hand shop "SABININA SVAŠTARIJA" (03-1-16-1-825/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR second hand shop \\"SABININA SVA\\u0160TARIJA\\""}}]	7	1
+864	2026-05-08 09:40:12.948122+02	149	TR "DARIS" (03-1-16-1-1389/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"DARIS\\""}}]	7	1
+865	2026-05-08 09:41:51.09145+02	149	TR "DARIS" (03-1-16-1-1389/25)	2	[]	7	1
+866	2026-05-08 09:42:44.939579+02	130	TR "E&I SHOP" (03-1-16-1-308/23)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"E&I SHOP\\""}}]	7	1
+867	2026-05-08 09:43:32.161779+02	155	TR "BUTIK AMELA" (03-1-16-1-1029/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"BUTIK AMELA\\""}}]	7	1
+868	2026-05-08 09:45:08.324111+02	134	TR "QUART" (03-1-16-1-1598/21)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"QUART\\""}}]	7	1
+869	2026-05-08 11:57:59.742215+02	149	TR "DARIS" (03-1-16-1-1389/25)	2	[{"changed": {"name": "Dokument", "object": "pdf \\u2013 TR \\"DARIS\\"", "fields": ["File"]}}]	7	1
+870	2026-05-08 11:58:20.917634+02	149	TR "DARIS" (03-1-16-1-1389/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"DARIS\\""}}]	7	1
+871	2026-05-08 11:59:10.603066+02	135	TR "Second hand LD" (03-1-16-1-38/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"Second hand LD\\""}}]	7	1
+872	2026-05-08 11:59:18.37731+02	135	TR "Second hand LD" (03-1-16-1-38/25)	2	[]	7	1
+873	2026-05-08 12:00:00.347061+02	152	TR "MD prestige boutique" (03-1-16-1-489/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"MD prestige boutique\\""}}]	7	1
+874	2026-05-08 12:00:05.629284+02	152	TR "MD prestige boutique" (03-1-16-1-489/25)	2	[]	7	1
+875	2026-05-08 12:00:24.867582+02	154	TR second hand shop "SABININA SVAŠTARIJA" (03-1-16-1-825/25)	2	[]	7	1
+876	2026-05-08 12:01:08.757825+02	130	TR "E&I SHOP" (03-1-16-1-308/23)	2	[]	7	1
+877	2026-05-08 12:01:47.180825+02	120	TR "DAMIR" (03-1-16-1-660/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"DAMIR\\""}}]	7	1
+878	2026-05-08 12:02:59.015608+02	145	TR "NISVETA" (03-1-16-1-750/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"NISVETA\\""}}]	7	1
+879	2026-05-08 12:04:12.527693+02	153	TR "ELEKTRONSKA PRODAVNICA ZAZA" (03-1-16-1-682/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"ELEKTRONSKA PRODAVNICA ZAZA\\""}}]	7	1
+880	2026-05-08 12:04:54.035931+02	154	TR second hand shop "SABININA SVAŠTARIJA" (03-1-16-1-825/25)	2	[]	7	1
+881	2026-05-08 13:44:16.408981+02	153	TR "ELEKTRONSKA PRODAVNICA ZAZA" (03-1-16-1-682/25)	2	[]	7	1
+882	2026-05-08 14:25:24.619481+02	121	Emir Zuko	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+883	2026-05-08 14:51:26.974014+02	11	Edmir Bukva	2	[{"changed": {"fields": ["Spol"]}}]	12	2
+884	2026-05-08 14:53:20.717193+02	141	Ilda Hadžimusić	2	[{"changed": {"fields": ["Adresa"]}}]	12	2
+885	2026-05-08 14:53:42.146978+02	137	TR "Pet shop Arka" (03-1-16-1-542/22)	2	[]	7	2
+886	2026-05-08 14:54:16.178404+02	141	Ilda Hadžimusić	3		12	2
+887	2026-05-21 09:28:39.611237+02	609	gor19 – iznajmljivač smještajnog objekta u domaćinstvu	1	[{"added": {}}]	15	2
+888	2026-05-21 09:35:53.475832+02	160	Almir Džambegović	1	[{"added": {}}]	12	2
+889	2026-05-21 09:42:21.696938+02	156	Smještajni objekat-kuća za odmor u domaćinstvu "Villa Palma" (06-1-18-1-328/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Almir D\\u017eambegovi\\u0107 \\u2192 Smje\\u0161tajni objekat-ku\\u0107a za odmor u doma\\u0107instvu \\"Villa Palma\\" (06-1-18-1-328/26)"}}, {"added": {"name": "Procjena uslova", "object": "Smje\\u0161tajni objekat-ku\\u0107a za odmor u doma\\u0107instvu \\"Villa Palma\\" \\u2013 03-1-18-1-328/26"}}]	7	2
+890	2026-05-21 09:56:37.630801+02	161	Amela Džambegović	1	[{"added": {}}]	12	2
+891	2026-05-21 09:57:22.231729+02	157	Smještajni objekat-studio apartman u domaćinstvu "Amorea" (03-1-18-1-304/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amela D\\u017eambegovi\\u0107 \\u2192 Smje\\u0161tajni objekat-studio apartman u doma\\u0107instvu \\"Amorea\\" (03-1-18-1-304/26)"}}, {"added": {"name": "Procjena uslova", "object": "Smje\\u0161tajni objekat-studio apartman u doma\\u0107instvu \\"Amorea\\" \\u2013 03-1-18-1-304/26"}}]	7	2
+892	2026-05-21 10:46:13.619889+02	157	Smještajni objekat-studio apartman u domaćinstvu "Amorea" (03-1-18-1-304/26)	2	[]	7	2
+893	2026-05-21 10:48:48.344213+02	162	Hedija Mirvić	1	[{"added": {}}]	12	2
+894	2026-05-21 10:49:19.189384+02	158	Smještajni objekat-studio apartman u domaćinstvu "Konak" (03-1-18-1-341/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Hedija Mirvi\\u0107 \\u2192 Smje\\u0161tajni objekat-studio apartman u doma\\u0107instvu \\"Konak\\" (03-1-18-1-341/26)"}}, {"added": {"name": "Procjena uslova", "object": "Smje\\u0161tajni objekat-studio apartman u doma\\u0107instvu \\"Konak\\" \\u2013 03-1-18-1-341/26"}}]	7	2
+895	2026-05-21 13:46:57.227179+02	156	Smještajni objekat-kuća za odmor u domaćinstvu "Villa Palma" (06-1-18-1-328/26)	2	[{"changed": {"name": "Procjena uslova", "object": "Smje\\u0161tajni objekat-ku\\u0107a za odmor u doma\\u0107instvu \\"Villa Palma\\" \\u2013 03-1-18-1-328/26", "fields": ["Dokument"]}}]	7	2
+896	2026-05-21 13:47:54.637696+02	157	Smještajni objekat-studio apartman u domaćinstvu "Amorea" (03-1-18-1-304/26)	2	[{"changed": {"name": "Procjena uslova", "object": "Smje\\u0161tajni objekat-studio apartman u doma\\u0107instvu \\"Amorea\\" \\u2013 03-1-18-1-304/26", "fields": ["Dokument"]}}]	7	2
+897	2026-05-21 13:48:00.689238+02	157	Smještajni objekat-studio apartman u domaćinstvu "Amorea" (03-1-18-1-304/26)	2	[]	7	2
+898	2026-05-21 13:48:32.054688+02	158	Smještajni objekat-studio apartman u domaćinstvu "Konak" (03-1-18-1-341/26)	2	[{"changed": {"name": "Procjena uslova", "object": "Smje\\u0161tajni objekat-studio apartman u doma\\u0107instvu \\"Konak\\" \\u2013 03-1-18-1-341/26", "fields": ["Dokument"]}}]	7	2
+899	2026-05-21 13:48:39.391097+02	158	Smještajni objekat-studio apartman u domaćinstvu "Konak" (03-1-18-1-341/26)	2	[]	7	2
+900	2026-05-22 08:47:06.208019+02	163	Fadila Radmilović	1	[{"added": {}}]	12	2
+901	2026-05-22 08:47:20.211277+02	159	Domaća radinost "DILA" (03-1-17-1-395/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Fadila Radmilovi\\u0107 \\u2192 Doma\\u0107a radinost \\"DILA\\" (03-1-17-1-395/26)"}}]	7	2
+902	2026-05-22 08:53:25.125544+02	164	Rizalija Hasanspahić	1	[{"added": {}}]	12	2
+903	2026-05-22 08:53:39.792652+02	160	Domaća radinost "OKUS PRIRODE" (03-1-17-1-419/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Rizalija Hasanspahi\\u0107 \\u2192 Doma\\u0107a radinost \\"OKUS PRIRODE\\" (03-1-17-1-419/26)"}}]	7	2
+904	2026-05-22 09:01:19.476049+02	165	Amira Imamović	1	[{"added": {}}]	12	2
+905	2026-05-22 09:01:26.287917+02	161	Domaća radinost "A.I.FELICIJA" (03-1-17-1-208/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amira Imamovi\\u0107 \\u2192 Doma\\u0107a radinost \\"A.I.FELICIJA\\" (03-1-17-1-208/26)"}}]	7	2
+906	2026-05-22 09:09:19.233772+02	166	Vedin Sirbubalo	1	[{"added": {}}]	12	2
+907	2026-05-22 09:09:28.901413+02	162	Obrtnička - automehaničarska radnja "VEDO" (03-1-17-1-393/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Vedin Sirbubalo \\u2192 Obrtni\\u010dka - automehani\\u010darska radnja \\"VEDO\\" (03-1-17-1-393/26)"}}]	7	2
+908	2026-05-22 09:45:55.006921+02	162	Obrtnička - automehaničarska radnja "VEDO" (03-1-17-1-393/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dka - automehani\\u010darska radnja \\"VEDO\\""}}]	7	2
+909	2026-05-22 09:47:01.855941+02	162	Obrtnička - automehaničarska radnja "VEDO" (03-1-17-1-393/26)	2	[]	7	2
+910	2026-05-22 09:47:16.905333+02	162	Obrtnička - automehaničarska radnja "VEDO" (03-1-17-1-393/26)	2	[]	7	2
+911	2026-05-22 09:47:56.580391+02	159	Domaća radinost "DILA" (03-1-17-1-395/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"DILA\\""}}]	7	2
+912	2026-05-25 09:18:34.096356+02	314	43.31 – Fasdadni i štukaturski radovi	2	[{"changed": {"fields": ["Description"]}}]	14	2
+913	2026-05-25 09:21:49.148834+02	167	Kenan Mujezinović	1	[{"added": {}}]	12	2
+914	2026-05-25 09:22:17.066297+02	163	Obrtnička djelatnost "Majstor u kući" (03-1-17-1-453/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Kenan Mujezinovi\\u0107 \\u2192 Obrtni\\u010dka djelatnost \\"Majstor u ku\\u0107i\\" (03-1-17-1-453/26)"}}]	7	2
+915	2026-05-25 09:53:38.53365+02	163	Obrtnička djelatnost "Majstor u kući" (03-1-17-1-453/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dka djelatnost \\"Majstor u ku\\u0107i\\""}}]	7	2
+916	2026-05-25 10:55:48.18342+02	168	Melisa Hasanspahić	1	[{"added": {}}]	12	2
+917	2026-05-25 10:59:59.445124+02	164	Domaća radinost "OKUS PRIRODE" (03-1-17-1-686/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Melisa Hasanspahi\\u0107 \\u2192 Doma\\u0107a radinost \\"OKUS PRIRODE\\" (03-1-17-1-686/24)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"OKUS PRIRODE\\""}}]	7	2
+918	2026-05-25 11:00:39.286297+02	164	Domaća radinost "OKUS PRIRODE" (03-1-17-1-686/24)	2	[{"changed": {"fields": ["Status"]}}]	7	2
+919	2026-05-25 11:01:11.703828+02	163	Obrtnička djelatnost "Majstor u kući" (03-1-17-1-453/26)	2	[{"changed": {"fields": ["Status"]}}]	7	2
+920	2026-05-25 11:14:27.932721+02	619	gor19 – limar	1	[{"added": {}}]	14	2
+921	2026-05-25 11:15:53.879311+02	610	gor 19 – limar	1	[{"added": {}}]	15	2
+922	2026-05-25 11:20:43.70925+02	165	Obrtničko-limarska radnja "SELAK" (03-1-17-1-1465/22)	1	[{"added": {}}]	7	2
+923	2026-05-25 11:22:15.442109+02	169	Nedžad Selak	1	[{"added": {}}]	12	2
+924	2026-05-25 11:22:20.427451+02	165	Obrtničko-limarska radnja "SELAK" (03-1-17-1-1465/22)	2	[{"added": {"name": "Vlasnik", "object": "Ned\\u017ead Selak \\u2192 Obrtni\\u010dko-limarska radnja \\"SELAK\\" (03-1-17-1-1465/22)"}}]	7	2
+925	2026-05-25 11:26:30.147019+02	165	Obrtničko-limarska radnja "SELAK" (03-1-17-1-1465/22)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dko-limarska radnja \\"SELAK\\""}}]	7	2
+926	2026-05-25 11:32:41.691685+02	38	Domaća radinost "ELEGANT HS" (03-1-17-1-538/25)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ELEGANT HS\\""}}]	7	2
+1149	2026-06-11 13:58:13.533852+02	239	Zumra Grčo	1	[{"added": {}}]	12	1
+927	2026-05-25 11:42:48.704439+02	14	obrtnička radnja - autopraonica "K&N" (03-1-17-1-589/26)	2	[{"changed": {"fields": ["Broj rje\\u0161enja", "Datum rje\\u0161enja/registracije", "Vrsta obrta", "Na\\u010din obavljanja", "Zanimanje", "Zabilje\\u0161ke"]}}]	7	2
+928	2026-05-26 08:25:08.071151+02	170	Adna Huseinović	1	[{"added": {}}]	12	2
+929	2026-05-26 08:25:28.130716+02	170	Adna Huseinović	2	[{"changed": {"fields": ["Telefon"]}}]	12	2
+930	2026-05-26 08:25:37.73914+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Adna Huseinovi\\u0107 \\u2192 Doma\\u0107a radinost \\"ADNA\\" (03-1-17-1-631/24)"}}]	7	2
+931	2026-05-26 08:30:39.933635+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ADNA\\""}}]	7	2
+932	2026-05-26 08:33:53.876021+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ADNA\\""}}]	7	2
+933	2026-05-26 08:37:31.663795+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ADNA\\""}}]	7	2
+934	2026-05-26 08:45:00.395383+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ADNA\\""}}]	7	2
+935	2026-05-26 08:47:25.068466+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ADNA\\""}}]	7	2
+936	2026-05-26 08:47:34.159605+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[]	7	2
+937	2026-05-26 08:48:05.521819+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[{"changed": {"fields": ["Datum po\\u010detka rada"]}}]	7	2
+938	2026-05-26 09:13:40.137858+02	171	Nedžad Kurtović	1	[{"added": {}}]	12	2
+939	2026-05-26 09:17:44.578035+02	167	UR bosanska kafana "GAZIJE" (03-1-22-1-1181/13)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ned\\u017ead Kurtovi\\u0107 \\u2192 UR bosanska kafana \\"GAZIJE\\" (03-1-22-1-1181/13)"}}, {"added": {"name": "Procjena uslova", "object": "UR bosanska kafana \\"GAZIJE\\" \\u2013 03-1-22-1181-1/13"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 UR bosanska kafana \\"GAZIJE\\""}}]	7	2
+940	2026-05-26 11:05:45.177286+02	152	TR "MD prestige boutique" (03-1-16-1-489/25)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 TR \\"MD prestige boutique\\""}}]	7	2
+941	2026-05-26 11:11:53.951718+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Trgovinska djelatnost \\"SCE\\""}}]	7	2
+942	2026-05-26 11:12:12.666644+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Trgovinska djelatnost \\"SCE\\""}}]	7	2
+943	2026-05-26 11:13:59.133146+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	3		7	2
+944	2026-05-26 11:15:57.621029+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Trgovinska djelatnost \\"SCE\\""}}, {"deleted": {"name": "Dokument", "object": "pdf \\u2013 Trgovinska djelatnost \\"SCE\\""}}]	7	2
+945	2026-05-26 11:16:13.463191+02	151	Trgovinska djelatnost "SCE" (03-1-16-1-1155/24)	2	[]	7	2
+946	2026-06-01 09:02:08.825409+02	14	obrtnička radnja - autopraonica "K&N" (03-1-17-1-589/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 obrtni\\u010dka radnja - autopraonica \\"K&N\\""}}]	7	2
+947	2026-06-01 09:07:57.406852+02	172	Kadira Halilović	1	[{"added": {}}]	12	2
+948	2026-06-01 09:08:28.653595+02	168	Domaća radinost "KADIRA" (03-1-17-1-522/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Kadira Halilovi\\u0107 \\u2192 Doma\\u0107a radinost \\"KADIRA\\" (03-1-17-1-522/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"KADIRA\\""}}]	7	2
+949	2026-06-01 09:13:21.304963+02	173	Sabina Vrana	1	[{"added": {}}]	12	2
+950	2026-06-01 09:13:50.426015+02	173	Sabina Vrana	2	[{"changed": {"fields": ["Telefon"]}}]	12	2
+951	2026-06-01 09:14:18.572166+02	169	Domaća radinost "BINKA" (03-1-17-1-529/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sabina Vrana \\u2192 Doma\\u0107a radinost \\"BINKA\\" (03-1-17-1-529/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"BINKA\\""}}]	7	2
+952	2026-06-01 09:19:21.56604+02	174	Elmin Hubjer	1	[{"added": {}}]	12	2
+953	2026-06-01 09:19:48.955996+02	170	Domaća radinost "ZIS" (03-1-17-1-481/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elmin Hubjer \\u2192 Doma\\u0107a radinost \\"ZIS\\" (03-1-17-1-481/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ZIS\\""}}]	7	2
+954	2026-06-01 09:24:59.628049+02	175	Altijana Ratković	1	[{"added": {}}]	12	2
+955	2026-06-01 09:25:30.866142+02	171	Domaća radinost "ALTIJANA" (03-1-17-1-464/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Altijana Ratkovi\\u0107 \\u2192 Doma\\u0107a radinost \\"ALTIJANA\\" (03-1-17-1-464/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ALTIJANA\\""}}]	7	2
+956	2026-06-01 09:29:39.052061+02	176	Elvedina Rahman	1	[{"added": {}}]	12	2
+957	2026-06-01 09:31:13.245727+02	172	Samostalni poljoprivredni proizvođač "E&M" (03-1-17-1-427/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elvedina Rahman \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"E&M\\" (03-1-17-1-427/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"E&M\\""}}]	7	2
+958	2026-06-01 09:36:24.948399+02	177	Sabiha Deljo	1	[{"added": {}}]	12	2
+959	2026-06-01 09:37:06.552324+02	173	Domaća radinost "VILA" (03-1-17-1-412/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sabiha Deljo \\u2192 Doma\\u0107a radinost \\"VILA\\" (03-1-17-1-412/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"VILA\\""}}]	7	2
+960	2026-06-01 09:41:28.873836+02	178	Ajnija Maslan	1	[{"added": {}}]	12	2
+961	2026-06-01 09:41:56.58388+02	174	Domaća radinost "KLUPKO" (03-1-17-1-413/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ajnija Maslan \\u2192 Doma\\u0107a radinost \\"KLUPKO\\" (03-1-17-1-413/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"KLUPKO\\""}}]	7	2
+962	2026-06-01 09:42:49.546695+02	174	Domaća radinost "KLUPKO" (03-1-17-1-413/26)	2	[]	7	2
+963	2026-06-01 09:48:35.068797+02	161	Domaća radinost "A.I.FELICIJA" (03-1-17-1-208/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"A.I.FELICIJA\\""}}]	7	2
+964	2026-06-01 09:51:31.97042+02	160	Domaća radinost "OKUS PRIRODE" (03-1-17-1-419/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"OKUS PRIRODE\\""}}]	7	2
+965	2026-06-01 10:55:28.015819+02	179	Aldin Papračanin	1	[{"added": {}}]	12	2
+966	2026-06-01 10:56:00.072842+02	175	Domaća radinost "ALDA" (03-1-17-1-390/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Aldin Papra\\u010danin \\u2192 Doma\\u0107a radinost \\"ALDA\\" (03-1-17-1-390/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Doma\\u0107a radinost \\"ALDA\\""}}]	7	2
+967	2026-06-01 11:03:04.568345+02	180	Haris Suljić	1	[{"added": {}}]	12	2
+968	2026-06-01 11:03:26.784326+02	176	Obrtnička radnja "HEM" (03-1-17-1-573/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Haris Sulji\\u0107 \\u2192 Obrtni\\u010dka radnja \\"HEM\\" (03-1-17-1-573/26)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dka radnja \\"HEM\\""}}]	7	2
+969	2026-06-01 11:04:18.744254+02	176	Obrtnička radnja "HEM" (03-1-17-1-573/26)	2	[]	7	2
+970	2026-06-01 11:07:29.765223+02	181	Paša Biser	1	[{"added": {}}]	12	2
+971	2026-06-01 11:08:09.437842+02	177	Samostalni poljoprivredni proizvođač "MOJ ZAVIČAJ" (03-1-17-1-367/26)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Pa\\u0161a Biser \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"MOJ ZAVI\\u010cAJ\\" (03-1-17-1-367/26)"}}]	7	2
+972	2026-06-01 11:10:43.618913+02	178	Obrtnička radnja "AUTO-SERVIS ADIS" (03-1-17-1-394/26)	1	[{"added": {}}]	7	2
+973	2026-06-01 11:12:11.168482+02	182	Adis Hodo	1	[{"added": {}}]	12	2
+974	2026-06-01 11:12:20.021878+02	178	Obrtnička radnja "AUTO-SERVIS ADIS" (03-1-17-1-394/26)	2	[{"added": {"name": "Vlasnik", "object": "Adis Hodo \\u2192 Obrtni\\u010dka radnja \\"AUTO-SERVIS ADIS\\" (03-1-17-1-394/26)"}}]	7	2
+975	2026-06-01 12:23:41.04944+02	177	Samostalni poljoprivredni proizvođač "MOJ ZAVIČAJ" (03-1-17-1-367/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"MOJ ZAVI\\u010cAJ\\""}}]	7	2
+976	2026-06-01 12:25:17.135727+02	178	Obrtnička radnja "AUTO-SERVIS ADIS" (03-1-17-1-394/26)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dka radnja \\"AUTO-SERVIS ADIS\\""}}]	7	2
+977	2026-06-03 10:45:26.162329+02	48	Nedžiba Drakovac	2	[]	12	2
+978	2026-06-03 10:45:41.667504+02	44	Samostalni poljoprivredni proizvođač "Hare" (03-1-17-1-552/25)	2	[{"changed": {"fields": ["Telefon"]}}]	7	2
+979	2026-06-03 11:27:06.201813+02	183	Aner Hastor	1	[{"added": {}}]	12	2
+980	2026-06-03 11:27:17.525742+02	183	Aner Hastor	2	[]	12	2
+981	2026-06-03 11:27:36.251388+02	179	UR caffe bar "DERBI" (03-1-22-1-1804/18)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Aner Hastor \\u2192 UR caffe bar \\"DERBI\\" (03-1-22-1-1804/18)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 UR caffe bar \\"DERBI\\""}}]	7	2
+982	2026-06-03 11:28:24.440104+02	179	UR caffe bar "DERBI" (03-1-22-1-1804/18)	2	[]	7	2
+983	2026-06-03 11:34:31.462264+02	179	UR caffe bar "DERBI" (03-1-22-1-1804/18)	2	[]	7	2
+984	2026-06-08 08:17:34.198442+02	97	Ugostiteljska radnja fast food "Ena" (03-1-18-1-1394/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Ugostiteljska radnja fast food \\"Ena\\""}}]	7	1
+985	2026-06-08 08:25:06.064721+02	96	Ugostiteljska radnja pečenjarnica "Quart" (03-1-18-1-1149/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Ugostiteljska radnja pe\\u010denjarnica \\"Quart\\""}}]	7	1
+986	2026-06-08 08:28:36.3594+02	9	Ugostiteljska radnja  pizzeria „TEMPO DI PIZZA“ (03-1-18-516/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Ugostiteljska radnja  pizzeria \\u201eTEMPO DI PIZZA\\u201c"}}]	7	1
+987	2026-06-08 08:32:40.849831+02	98	Ugostiteljska radnja aščinica-ćevabdžinica "Kutak" (03-1-18-1-1608/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Ugostiteljska radnja a\\u0161\\u010dinica-\\u0107evabd\\u017einica \\"Kutak\\""}}]	7	1
+988	2026-06-08 08:33:04.46235+02	98	Ugostiteljska radnja aščinica-ćevabdžinica "Kutak" (03-1-18-1-1608/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Ugostiteljska radnja a\\u0161\\u010dinica-\\u0107evabd\\u017einica \\"Kutak\\""}}]	7	1
+989	2026-06-08 09:34:12.024416+02	184	Amina Kovač	1	[{"added": {}}]	12	1
+990	2026-06-08 09:34:22.715971+02	180	Smještajni objekat-kuća za odmor u domaćinstvu "Drinske oaza" (03-1-18-1-1483/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amina Kova\\u010d \\u2192 Smje\\u0161tajni objekat-ku\\u0107a za odmor u doma\\u0107instvu \\"Drinske oaza\\" (03-1-18-1-1483/25)"}}]	7	1
+991	2026-06-08 09:34:42.117441+02	180	Smještajni objekat-kuća za odmor u domaćinstvu "Drinska oaza" (03-1-18-1-1483/25)	2	[{"changed": {"fields": ["Naziv obrta"]}}]	7	1
+992	2026-06-08 09:43:34.814136+02	185	Mehemed Hukara	1	[{"added": {}}]	12	1
+993	2026-06-08 09:43:52.713205+02	181	UR buffet "M&M" (03-1-18-1-662/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Mehemed Hukara \\u2192 UR buffet \\"M&M\\" (03-1-18-1-662/23)"}}, {"added": {"name": "Dokument", "object": "pdf \\u2013 UR buffet \\"M&M\\""}}]	7	1
+994	2026-06-08 09:51:02.264988+02	93	Ugostiteljska radnja fast food "NUR" (03-1-18-1-1163/25)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Ugostiteljska radnja fast food \\"NUR\\""}}]	7	1
+995	2026-06-08 12:29:40.325316+02	37	Adna Bezdrob	2	[]	12	1
+996	2026-06-08 12:29:54.964069+02	182	Obrtnička djelatnost "SVILEN KONAC" (03-1-17-1-1780/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Adna Bezdrob \\u2192 Obrtni\\u010dka djelatnost \\"SVILEN KONAC\\" (03-1-17-1-1780/23)"}}]	7	1
+997	2026-06-08 12:38:34.864686+02	186	Almedin Mutapčić	1	[{"added": {}}]	12	1
+998	2026-06-08 12:38:45.827736+02	183	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-202/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Almedin Mutap\\u010di\\u0107 \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-202/24)"}}]	7	1
+999	2026-06-08 12:43:00.073287+02	187	Admir Hodo	1	[{"added": {}}]	12	1
+1000	2026-06-08 12:43:13.250682+02	184	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-206/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Admir Hodo \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-206/24)"}}]	7	1
+1001	2026-06-08 12:46:39.322606+02	188	Irmel Pjano	1	[{"added": {}}]	12	1
+1002	2026-06-08 12:49:12.595879+02	185	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-1586/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Irmel Pjano \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-1586/25)"}}]	7	1
+1003	2026-06-08 12:56:29.27967+02	186	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-1395/24)	1	[{"added": {}}]	7	1
+1004	2026-06-08 12:58:24.517083+02	189	Damir Ahmetspahić	1	[{"added": {}}]	12	1
+1005	2026-06-08 12:58:33.677713+02	186	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-1395/24)	2	[{"added": {"name": "Vlasnik", "object": "Damir Ahmetspahi\\u0107 \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-1395/24)"}}]	7	1
+1006	2026-06-08 13:02:35.463255+02	186	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-1395/24)	2	[]	7	1
+1008	2026-06-08 13:13:59.642016+02	187	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-216/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Admir \\u017duga \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-216/24)"}}]	7	1
+1009	2026-06-08 13:28:12.408698+02	191	Midhat Obuća	1	[{"added": {}}]	12	1
+1010	2026-06-08 13:41:53.606584+02	188	Obrtnička radnja za proizvodnju aluminijske i PVC stolarije "ALU - PLASTIK" (03-1-17-1-208/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Midhat Obu\\u0107a \\u2192 Obrtni\\u010dka radnja za proizvodnju aluminijske i PVC stolarije \\"ALU - PLASTIK\\" (03-1-17-1-208/24)"}}]	7	1
+1011	2026-06-08 14:02:14.667379+02	192	Samir Tabaković	1	[{"added": {}}]	12	1
+1012	2026-06-08 14:02:24.463938+02	189	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-191/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Samir Tabakovi\\u0107 \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-191/25)"}}]	7	1
+1013	2026-06-08 14:18:28.975742+02	193	Admir Korjenić	1	[{"added": {}}]	12	1
+1014	2026-06-08 14:24:48.668113+02	190	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-223/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Admir Korjeni\\u0107 \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-223/24)"}}]	7	1
+1015	2026-06-08 15:06:24.199504+02	194	Nura Bukalo	1	[{"added": {}}]	12	1
+1016	2026-06-08 15:06:37.294919+02	191	Domaća radinost "POLJOPLOD" (03-1-17-1-222/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Nura Bukalo \\u2192 Doma\\u0107a radinost \\"POLJOPLOD\\" (03-1-17-1-222/24)"}}]	7	1
+1017	2026-06-08 15:20:50.200487+02	611	gor 20 – prerađivač kafe	1	[{"added": {}}]	15	1
+1018	2026-06-08 15:24:57.690864+02	195	Meva Muminović	1	[{"added": {}}]	12	1
+1019	2026-06-08 15:25:06.893539+02	192	Pržionica kafe "EMINA" (03-1-17-1-281/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Meva Muminovi\\u0107 \\u2192 Pr\\u017eionica kafe \\"EMINA\\" (03-1-17-1-281/24)"}}]	7	1
+1020	2026-06-08 15:25:42.780847+02	192	Pržionica kafe "EMINA" (03-1-17-1-281/24)	2	[{"changed": {"fields": ["Obavlja obrt u vanjskotrgovinskom poslovanju"]}}]	7	1
+1021	2026-06-08 15:33:13.845603+02	196	Muhamed Herak	1	[{"added": {}}]	12	1
+1022	2026-06-08 15:33:21.25406+02	193	Obrtnička radnja "SANTANA" (03-1-17-1-330/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Muhamed Herak \\u2192 Obrtni\\u010dka radnja \\"SANTANA\\" (03-1-17-1-330/24)"}}]	7	1
+1023	2026-06-08 15:44:16.125508+02	197	Adana Hodžić Borovina	1	[{"added": {}}]	12	1
+1024	2026-06-08 15:44:37.019573+02	197	Adana Hodžić Borovina	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+1025	2026-06-08 15:46:48.565052+02	194	Obrtnička radnja-Kozmetički salon "Shades of beauty" (03-1-17-1-1474/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Adana Hod\\u017ei\\u0107 Borovina \\u2192 Obrtni\\u010dka radnja-Kozmeti\\u010dki salon \\"Shades of beauty\\" (03-1-17-1-1474/25)"}}]	7	1
+1026	2026-06-09 08:00:58.284667+02	198	Safija Tanjo	1	[{"added": {}}]	12	1
+1027	2026-06-09 08:01:07.46709+02	195	Obrtnička radnja "TTM" (03-1-17-1-1047/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Safija Tanjo \\u2192 Obrtni\\u010dka radnja \\"TTM\\" (03-1-17-1-1047/23)"}}]	7	1
+1028	2026-06-09 08:13:52.455358+02	612	gor 21 – savjetnik u vezi sa poslovanjem	1	[{"added": {}}]	15	1
+1029	2026-06-09 08:18:03.491878+02	199	Emir Popović	1	[{"added": {}}]	12	1
+1030	2026-06-09 08:18:17.58603+02	199	Emir Popović	2	[]	12	1
+1031	2026-06-09 08:19:18.082564+02	196	Obrtnička djelatnost "eDeks" (03-1-17-1-390/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Emir Popovi\\u0107 \\u2192 Obrtni\\u010dka djelatnost \\"eDeks\\" (03-1-17-1-390/24)"}}]	7	1
+1032	2026-06-09 08:25:37.767624+02	489	69.20 – Računovodstvene i knjigovodstvene djelatnosti	2	[{"changed": {"fields": ["Description"]}}]	14	1
+1033	2026-06-09 08:26:03.291512+02	53	2411.001 – Racunovođa i knjigovođa	2	[{"changed": {"fields": ["Description"]}}]	15	1
+1034	2026-06-09 08:28:23.51588+02	200	Muamer Uhota	1	[{"added": {}}]	12	1
+1035	2026-06-09 08:28:41.062772+02	197	Obrtnička djelatnost "EUROBIRO" (03-1-17-1-400/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Muamer Uhota \\u2192 Obrtni\\u010dka djelatnost \\"EUROBIRO\\" (03-1-17-1-400/24)"}}]	7	1
+1036	2026-06-09 08:47:59.029627+02	201	Memsud Zorlak	1	[{"added": {}}]	12	1
+1037	2026-06-09 08:48:09.26207+02	198	Samostalni poljoprivredni proizvođač "MEMSUD" (03-1-17-1-424/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Memsud Zorlak \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"MEMSUD\\" (03-1-17-1-424/24)"}}]	7	1
+1038	2026-06-09 08:48:41.171823+02	201	Memsud Zorlak	2	[]	12	1
+1039	2026-06-09 08:51:30.621826+02	202	Elmedina Hodo	1	[{"added": {}}]	12	1
+1040	2026-06-09 08:53:27.383008+02	199	Domaća radinost "HOLI" (03-1-17-1-447/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elmedina Hodo \\u2192 Doma\\u0107a radinost \\"HOLI\\" (03-1-17-1-447/24)"}}]	7	1
+1041	2026-06-09 08:54:33.834879+02	199	Domaća radinost "HOLI" (03-1-17-1-447/24)	2	[]	7	1
+1042	2026-06-09 09:05:39.862373+02	203	Armin Mujezinović	1	[{"added": {}}]	12	1
+1043	2026-06-09 09:06:00.736785+02	203	Armin Mujezinović	2	[]	12	1
+1044	2026-06-09 09:06:04.130954+02	200	Domaća radinost "A&E" (03-1-17-1-455/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Armin Mujezinovi\\u0107 \\u2192 Doma\\u0107a radinost \\"A&E\\" (03-1-17-1-455/24)"}}]	7	1
+1045	2026-06-09 09:07:32.314114+02	200	Domaća radinost "A&E" (03-1-17-1-455/24)	2	[{"changed": {"fields": ["Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+1046	2026-06-09 09:11:26.593166+02	204	Mile Jovović	1	[{"added": {}}]	12	1
+1047	2026-06-09 09:15:05.755037+02	205	Emir Curo	1	[{"added": {}}]	12	1
+1048	2026-06-09 09:15:14.023488+02	201	Domaća radinost "BEG" (03-1-17-1-479/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Emir Curo \\u2192 Doma\\u0107a radinost \\"BEG\\" (03-1-17-1-479/24)"}}]	7	1
+1049	2026-06-09 09:16:14.729832+02	201	Domaća radinost "BEG" (03-1-17-1-479/24)	2	[]	7	1
+1050	2026-06-09 09:21:15.729107+02	206	Mugdim Krakonja	1	[{"added": {}}]	12	1
+1051	2026-06-09 09:46:34.596546+02	206	Mugdim Krakonja	2	[]	12	1
+1052	2026-06-09 09:46:45.489051+02	202	Obrtnička radnja-autopraonica  "REPLAY-PONOVO" (03-1-17-1-487/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Mugdim Krakonja \\u2192 Obrtni\\u010dka radnja-autopraonica  \\"REPLAY-PONOVO\\" (03-1-17-1-487/24)"}}]	7	1
+1053	2026-06-09 09:48:56.762103+02	202	Obrtnička radnja-autopraonica  "REPLAY-PONOVO" (03-1-17-1-487/24)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+1054	2026-06-09 11:34:50.941671+02	207	Enisa Ušanović	1	[{"added": {}}]	12	1
+1055	2026-06-09 11:37:11.839418+02	203	Domaća radinost "UŠANOVIĆ" (03-1-17-1-494/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Enisa U\\u0161anovi\\u0107 \\u2192 Doma\\u0107a radinost \\"U\\u0160ANOVI\\u0106\\" (03-1-17-1-494/24)"}}]	7	1
+1056	2026-06-09 11:42:20.428185+02	208	Elvir Kovač	1	[{"added": {}}]	12	1
+1057	2026-06-09 11:43:52.631529+02	204	Obrtnička radnja "AUTOSERVIS GORAŽDE" (03-1-17-1-502/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elvir Kova\\u010d \\u2192 Obrtni\\u010dka radnja \\"AUTOSERVIS GORA\\u017dDE\\" (03-1-17-1-502/24)"}}]	7	1
+1058	2026-06-09 11:48:42.061291+02	209	Dinka Zorlak	1	[{"added": {}}]	12	1
+1059	2026-06-09 11:49:15.4578+02	205	Samostalni poljoprivredni proizvođač "DINKA" (03-1-17-1-510/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Dinka Zorlak \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"DINKA\\" (03-1-17-1-510/24)"}}]	7	1
+1060	2026-06-09 11:56:44.535649+02	210	Salmin Kutlovac	1	[{"added": {}}]	12	1
+1061	2026-06-09 11:57:35.890228+02	210	Salmin Kutlovac	2	[]	12	1
+1062	2026-06-09 11:59:23.27088+02	206	Obrtnička djelatnost "Vodoinstalacije" (03-1-17-1-503/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Salmin Kutlovac \\u2192 Obrtni\\u010dka djelatnost \\"Vodoinstalacije\\" (03-1-17-1-503/24)"}}]	7	1
+1063	2026-06-09 12:02:37.316913+02	206	Obrtnička djelatnost "Vodoinstalacije" (03-1-17-1-503/24)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+1064	2026-06-09 12:03:11.70119+02	206	Obrtnička djelatnost "Vodoinstalacije" (03-1-17-1-503/24)	2	[]	7	1
+1065	2026-06-09 12:20:07.917194+02	211	Bahra Turulja	1	[{"added": {}}]	12	1
+1066	2026-06-09 12:27:42.754177+02	211	Bahra Turulja	2	[]	12	1
+1067	2026-06-09 12:27:47.900542+02	207	Obrtnička radnja-salon za masažu "RELAX" (03-1-17-1-913/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Bahra Turulja \\u2192 Obrtni\\u010dka radnja-salon za masa\\u017eu \\"RELAX\\" (03-1-17-1-913/23)"}}]	7	1
+1068	2026-06-09 12:30:32.65081+02	212	Lejla Uglješa	1	[{"added": {}}]	12	1
+1069	2026-06-09 12:30:55.586972+02	208	Samosatlni poljoprivredni proizvođač "LELA" (03-1-17-1-531/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Lejla Uglje\\u0161a \\u2192 Samosatlni poljoprivredni proizvo\\u0111a\\u010d \\"LELA\\" (03-1-17-1-531/24)"}}]	7	1
+1070	2026-06-09 13:47:58.094209+02	213	Salko Herak	1	[{"added": {}}]	12	1
+1071	2026-06-09 13:48:04.52141+02	209	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-522/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Salko Herak \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-522/24)"}}]	7	1
+1072	2026-06-09 13:48:37.612536+02	209	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-522/24)	2	[]	7	1
+1073	2026-06-09 13:59:37.671313+02	214	Alen Bašić	1	[{"added": {}}]	12	1
+1074	2026-06-09 13:59:58.927464+02	210	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-542/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Alen Ba\\u0161i\\u0107 \\u2192 Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-542/24)"}}]	7	1
+1075	2026-06-09 14:18:52.439543+02	211	Domaća radinost "MIMICA" (03-1-17-1-545/24)	1	[{"added": {}}]	7	1
+1076	2026-06-09 14:21:01.725423+02	215	Sebina Muslić	1	[{"added": {}}]	12	1
+1077	2026-06-09 14:21:06.27183+02	211	Domaća radinost "MIMICA" (03-1-17-1-545/24)	2	[{"changed": {"fields": ["Status", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}, {"added": {"name": "Vlasnik", "object": "Sebina Musli\\u0107 \\u2192 Doma\\u0107a radinost \\"MIMICA\\" (03-1-17-1-545/24)"}}]	7	1
+1078	2026-06-09 15:20:04.347246+02	212	Obrtničko-frizerska radnja "KEN" (03-1-17-1-546/24)	1	[{"added": {}}]	7	1
+1079	2026-06-09 15:21:10.593218+02	216	Kenan Bešlija	1	[{"added": {}}]	12	1
+1080	2026-06-09 15:22:56.534076+02	212	Obrtničko-frizerska radnja "KEN" (03-1-17-1-546/24)	2	[{"changed": {"fields": ["Zabilje\\u0161ke"]}}, {"added": {"name": "Vlasnik", "object": "Kenan Be\\u0161lija \\u2192 Obrtni\\u010dko-frizerska radnja \\"KEN\\" (03-1-17-1-546/24)"}}]	7	1
+1081	2026-06-09 15:23:27.228939+02	212	Obrtničko-frizerska radnja "KEN" (03-1-17-1-546/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dko-frizerska radnja \\"KEN\\""}}]	7	1
+1082	2026-06-09 15:23:50.93407+02	212	Obrtničko-frizerska radnja "KEN" (03-1-17-1-546/24)	2	[{"added": {"name": "Dokument", "object": "pdf \\u2013 Obrtni\\u010dko-frizerska radnja \\"KEN\\""}}]	7	1
+1083	2026-06-09 15:29:58.235957+02	212	Obrtničko-frizerska radnja "KEN" (03-1-17-1-546/24)	2	[{"changed": {"fields": ["Zabilje\\u0161ke"]}}]	7	1
+1084	2026-06-09 15:30:23.673676+02	216	Kenan Bešlija	2	[]	12	1
+1085	2026-06-09 15:30:25.334543+02	212	Obrtničko-frizerska radnja "KEN" (03-1-17-1-546/24)	2	[]	7	1
+1086	2026-06-10 08:17:46.327613+02	213	Domaća radinost "ALMA" (03-1-17-1-553/24)	1	[{"added": {}}]	7	1
+1087	2026-06-10 08:19:16.885047+02	217	Alma Deljo	1	[{"added": {}}]	12	1
+1088	2026-06-10 08:19:22.458912+02	213	Domaća radinost "ALMA" (03-1-17-1-553/24)	2	[{"changed": {"fields": ["Datum po\\u010detka rada", "Adresa/Sjedi\\u0161te", "Grad", "Po\\u0161tanski broj"]}}, {"added": {"name": "Vlasnik", "object": "Alma Deljo \\u2192 Doma\\u0107a radinost \\"ALMA\\" (03-1-17-1-553/24)"}}]	7	1
+1089	2026-06-10 08:25:06.610905+02	214	Javni prijevoz tereta u vanlinijskom cestovnom prijevozu-taksi prijevoz (03-1-23-1-561/24)	1	[{"added": {}}]	7	1
+1090	2026-06-10 08:29:42.367902+02	218	Sanin Kovač	1	[{"added": {}}]	12	1
+1091	2026-06-10 08:30:02.935573+02	214	Javni prijevoz tereta u vanlinijskom cestovnom prijevozu (03-1-23-1-561/24)	2	[{"changed": {"fields": ["Naziv obrta", "Zabilje\\u0161ke"]}}, {"added": {"name": "Vlasnik", "object": "Sanin Kova\\u010d \\u2192 Javni prijevoz tereta u vanlinijskom cestovnom prijevozu (03-1-23-1-561/24)"}}]	7	1
+1092	2026-06-10 08:30:23.1135+02	214	Javni prijevoz tereta u vanlinijskom cestovnom prijevozu (03-1-23-1-561/24)	2	[]	7	1
+1093	2026-06-10 08:35:52.645778+02	219	Edin Alihodžić	1	[{"added": {}}]	12	1
+1094	2026-06-10 08:36:16.763726+02	215	Obrtnička djelatnost "ED-AL" (03-1-17-1-562/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Edin Alihod\\u017ei\\u0107 \\u2192 Obrtni\\u010dka djelatnost \\"ED-AL\\" (03-1-17-1-562/24)"}}]	7	1
+1095	2026-06-10 08:44:14.587222+02	220	Sanela Šalaka	1	[{"added": {}}]	12	1
+1096	2026-06-10 08:44:32.092166+02	216	Domaća radinost "SANA" (03-1-17-1-547/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sanela \\u0160alaka \\u2192 Doma\\u0107a radinost \\"SANA\\" (03-1-17-1-547/24)"}}]	7	1
+1097	2026-06-10 08:48:33.293848+02	221	Irma Peštek	1	[{"added": {}}]	12	1
+1098	2026-06-10 08:48:41.128441+02	221	Irma Peštek	2	[]	12	1
+1099	2026-06-10 08:48:58.008435+02	217	Samostalni poljoprivredni proizvođač "Irma" (03-1-17-1-599/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Irma Pe\\u0161tek \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"Irma\\" (03-1-17-1-599/24)"}}]	7	1
+1101	2026-06-10 08:57:51.626393+02	218	Domaća radinost "SUNCE" (03-1-17-1-603/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amela Halilovi\\u0107 \\u2192 Doma\\u0107a radinost \\"SUNCE\\" (03-1-17-1-603/24)"}}]	7	1
+1102	2026-06-10 09:02:49.353405+02	223	Arnela Rogo	1	[{"added": {}}]	12	1
+1103	2026-06-10 09:03:15.061759+02	219	Obrtnička radnja-kozmetički salon "Amela" (03-1-17-1-628/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Arnela Rogo \\u2192 Obrtni\\u010dka radnja-kozmeti\\u010dki salon \\"Amela\\" (03-1-17-1-628/24)"}}]	7	1
+1104	2026-06-10 09:03:32.876892+02	219	Obrtnička radnja-kozmetički salon "Arnela" (03-1-17-1-628/24)	2	[{"changed": {"fields": ["Naziv obrta"]}}]	7	1
+1105	2026-06-10 09:11:16.843374+02	224	Hasena Korjenić	1	[{"added": {}}]	12	1
+1106	2026-06-10 09:11:33.240966+02	220	Srodna djelatnost "ŠUMSKI PLODOVI" (03-1-17-1-460/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Hasena Korjeni\\u0107 \\u2192 Srodna djelatnost \\"\\u0160UMSKI PLODOVI\\" (03-1-17-1-460/23)"}}]	7	1
+1107	2026-06-10 09:15:16.943718+02	225	Ramiz Korjenić	1	[{"added": {}}]	12	1
+1108	2026-06-10 09:15:58.394521+02	221	Srodna djelatnost "ZLATNA DOLINA" (03-1-17-1-457/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ramiz Korjeni\\u0107 \\u2192 Srodna djelatnost \\"ZLATNA DOLINA\\" (03-1-17-1-457/23)"}}]	7	1
+1109	2026-06-10 09:22:37.553214+02	226	Senada Hasanbegović Šovšić	1	[{"added": {}}]	12	1
+1110	2026-06-10 09:23:02.20888+02	222	Domaća radinost "ŠOLE" (03-1-17-1-641/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Senada Hasanbegovi\\u0107 \\u0160ov\\u0161i\\u0107 \\u2192 Doma\\u0107a radinost \\"\\u0160OLE\\" (03-1-17-1-641/24)"}}]	7	1
+1111	2026-06-10 09:25:31.286104+02	227	Enes Ljukovac	1	[{"added": {}}]	12	1
+1112	2026-06-10 09:25:52.903538+02	223	Samostalni poljoprivredni proizvođač "LJUKOVAC" (03-1-17-1-609/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Enes Ljukovac \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"LJUKOVAC\\" (03-1-17-1-609/24)"}}]	7	1
+1113	2026-06-10 11:47:32.798417+02	228	Aldin Žuga	1	[{"added": {}}]	12	1
+1114	2026-06-10 11:47:38.636388+02	224	Domaća radinost "PROCLEAN-ČIŠĆENJE" (03-1-17-1-615/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Aldin \\u017duga \\u2192 Doma\\u0107a radinost \\"PROCLEAN-\\u010cI\\u0160\\u0106ENJE\\" (03-1-17-1-615/24)"}}]	7	1
+1115	2026-06-10 11:48:30.968091+02	228	Aldin Žuga	2	[]	12	1
+1116	2026-06-10 11:54:22.803809+02	229	Ismeta Mirvić	1	[{"added": {}}]	12	1
+1117	2026-06-10 11:54:29.65175+02	225	Domaća radinost "ISMETA" (03-1-17-1-619/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ismeta Mirvi\\u0107 \\u2192 Doma\\u0107a radinost \\"ISMETA\\" (03-1-17-1-619/24)"}}]	7	1
+1118	2026-06-10 11:58:43.645708+02	230	Sanela Halilović	1	[{"added": {}}]	12	1
+1119	2026-06-10 11:59:09.500349+02	226	Domaća radinost "BARE" (03-1-17-1-622/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sanela Halilovi\\u0107 \\u2192 Doma\\u0107a radinost \\"BARE\\" (03-1-17-1-622/24)"}}]	7	1
+1120	2026-06-10 14:03:53.551369+02	231	Nedim Pinjo	1	[{"added": {}}]	12	1
+1121	2026-06-10 14:04:23.892083+02	227	Obrtnička radnja "KAN KLJUČ" (03-1-17-1-643/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Nedim Pinjo \\u2192 Obrtni\\u010dka radnja \\"KAN KLJU\\u010c\\" (03-1-17-1-643/24)"}}]	7	1
+1122	2026-06-10 14:10:39.932467+02	613	gor22 – popravak namještaja	1	[{"added": {}}]	15	1
+1123	2026-06-10 14:11:23.308331+02	613	gor22 – popravak namještaja	3		15	1
+1124	2026-06-10 14:13:31.330796+02	232	Diana Ćurovac	1	[{"added": {}}]	12	1
+1125	2026-06-10 14:13:58.332617+02	228	Obrtnička radnja "Enterijer" (03-1-17-1-647/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Diana \\u0106urovac \\u2192 Obrtni\\u010dka radnja \\"Enterijer\\" (03-1-17-1-647/24)"}}]	7	1
+1126	2026-06-10 14:15:07.457625+02	166	Domaća radinost "ADNA" (03-1-17-1-631/24)	2	[]	7	1
+1127	2026-06-10 14:17:06.760203+02	229	Samostalni poljoprivredni proizvođač "Sarajka" (03-1-17-1-678/24)	1	[{"added": {}}]	7	1
+1128	2026-06-10 14:17:42.608085+02	233	Aida Kulić	1	[{"added": {}}]	12	1
+1129	2026-06-10 14:19:13.813519+02	229	Samostalni poljoprivredni proizvođač "Sarajka" (03-1-17-1-678/24)	2	[{"changed": {"fields": ["Datum po\\u010detka rada", "Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}, {"added": {"name": "Vlasnik", "object": "Aida Kuli\\u0107 \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"Sarajka\\" (03-1-17-1-678/24)"}}]	7	1
+1130	2026-06-10 14:19:31.045175+02	229	Samostalni poljoprivredni proizvođač "Sarajka" (03-1-17-1-678/24)	2	[]	7	1
+1131	2026-06-11 08:22:20.775233+02	234	Amina Čupar	1	[{"added": {}}]	12	1
+1132	2026-06-11 08:25:39.75147+02	234	Amina Čupar	2	[]	12	1
+1133	2026-06-11 08:26:56.204122+02	230	Obrtnička radnja-kozmetički salon "BEAUTY SALON AMINA" (03-1-17-1-681/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Amina \\u010cupar \\u2192 Obrtni\\u010dka radnja-kozmeti\\u010dki salon \\"BEAUTY SALON AMINA\\" (03-1-17-1-681/24)"}}]	7	1
+1134	2026-06-11 08:46:16.487795+02	235	Faruk Krdžalija	1	[{"added": {}}]	12	1
+1135	2026-06-11 08:46:21.183248+02	231	Obrtnička djelatnost "Sat Plus" (03-1-17-673/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Faruk Krd\\u017ealija \\u2192 Obrtni\\u010dka djelatnost \\"Sat Plus\\" (03-1-17-673/24)"}}]	7	1
+1136	2026-06-11 08:46:56.490013+02	231	Obrtnička djelatnost "Sat Plus" (03-1-17-673/24)	2	[]	7	1
+1137	2026-06-11 08:54:23.190214+02	236	Aldijana Đogo	1	[{"added": {}}]	12	1
+1138	2026-06-11 08:54:29.78554+02	232	Obrtnička radnja-Frizerski salon "NOIR" (03-1-17-1-504/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Aldijana \\u0110ogo \\u2192 Obrtni\\u010dka radnja-Frizerski salon \\"NOIR\\" (03-1-17-1-504/23)"}}]	7	1
+1139	2026-06-11 08:54:58.864409+02	232	Obrtnička radnja-Frizerski salon "NOIR" (03-1-17-1-504/23)	2	[]	7	1
+1140	2026-06-11 09:08:00.361866+02	237	Sanel Halilović	1	[{"added": {}}]	12	1
+1141	2026-06-11 09:08:05.071767+02	233	Domaća radinost "Sanel" (03-1-17-1-693/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Sanel Halilovi\\u0107 \\u2192 Doma\\u0107a radinost \\"Sanel\\" (03-1-17-1-693/24)"}}]	7	1
+1142	2026-06-11 09:08:33.187086+02	233	Domaća radinost "Sanel" (03-1-17-1-693/24)	2	[]	7	1
+1143	2026-06-11 09:09:28.181987+02	164	Domaća radinost "OKUS PRIRODE" (03-1-17-1-686/24)	2	[]	7	1
+1144	2026-06-11 13:50:24.593102+02	238	Almir Bogdanić	1	[{"added": {}}]	12	1
+1145	2026-06-11 13:50:31.112092+02	234	Obrtnička radnja "ISTAMBUL" (03-1-17-1-713/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Almir Bogdani\\u0107 \\u2192 Obrtni\\u010dka radnja \\"ISTAMBUL\\" (03-1-17-1-713/24)"}}]	7	1
+1146	2026-06-11 13:50:54.057452+02	234	Obrtnička radnja "ISTAMBUL" (03-1-17-1-713/24)	2	[]	7	1
+1147	2026-06-11 13:53:03.491707+02	228	Obrtnička radnja "Enterijer" (03-1-17-1-647/24)	2	[]	7	1
+1148	2026-06-11 13:53:20.522651+02	234	Obrtnička radnja "ISTAMBUL" (03-1-17-1-713/24)	2	[{"changed": {"fields": ["Zanimanje"]}}]	7	1
+1150	2026-06-11 13:58:18.634578+02	235	Domaća radinost "Zumra" (03-1-17-1-509/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Zumra Gr\\u010do \\u2192 Doma\\u0107a radinost \\"Zumra\\" (03-1-17-1-509/23)"}}]	7	1
+1151	2026-06-11 14:01:06.177456+02	236	Domaća radinost "RAZIJA" (03-1-17-1-694/24)	1	[{"added": {}}]	7	1
+1152	2026-06-11 14:01:49.936257+02	240	Razija Hadžović	1	[{"added": {}}]	12	1
+1153	2026-06-11 14:01:54.078008+02	236	Domaća radinost "RAZIJA" (03-1-17-1-694/24)	2	[{"added": {"name": "Vlasnik", "object": "Razija Had\\u017eovi\\u0107 \\u2192 Doma\\u0107a radinost \\"RAZIJA\\" (03-1-17-1-694/24)"}}]	7	1
+1154	2026-06-11 14:03:07.975454+02	236	Domaća radinost "RAZIJA" (03-1-17-1-694/24)	2	[{"changed": {"fields": ["Datum prestanka rada", "Broj rje\\u0161enja o prestanku"]}}]	7	1
+1155	2026-06-11 14:41:10.550815+02	241	Naida Velić	1	[{"added": {}}]	12	1
+1156	2026-06-11 14:41:16.867951+02	237	Domaća radinost "POZITIVA" (03-1-17-1-719/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Naida Veli\\u0107 \\u2192 Doma\\u0107a radinost \\"POZITIVA\\" (03-1-17-1-719/24)"}}]	7	1
+1157	2026-06-11 14:51:46.446707+02	237	Domaća radinost "POZITIVA" (03-1-17-1-719/24)	2	[{"changed": {"fields": ["Zabilje\\u0161ke"]}}]	7	1
+1158	2026-06-11 15:00:13.059959+02	237	Domaća radinost "POZITIVA" (03-1-17-1-719/24)	2	[]	7	1
+1159	2026-06-11 15:04:54.591018+02	242	Hajrija Mulahmetović	1	[{"added": {}}]	12	1
+1160	2026-06-11 15:05:01.101845+02	238	Samostalni poljoprivredni proizvođač "HAJRIJA" (03-1-17-1-478/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Hajrija Mulahmetovi\\u0107 \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"HAJRIJA\\" (03-1-17-1-478/23)"}}]	7	1
+1161	2026-06-11 15:08:29.601366+02	243	Damir Deljo	1	[{"added": {}}]	12	1
+1162	2026-06-11 15:08:36.771058+02	239	Domaća radinost "Šuda"-Goražde (03-1-17-1-662/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Damir Deljo \\u2192 Doma\\u0107a radinost \\"\\u0160uda\\"-Gora\\u017ede (03-1-17-1-662/24)"}}]	7	1
+1163	2026-06-11 15:12:38.553294+02	244	Selma Haljković-Muratspahić	1	[{"added": {}}]	12	1
+1164	2026-06-11 15:12:44.538304+02	240	Domaća radinost "SELMA" (03-1-17-1-735/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Selma Haljkovi\\u0107-Muratspahi\\u0107 \\u2192 Doma\\u0107a radinost \\"SELMA\\" (03-1-17-1-735/24)"}}]	7	1
+1165	2026-06-11 15:17:18.359457+02	245	Dino Karkelja	1	[{"added": {}}]	12	1
+1166	2026-06-11 15:17:45.150069+02	241	Samostalni poljoprivredni proizvođač "KARKELJA" (03-1-17-1-733/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Dino Karkelja \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"KARKELJA\\" (03-1-17-1-733/24)"}}]	7	1
+1167	2026-06-12 08:22:04.810637+02	246	Senada Gabela	1	[{"added": {}}]	12	1
+1168	2026-06-12 08:31:28.218851+02	242	Samostalni poljoprivredni proizvođač "SeGa" (03-1-17-1-745/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Senada Gabela \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"SeGa\\" (03-1-17-1-745/24)"}}]	7	1
+1169	2026-06-12 08:42:31.488909+02	243	Domaća radinost "AL" (03-1-17-1-751/24)	1	[{"added": {}}]	7	1
+1170	2026-06-12 08:45:08.54713+02	247	Ajla Lagumdžija	1	[{"added": {}}]	12	1
+1171	2026-06-12 08:45:25.771015+02	243	Domaća radinost "AL" (03-1-17-1-751/24)	2	[{"changed": {"fields": ["Status", "Adresa/Sjedi\\u0161te", "Grad", "Po\\u0161tanski broj"]}}, {"added": {"name": "Vlasnik", "object": "Ajla Lagumd\\u017eija \\u2192 Doma\\u0107a radinost \\"AL\\" (03-1-17-1-751/24)"}}]	7	1
+1172	2026-06-12 08:56:44.443081+02	114	7231.001 – Automehaničar-pranje auta	2	[{"changed": {"fields": ["Description"]}}]	15	1
+1173	2026-06-12 09:08:19.796341+02	248	Muhamed Žigo	1	[{"added": {}}]	12	1
+1174	2026-06-12 09:08:38.643963+02	248	Muhamed Žigo	2	[{"changed": {"fields": ["Telefon"]}}]	12	1
+1175	2026-06-12 09:08:43.315042+02	244	Obrtnička radnja-autopraonica "CRISTAL" (03-1-17-1-335/25)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Muhamed \\u017digo \\u2192 Obrtni\\u010dka radnja-autopraonica \\"CRISTAL\\" (03-1-17-1-335/25)"}}]	7	1
+1176	2026-06-12 09:09:23.564502+02	248	Muhamed Žiga	2	[{"changed": {"fields": ["Prezime Vlasnika"]}}]	12	1
+1177	2026-06-12 09:10:28.532466+02	244	Obrtnička radnja-autopraonica "CRISTAL" (03-1-17-1-335/25)	2	[{"changed": {"fields": ["Na\\u010din obavljanja", "Zabilje\\u0161ke"]}}]	7	1
+1178	2026-06-12 09:10:38.645487+02	244	Obrtnička radnja-autopraonica "CRISTAL" (03-1-17-1-335/25)	2	[]	7	1
+1179	2026-06-12 09:18:23.122157+02	603	gor15 – administrator	2	[{"changed": {"fields": ["Description"]}}]	15	1
+1180	2026-06-12 09:21:06.359679+02	249	Elvedin Perjan	1	[{"added": {}}]	12	1
+1181	2026-06-12 09:21:22.982627+02	245	Obrtnička djelatnost "BUSINESS FACTOR" (03-1-17-1-771/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Elvedin Perjan \\u2192 Obrtni\\u010dka djelatnost \\"BUSINESS FACTOR\\" (03-1-17-1-771/24)"}}]	7	1
+1182	2026-06-12 09:39:46.181635+02	250	Ejub Agović	1	[{"added": {}}]	12	1
+1183	2026-06-12 09:39:52.314091+02	246	Samostalni poljoprivredni proizvođač "EMA" (03-1-17-1-561/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ejub Agovi\\u0107 \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"EMA\\" (03-1-17-1-561/23)"}}]	7	1
+1184	2026-06-12 09:48:44.261351+02	251	Nedžad Tabaković	1	[{"added": {}}]	12	1
+1185	2026-06-12 09:49:21.236399+02	247	Domaća radinost "BIJELA PČELA" (03-1-17-1-803/24)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Ned\\u017ead Tabakovi\\u0107 \\u2192 Doma\\u0107a radinost \\"BIJELA P\\u010cELA\\" (03-1-17-1-803/24)"}}]	7	1
+1186	2026-06-12 11:29:48.29931+02	252	Senad Alaim	1	[{"added": {}}]	12	1
+1187	2026-06-12 11:29:54.250119+02	248	Samostalni poljoprivredni proizvođač "SENČO" (03-1-17-1-423/23)	1	[{"added": {}}, {"added": {"name": "Vlasnik", "object": "Senad Alaim \\u2192 Samostalni poljoprivredni proizvo\\u0111a\\u010d \\"SEN\\u010cO\\" (03-1-17-1-423/23)"}}]	7	1
 \.
 
 
@@ -1304,6 +2107,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 33	registry	0015_alter_business_options_business_obrt_type_and_more	2026-03-13 14:14:29.049074+01
 34	registry	0016_business_ending_registration_number	2026-03-26 07:59:55.231167+01
 35	registry	0017_alter_business_industry_alter_inspection_result_and_more	2026-03-27 08:28:17.226597+01
+36	registry	0018_business_is_foreign_trade_and_more	2026-05-05 14:39:44.313314+02
+37	registry	0019_owner_sex_alter_business_business_type	2026-05-06 15:04:10.250892+02
 \.
 
 
@@ -1326,6 +2131,12 @@ w1fdxtawn08azt7ob3nupnkztnz3af10	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNut
 4oyaob5pll23snljqqhgi5dts3qhut7z	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNutDtf-_9twhxXUpYO89hyuIiQJx-txTpyXUH-RHrvUlqdZmnJHdFHrTLW8v8uh7u30GJvWw1AyVvtQJtwKdxOLvsYASyFD1YcMZzYkCDSlu1eZ4dZUyENDhkRPH5AshBNxs:1wAmfC:9JcqfO25gYb6l-7K_nKLptjPIOY4-RbcQU0WAYQYbgo	2026-04-23 12:31:06.290802+02
 xe9e0xsq3sdoa8h3yip6duunf9h3aywl	.eJxVjDsOwjAQRO_iGlkYf6GkzxmstXcXB5AtxUmFuDtYSgHlzHszLxFhW0vcOi1xRnERShx-uwT5QXUAvEO9NZlbXZc5yaHInXY5NaTndXf_Dgr0MtbaMRIiB-99zngmMt4ax5ZP-ZhDCKS0-WZS4C1achqQDTudgkHL4v0BEls47g:1wFnl0:rmDnKGe_tRlZFlQrAmicWaShHBIMW20z30zcZOE3zKs	2026-05-07 08:41:50.379813+02
 frianslgzz4yoy002q0ls76bav3sw9gy	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNutDtf-_9twhxXUpYO89hyuIiQJx-txTpyXUH-RHrvUlqdZmnJHdFHrTLW8v8uh7u30GJvWw1AyVvtQJtwKdxOLvsYASyFD1YcMZzYkCDSlu1eZ4dZUyENDhkRPH5AshBNxs:1wG9Gy:nPfy5Un9uNSRHeYFgzSSFfQCY7gc_rFwPD1AthPrtoo	2026-05-08 07:40:16.60207+02
+8qvuzbdobue8ns5ymzprd8fs1t6miyna	.eJxVjDsOwjAQRO_iGlkYf6GkzxmstXcXB5AtxUmFuDtYSgHlzHszLxFhW0vcOi1xRnERShx-uwT5QXUAvEO9NZlbXZc5yaHInXY5NaTndXf_Dgr0MtbaMRIiB-99zngmMt4ax5ZP-ZhDCKS0-WZS4C1achqQDTudgkHL4v0BEls47g:1wKseQ:xBiFQI9HM6Lau-r9cZlNatoHP3N_qL3O5jz90iZCdAQ	2026-05-21 08:56:02.855572+02
+xw146cetyw8ziyvuhjhd3sx5jfkj0ffc	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNutDtf-_9twhxXUpYO89hyuIiQJx-txTpyXUH-RHrvUlqdZmnJHdFHrTLW8v8uh7u30GJvWw1AyVvtQJtwKdxOLvsYASyFD1YcMZzYkCDSlu1eZ4dZUyENDhkRPH5AshBNxs:1wLFPS:x8XJsQ68N8ReEGZuZSqxhi-e1keNC2hVz4pjKBbbvRA	2026-05-22 09:14:06.397827+02
+kaztvzcq7283io4c8lmzvsaf9jvw74rl	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNutDtf-_9twhxXUpYO89hyuIiQJx-txTpyXUH-RHrvUlqdZmnJHdFHrTLW8v8uh7u30GJvWw1AyVvtQJtwKdxOLvsYASyFD1YcMZzYkCDSlu1eZ4dZUyENDhkRPH5AshBNxs:1wPxbf:ICe6cRBxqkaRt3Yy45NxmKkH6HMdxSc8WDyNAgErPaA	2026-06-04 09:14:11.201379+02
+qtk6yh0hfpbxdjnufayt1ih1goxx6ktn	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNutDtf-_9twhxXUpYO89hyuIiQJx-txTpyXUH-RHrvUlqdZmnJHdFHrTLW8v8uh7u30GJvWw1AyVvtQJtwKdxOLvsYASyFD1YcMZzYkCDSlu1eZ4dZUyENDhkRPH5AshBNxs:1wQPaq:7XxnJrMUkR0gPdPVS_5-8XCP5BJInDlTdTmvP5f2eoo	2026-06-05 15:07:12.034944+02
+j07oquzu7ff0a0magxrxv95mpk7d65cg	.eJxVjEEOwiAQRe_C2hAYHAou3XsGAsNUqgaS0q6Md7dNutDtf-_9twhxXUpYO89hyuIiQJx-txTpyXUH-RHrvUlqdZmnJHdFHrTLW8v8uh7u30GJvWw1AyVvtQJtwKdxOLvsYASyFD1YcMZzYkCDSlu1eZ4dZUyENDhkRPH5AshBNxs:1wWSTb:RU5M-TEZLDiULvnmyPcNM7EkGmD33yvSAENxP5Rd25g	2026-06-22 07:24:43.95199+02
+kqlh2y3lx5kb4eluos6a2887kzn2mes9	.eJxVjDsOwjAQRO_iGlkYf6GkzxmstXcXB5AtxUmFuDtYSgHlzHszLxFhW0vcOi1xRnERShx-uwT5QXUAvEO9NZlbXZc5yaHInXY5NaTndXf_Dgr0MtbaMRIiB-99zngmMt4ax5ZP-ZhDCKS0-WZS4C1achqQDTudgkHL4v0BEls47g:1wWTHG:inRJjSVGMfVbT2NAWkWxTodkf7YoVJv5b3WRdo8dXfE	2026-06-22 08:16:02.566651+02
 \.
 
 
@@ -1647,7 +2458,6 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 311	43.21	Elektroinstalacijski radovi
 312	43.22	Ugradnja vodovoda
 313	43.29	Ostali građevinski instalacijski radovi
-314	43.31	Žbukanje
 315	43.32	Ugradnja stolarije
 316	43.33	Postavljanje podnih i zidnih obloga
 317	43.34	Bojenje i staklarski radovi
@@ -1712,7 +2522,6 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 376	47.21	Trgovina na malo voćem i povrćem
 377	47.22	Trgovina na malo mesom i mesnim proizvodima
 378	47.23	Trgovina na malo ribom
-379	47.24	Trgovina na malo hljebom
 380	47.25	Trgovina na malo pićima
 381	47.26	Trgovina na malo duhanskim proizvodima
 382	47.29	Ostala trgovina na malo hranom u specijaliziranim prodavnicama
@@ -1721,7 +2530,6 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 385	47.42	Trgovina na malo telekomunikacijskom opremom
 386	47.43	Trgovina na malo audio i video opremom
 387	47.51	Trgovina na malo tekstilom
-388	47.52	Trgovina na malo željeznom robom
 389	47.53	Trgovina na malo tepisima
 390	47.54	Trgovina na malo električnim aparatima za domaćinstvo
 391	47.59	Trgovina na malo namještajem
@@ -1733,9 +2541,10 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 397	47.71	Trgovina na malo odjećom
 398	47.72	Trgovina na malo obućom i kožnim proizvodima
 399	47.73	Trgovina na malo farmaceutskim proizvodima
+388	47.52	Trgovina na malo metalnom robom, bojama i staklom
+314	43.31	Fasdadni i štukaturski radovi
 400	47.74	Trgovina na malo medicinskim i ortopedskim proizvodima
 401	47.75	Trgovina na malo kozmetikom i toaletnim proizvodima
-402	47.76	Trgovina na malo cvijećem
 403	47.77	Trgovina na malo satovima i nakitom
 404	47.78	Ostala trgovina na malo novom robom u specijaliziranim prodavnicama
 406	47.81	Trgovina na malo putem štandova i tržnica hranom
@@ -1821,7 +2630,6 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 486	68.32	Upravljanje nekretninama uz naplatu ili po ugovoru
 487	code	description
 488	69.10	Pravne djelatnosti
-489	69.20	Računovodstvene
 490	70.10	Upravljanje društvima
 491	70.21	Djelatnosti odnosa s javnošću i komunikacija
 492	70.22	Savjetovanje u vezi s poslovanjem i ostalim upravljanjem
@@ -1947,6 +2755,10 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 613	A/01.25	uzgoj bobičastog voća
 615	C/25.50	Kovanje, presovanje, štancanje i valjanje metala, metalurgija praha
 616	G/45.20	Automatska autopraonica na kovanice
+379	47.24	Trgovina na malo slatkišima
+402	47.76	Trgovina na malo cvijećem, sadnicama, sjemenjem, gnojivom, kućnim ljubimcima i hranom za kućne ljubimce
+619	gor19	limar
+489	69.20	Računovodstvene i knjigovodstvene djelatnosti
 \.
 
 
@@ -1957,6 +2769,21 @@ COPY public.registry_activitycode (id, code, description) FROM stdin;
 COPY public.registry_assessment (id, document_number, assessment_date, result, document_file, notes, business_id) FROM stdin;
 2	03-1-18-1-07/26	2026-01-12	compliant	assessments/2026/04/Brezac_Naser-minimalni_uslovi.pdf	\N	16
 3	03-1-18-1-364/25	2025-03-17	compliant		\N	91
+4	03-1-18-2-64/25	2025-01-16	compliant		\N	92
+5	03-1-18-1-470/25	2025-04-07	compliant		\N	9
+6	03-1-18-1-852/25	2025-06-19	compliant		\N	93
+7	03-1-18-1-802/25	2025-06-10	compliant		\N	94
+8	03-1-18-1-1113/25	2025-08-27	compliant		\N	95
+9	03-1-18-1-1058/25	2025-09-02	compliant		\N	96
+10	03-1-18-1-1132	2025-09-01	compliant		\N	93
+11	03-1-18-1-1253/25	2025-09-22	compliant		\N	95
+12	03-1-18-1-1325/25	2025-10-03	compliant		\N	97
+13	03-1-18-1-1443/24	2024-10-10	compliant		\N	98
+14	03-1-18-1-1566/25	2025-12-01	compliant		\N	98
+15	03-1-18-1-328/26	2026-03-17	compliant	assessments/2026/05/džambegović_almir-smještaj.pdf	\N	156
+16	03-1-18-1-304/26	2026-03-11	compliant	assessments/2026/05/džambegović_amela-smještaj.pdf	\N	157
+17	03-1-18-1-341/26	2026-03-18	compliant	assessments/2026/05/mirvić_hedija-smještaj.pdf	\N	158
+18	03-1-22-1181-1/13	2013-05-27	compliant		\N	167
 \.
 
 
@@ -2443,6 +3270,1013 @@ COPY public.registry_auditlog (id, action, table_name, record_id, action_time, u
 490	create	Owner	95	2026-04-24 14:49:47.683823+02	1
 491	create	Business	91	2026-04-24 14:52:05.229714+02	1
 492	create	BusinessOwner	93	2026-04-24 14:52:05.232743+02	1
+493	create	Owner	96	2026-04-24 14:58:59.805428+02	1
+494	create	Business	92	2026-04-24 15:00:55.077145+02	1
+495	create	BusinessOwner	94	2026-04-24 15:00:55.084145+02	1
+496	update	Business	8	2026-04-24 15:07:44.190429+02	1
+497	update	Owner	8	2026-04-24 15:09:18.057866+02	1
+498	update	Owner	8	2026-04-24 15:10:11.299646+02	1
+499	update	Business	9	2026-04-24 15:10:50.942368+02	1
+500	update	BusinessOwner	9	2026-04-24 15:10:50.945371+02	1
+501	create	Owner	97	2026-04-27 08:26:39.501604+02	1
+502	create	Business	93	2026-04-27 08:27:43.043913+02	1
+503	create	BusinessOwner	95	2026-04-27 08:27:43.049944+02	1
+504	create	Business	94	2026-04-27 08:31:49.260942+02	1
+505	create	Owner	98	2026-04-27 08:33:16.295839+02	1
+506	update	Business	94	2026-04-27 08:34:10.435477+02	1
+507	create	BusinessOwner	96	2026-04-27 08:34:10.438006+02	1
+508	create	Business	95	2026-04-27 08:52:20.246503+02	1
+509	create	Owner	99	2026-04-27 08:53:25.568338+02	1
+510	update	Business	95	2026-04-27 08:54:35.784585+02	1
+511	create	BusinessOwner	97	2026-04-27 08:54:35.786584+02	1
+512	create	Owner	100	2026-04-27 08:59:30.918799+02	1
+513	create	Business	96	2026-04-27 09:00:21.255871+02	1
+514	create	BusinessOwner	98	2026-04-27 09:00:21.259882+02	1
+515	update	Business	93	2026-04-27 09:08:36.477386+02	1
+516	update	Business	95	2026-04-27 09:12:22.178536+02	1
+517	update	Business	95	2026-04-27 09:13:00.709954+02	1
+518	update	BusinessOwner	97	2026-04-27 09:13:00.714406+02	1
+519	update	Business	93	2026-04-27 09:13:51.741325+02	1
+520	update	Business	93	2026-04-27 09:14:05.662265+02	1
+521	create	Owner	101	2026-04-27 09:19:22.520553+02	1
+522	create	Business	97	2026-04-27 09:20:07.852652+02	1
+523	create	BusinessOwner	99	2026-04-27 09:20:07.854682+02	1
+524	create	Owner	102	2026-04-27 09:27:25.738561+02	1
+525	create	Business	98	2026-04-27 09:30:00.41992+02	1
+526	create	BusinessOwner	100	2026-04-27 09:30:00.422952+02	1
+527	update	Business	98	2026-04-27 09:32:07.116236+02	1
+528	create	Owner	103	2026-04-27 09:36:16.666871+02	1
+529	create	Business	99	2026-04-27 09:36:33.236342+02	1
+530	create	BusinessOwner	101	2026-04-27 09:36:33.242311+02	1
+531	update	Business	99	2026-04-27 09:39:42.135873+02	1
+532	create	Owner	104	2026-04-27 09:50:07.514728+02	1
+533	create	Business	100	2026-04-27 09:50:14.409186+02	1
+534	create	BusinessOwner	102	2026-04-27 09:50:14.414217+02	1
+535	create	Owner	105	2026-04-27 11:05:56.53688+02	1
+536	create	Business	101	2026-04-27 11:06:14.060469+02	1
+537	create	BusinessOwner	103	2026-04-27 11:06:14.06702+02	1
+538	create	Owner	106	2026-04-27 11:19:50.443234+02	1
+539	create	Business	102	2026-04-27 11:19:57.516038+02	1
+540	create	BusinessOwner	104	2026-04-27 11:19:57.521118+02	1
+541	create	Owner	107	2026-04-27 11:23:36.566802+02	1
+542	create	Business	103	2026-04-27 11:23:42.143627+02	1
+543	create	BusinessOwner	105	2026-04-27 11:23:42.147406+02	1
+544	update	Business	5	2026-04-27 11:25:05.103713+02	1
+545	create	Owner	108	2026-04-27 11:31:28.660444+02	1
+546	create	Business	104	2026-04-27 11:31:33.488923+02	1
+547	create	BusinessOwner	106	2026-04-27 11:31:33.492499+02	1
+548	create	Owner	109	2026-04-27 11:35:29.758484+02	1
+549	create	Business	105	2026-04-27 11:35:48.340156+02	1
+550	create	BusinessOwner	107	2026-04-27 11:35:48.34267+02	1
+551	update	Business	101	2026-04-27 11:43:06.221013+02	1
+552	create	Owner	110	2026-04-27 11:45:33.411158+02	1
+553	create	Business	106	2026-04-27 11:45:39.475068+02	1
+554	create	BusinessOwner	108	2026-04-27 11:45:39.479612+02	1
+555	create	Owner	111	2026-04-27 11:50:57.049004+02	1
+556	create	Business	107	2026-04-27 11:51:01.760426+02	1
+557	create	BusinessOwner	109	2026-04-27 11:51:01.765428+02	1
+558	update	Business	106	2026-04-27 11:52:38.14523+02	1
+559	create	Business	108	2026-04-27 11:56:36.945061+02	1
+560	create	Owner	112	2026-04-27 11:57:25.976201+02	1
+561	update	Business	108	2026-04-27 11:57:35.628783+02	1
+562	create	BusinessOwner	110	2026-04-27 11:57:35.631816+02	1
+563	create	Owner	113	2026-04-27 12:00:09.485789+02	1
+564	create	Business	109	2026-04-27 12:00:16.457973+02	1
+565	create	BusinessOwner	111	2026-04-27 12:00:16.460971+02	1
+566	update	Business	109	2026-04-27 12:00:46.141399+02	1
+567	update	Business	99	2026-04-27 12:05:03.164673+02	1
+568	update	Business	99	2026-04-27 12:05:33.3763+02	1
+569	create	Owner	114	2026-04-27 12:49:34.803153+02	1
+570	update	Owner	114	2026-04-27 12:51:02.770478+02	1
+571	create	Business	110	2026-04-27 12:51:14.701811+02	1
+572	create	BusinessOwner	112	2026-04-27 12:51:14.707779+02	1
+573	update	Business	110	2026-04-27 12:55:15.414922+02	1
+574	update	Business	110	2026-04-27 12:55:42.963171+02	1
+575	create	Owner	115	2026-04-27 13:05:58.44065+02	1
+576	create	Business	111	2026-04-27 13:06:04.26449+02	1
+577	create	BusinessOwner	113	2026-04-27 13:06:04.267524+02	1
+578	update	Business	105	2026-04-27 13:07:27.583601+02	1
+579	update	Business	103	2026-04-27 13:09:47.281155+02	1
+580	update	Business	103	2026-04-27 13:11:46.605117+02	1
+581	update	Business	103	2026-04-27 13:12:08.478362+02	1
+582	update	Business	103	2026-04-27 13:14:45.917608+02	1
+583	update	Business	103	2026-04-27 13:15:31.653925+02	1
+584	update	Business	99	2026-04-27 13:16:12.516696+02	1
+585	update	Business	99	2026-04-27 13:16:27.586268+02	1
+586	create	Owner	116	2026-04-27 14:08:15.338161+02	1
+587	create	Business	112	2026-04-27 14:08:26.058866+02	1
+588	create	BusinessOwner	114	2026-04-27 14:08:26.062868+02	1
+589	create	Business	113	2026-04-27 14:11:55.046475+02	1
+590	update	Business	113	2026-04-27 14:14:18.207882+02	1
+591	create	Owner	117	2026-04-27 14:16:05.568006+02	1
+592	update	Business	113	2026-04-27 14:16:14.954123+02	1
+593	create	BusinessOwner	115	2026-04-27 14:16:14.956123+02	1
+594	create	Owner	118	2026-04-27 14:20:27.618675+02	1
+595	create	Business	114	2026-04-27 14:20:33.659784+02	1
+596	create	BusinessOwner	116	2026-04-27 14:20:33.663804+02	1
+597	update	Business	114	2026-04-27 14:22:18.02259+02	1
+598	create	Owner	119	2026-04-27 14:25:45.877214+02	1
+599	create	Business	115	2026-04-27 14:25:52.367493+02	1
+600	create	BusinessOwner	117	2026-04-27 14:25:52.371519+02	1
+601	update	Business	101	2026-04-27 14:27:35.643526+02	1
+602	create	Owner	120	2026-04-27 14:30:43.825679+02	1
+603	create	Business	116	2026-04-27 14:30:55.9051+02	1
+604	create	BusinessOwner	118	2026-04-27 14:30:55.908101+02	1
+605	update	Business	116	2026-04-27 14:32:00.748062+02	1
+606	create	Owner	121	2026-04-27 14:34:16.219515+02	1
+607	create	Business	117	2026-04-27 14:34:28.182119+02	1
+608	create	BusinessOwner	119	2026-04-27 14:34:28.185088+02	1
+609	update	Business	109	2026-04-27 14:36:15.13428+02	1
+610	create	Owner	122	2026-04-28 08:26:44.213315+02	1
+611	create	Business	118	2026-04-28 08:26:55.769931+02	1
+612	create	BusinessOwner	120	2026-04-28 08:26:55.777422+02	1
+613	update	Business	102	2026-04-28 08:29:13.149815+02	1
+614	update	Business	102	2026-04-28 08:29:24.209335+02	1
+615	update	Business	115	2026-04-28 08:31:04.60607+02	1
+616	update	Business	113	2026-04-28 08:34:10.690189+02	1
+617	update	Business	100	2026-04-28 08:35:18.347743+02	1
+618	create	Owner	123	2026-04-28 08:41:40.047986+02	1
+619	create	Business	119	2026-04-28 08:41:44.610388+02	1
+620	create	BusinessOwner	121	2026-04-28 08:41:44.615392+02	1
+621	create	Owner	124	2026-04-28 08:45:03.319761+02	1
+622	create	Business	120	2026-04-28 08:45:09.391258+02	1
+623	create	BusinessOwner	122	2026-04-28 08:45:09.394705+02	1
+624	update	Business	114	2026-04-28 08:46:10.273467+02	1
+625	update	Business	114	2026-04-28 08:46:18.252016+02	1
+626	create	Owner	125	2026-04-28 09:35:40.480082+02	1
+627	create	Business	121	2026-04-28 09:35:47.516169+02	1
+628	create	BusinessOwner	123	2026-04-28 09:35:47.523823+02	1
+629	update	Business	110	2026-04-28 11:00:02.532566+02	1
+630	update	Business	110	2026-04-28 11:00:12.461584+02	1
+631	create	Owner	126	2026-04-28 11:03:03.526094+02	1
+632	create	Business	122	2026-04-28 11:03:24.442056+02	1
+633	create	BusinessOwner	124	2026-04-28 11:03:24.445057+02	1
+634	update	Business	122	2026-04-28 11:05:27.684679+02	1
+635	update	Business	122	2026-04-28 11:05:39.152205+02	1
+636	update	BusinessOwner	124	2026-04-28 11:05:39.154173+02	1
+637	create	Owner	127	2026-04-28 11:11:40.279493+02	1
+638	create	Business	123	2026-04-28 11:12:02.963685+02	1
+639	create	BusinessOwner	125	2026-04-28 11:12:02.971686+02	1
+640	create	Owner	128	2026-04-28 11:16:06.454268+02	1
+641	create	Business	124	2026-04-28 11:16:15.715037+02	1
+642	create	BusinessOwner	126	2026-04-28 11:16:15.719065+02	1
+643	create	Owner	129	2026-04-29 08:22:03.759225+02	1
+644	create	Business	125	2026-04-29 08:22:10.426242+02	1
+645	create	BusinessOwner	127	2026-04-29 08:22:10.432771+02	1
+646	update	Owner	129	2026-04-29 08:22:45.661461+02	1
+647	update	Business	125	2026-04-29 08:22:48.814866+02	1
+648	create	Owner	130	2026-04-29 08:28:35.87318+02	1
+649	create	Business	126	2026-04-29 08:28:43.4001+02	1
+650	create	BusinessOwner	128	2026-04-29 08:28:43.405069+02	1
+651	update	Business	112	2026-04-29 08:30:32.102644+02	1
+652	create	Owner	131	2026-04-29 08:38:44.086772+02	1
+653	create	Business	127	2026-04-29 08:39:10.052402+02	1
+654	create	BusinessOwner	129	2026-04-29 08:39:10.056434+02	1
+655	update	Business	127	2026-04-29 08:39:56.52867+02	1
+656	update	Business	104	2026-04-29 08:42:55.859225+02	1
+657	update	Business	104	2026-04-29 08:43:37.139483+02	1
+658	create	Owner	132	2026-04-29 08:52:19.372852+02	1
+659	create	Business	128	2026-04-29 08:52:25.567355+02	1
+660	create	BusinessOwner	130	2026-04-29 08:52:25.571389+02	1
+661	create	Owner	133	2026-04-29 08:57:06.664978+02	1
+662	create	Business	129	2026-04-29 08:57:12.458069+02	1
+663	create	BusinessOwner	131	2026-04-29 08:57:12.462069+02	1
+664	create	Owner	134	2026-04-29 09:00:03.985675+02	1
+665	create	Business	130	2026-04-29 09:00:09.760294+02	1
+666	create	BusinessOwner	132	2026-04-29 09:00:09.763294+02	1
+667	update	Business	130	2026-04-29 09:00:49.209959+02	1
+668	update	Business	3	2026-04-29 09:01:07.999372+02	1
+669	update	Business	129	2026-04-29 09:01:50.720692+02	1
+670	update	Business	129	2026-04-29 09:01:57.637439+02	1
+671	update	Business	121	2026-04-29 09:03:09.163489+02	1
+672	update	Business	108	2026-04-29 09:05:33.54339+02	1
+673	update	Business	108	2026-04-29 09:05:46.739952+02	1
+674	create	Owner	135	2026-04-29 09:08:51.561486+02	1
+675	create	Business	131	2026-04-29 09:09:50.378878+02	1
+676	create	BusinessOwner	133	2026-04-29 09:09:50.38289+02	1
+677	create	Owner	136	2026-04-29 09:20:22.2653+02	1
+678	create	Business	132	2026-04-29 09:21:03.100904+02	1
+679	create	BusinessOwner	134	2026-04-29 09:21:03.104905+02	1
+680	update	Business	132	2026-04-29 09:21:36.931871+02	1
+681	create	Owner	137	2026-04-29 09:32:48.840714+02	1
+682	create	Business	133	2026-04-29 09:41:10.66881+02	1
+683	create	BusinessOwner	135	2026-04-29 09:41:10.67281+02	1
+684	update	Business	123	2026-04-29 09:45:21.101493+02	1
+685	update	Business	123	2026-04-29 09:45:29.696101+02	1
+686	update	Business	123	2026-04-29 09:49:08.927724+02	1
+687	update	Business	2	2026-04-29 09:52:19.413893+02	1
+688	update	Business	1	2026-04-29 11:10:55.11301+02	1
+689	create	Owner	138	2026-04-29 11:22:53.214651+02	1
+690	create	Business	134	2026-04-29 11:23:02.883279+02	1
+691	create	BusinessOwner	136	2026-04-29 11:23:02.887278+02	1
+692	update	Business	131	2026-04-29 11:25:37.702117+02	1
+693	create	Owner	139	2026-04-29 11:29:37.932664+02	1
+694	create	Business	135	2026-04-29 11:29:42.526252+02	1
+695	create	BusinessOwner	137	2026-04-29 11:29:42.529252+02	1
+696	update	Business	4	2026-04-29 12:47:12.236663+02	2
+697	create	Document	29	2026-04-29 12:47:13.502911+02	2
+698	update	Business	4	2026-04-29 12:47:21.748153+02	2
+699	delete	Document	29	2026-04-29 12:47:21.750155+02	2
+700	create	Owner	140	2026-04-30 09:37:56.336968+02	1
+701	create	Business	136	2026-04-30 09:38:05.158695+02	1
+702	create	BusinessOwner	138	2026-04-30 09:38:05.166732+02	1
+703	create	Business	137	2026-04-30 09:43:16.4221+02	1
+704	create	Owner	141	2026-04-30 09:44:16.217709+02	1
+705	update	Business	137	2026-04-30 09:44:41.987942+02	1
+706	create	BusinessOwner	139	2026-04-30 09:44:41.991942+02	1
+707	update	Business	137	2026-04-30 09:45:14.717811+02	1
+708	create	Owner	142	2026-04-30 09:48:34.896486+02	1
+709	create	Business	138	2026-04-30 09:48:42.699114+02	1
+710	create	BusinessOwner	140	2026-04-30 09:48:42.706114+02	1
+711	update	Business	138	2026-04-30 09:49:29.708679+02	1
+712	create	Owner	143	2026-04-30 09:52:18.292818+02	1
+713	create	Business	139	2026-04-30 09:52:36.057803+02	1
+714	create	BusinessOwner	141	2026-04-30 09:52:36.06232+02	1
+715	update	Business	139	2026-04-30 09:54:33.845867+02	1
+716	create	Owner	144	2026-04-30 10:29:53.02588+02	1
+717	create	Business	140	2026-04-30 10:30:07.554492+02	1
+718	create	BusinessOwner	142	2026-04-30 10:30:07.559585+02	1
+719	update	Owner	144	2026-04-30 10:30:56.372513+02	1
+720	update	Business	140	2026-04-30 10:30:58.840125+02	1
+721	create	Owner	145	2026-04-30 10:50:15.933144+02	1
+722	update	Owner	145	2026-04-30 10:50:49.582824+02	1
+723	create	Business	141	2026-04-30 10:50:58.729863+02	1
+724	create	BusinessOwner	143	2026-04-30 10:50:58.729863+02	1
+725	update	Business	141	2026-04-30 10:51:30.770638+02	1
+726	create	Owner	146	2026-04-30 10:55:22.502329+02	1
+727	create	Business	142	2026-04-30 10:55:27.646991+02	1
+728	create	BusinessOwner	144	2026-04-30 10:55:27.662704+02	1
+729	update	Business	142	2026-04-30 10:55:55.752219+02	1
+730	update	Business	136	2026-04-30 11:08:13.070585+02	1
+731	update	Business	128	2026-04-30 11:12:29.465337+02	1
+732	create	Owner	147	2026-04-30 11:40:46.490647+02	1
+733	create	Business	143	2026-04-30 11:40:50.71455+02	1
+734	create	BusinessOwner	145	2026-04-30 11:40:50.719591+02	1
+735	update	Business	136	2026-04-30 11:41:57.099158+02	1
+736	update	Business	136	2026-04-30 11:42:13.264781+02	1
+737	create	Owner	148	2026-04-30 11:45:38.981149+02	1
+738	create	Business	144	2026-04-30 11:45:43.502626+02	1
+739	create	BusinessOwner	146	2026-04-30 11:45:43.507724+02	1
+740	update	Business	142	2026-04-30 11:48:26.34487+02	1
+741	update	Business	142	2026-04-30 12:04:42.339216+02	1
+742	create	Owner	149	2026-05-04 13:58:31.622242+02	1
+743	create	Business	145	2026-05-04 13:58:35.82909+02	1
+744	create	BusinessOwner	147	2026-05-04 13:58:35.840208+02	1
+745	update	Business	145	2026-05-04 14:00:02.017813+02	1
+746	update	Business	130	2026-05-04 14:03:16.509898+02	1
+747	update	Business	130	2026-05-04 14:03:43.259859+02	1
+748	update	Business	128	2026-05-04 14:04:38.022643+02	1
+749	update	Business	128	2026-05-04 14:04:50.293812+02	1
+750	update	Business	104	2026-05-04 14:05:36.263845+02	1
+751	update	Business	104	2026-05-04 14:05:44.175397+02	1
+752	create	Owner	150	2026-05-04 14:14:02.812231+02	1
+753	create	Business	146	2026-05-04 14:14:07.336935+02	1
+754	create	BusinessOwner	148	2026-05-04 14:14:07.344925+02	1
+755	create	Owner	151	2026-05-04 14:18:15.667158+02	1
+756	create	Business	147	2026-05-04 14:18:22.256575+02	1
+757	create	BusinessOwner	149	2026-05-04 14:18:22.260546+02	1
+758	update	Business	147	2026-05-04 14:19:00.759026+02	1
+759	create	Owner	152	2026-05-04 14:22:11.130225+02	1
+760	create	Business	148	2026-05-04 14:22:25.999039+02	1
+761	create	BusinessOwner	150	2026-05-04 14:22:26.003038+02	1
+762	update	Business	140	2026-05-04 14:23:33.154666+02	1
+763	update	Business	140	2026-05-04 14:23:41.82509+02	1
+764	update	Business	140	2026-05-04 14:23:55.9204+02	1
+765	update	Business	139	2026-05-04 14:24:43.177422+02	1
+766	update	Business	132	2026-05-04 14:25:55.502749+02	1
+767	create	Owner	153	2026-05-04 14:47:49.147611+02	1
+768	create	Business	149	2026-05-04 14:47:54.368536+02	1
+769	create	BusinessOwner	151	2026-05-04 14:47:54.371533+02	1
+770	update	Business	149	2026-05-04 14:48:35.913602+02	1
+771	update	Business	137	2026-05-04 14:49:32.477405+02	1
+772	update	Business	137	2026-05-04 14:49:43.221464+02	1
+773	update	Business	148	2026-05-04 14:50:53.60882+02	1
+774	update	Business	148	2026-05-04 14:50:59.350879+02	1
+775	create	Owner	154	2026-05-04 14:54:16.112059+02	1
+776	create	Business	150	2026-05-04 14:54:20.26146+02	1
+777	create	BusinessOwner	152	2026-05-04 14:54:20.267459+02	1
+778	update	Business	150	2026-05-04 14:54:37.857988+02	1
+779	update	Business	141	2026-05-04 14:55:26.155187+02	1
+780	update	Business	141	2026-05-04 14:55:35.70793+02	1
+781	update	Business	138	2026-05-04 14:56:45.78279+02	1
+782	update	Business	138	2026-05-04 14:57:00.476551+02	1
+783	create	Owner	155	2026-05-04 15:01:27.215227+02	1
+784	create	Business	151	2026-05-04 15:02:03.1762+02	1
+785	create	BusinessOwner	153	2026-05-04 15:02:03.182233+02	1
+786	update	Business	125	2026-05-04 15:03:03.708951+02	1
+787	update	Business	135	2026-05-04 15:16:37.338776+02	1
+788	create	Owner	156	2026-05-05 08:11:03.112234+02	1
+789	update	Owner	156	2026-05-05 08:11:11.410091+02	1
+790	create	Business	152	2026-05-05 08:11:16.117174+02	1
+791	create	BusinessOwner	154	2026-05-05 08:11:16.123171+02	1
+792	create	Owner	157	2026-05-05 08:19:48.813514+02	1
+793	create	Business	153	2026-05-05 08:19:56.728495+02	1
+794	create	BusinessOwner	155	2026-05-05 08:19:56.73451+02	1
+795	update	Business	120	2026-05-05 08:23:24.790443+02	1
+796	update	Business	3	2026-05-05 08:24:33.319293+02	1
+797	update	Business	130	2026-05-05 08:25:03.616301+02	1
+798	create	Owner	158	2026-05-05 08:29:14.563623+02	1
+799	create	Business	154	2026-05-05 08:29:20.334012+02	1
+800	create	BusinessOwner	156	2026-05-05 08:29:20.339998+02	1
+801	create	Owner	159	2026-05-05 08:32:03.041629+02	1
+802	create	Business	155	2026-05-05 08:32:07.632625+02	1
+803	create	BusinessOwner	157	2026-05-05 08:32:07.636613+02	1
+804	update	Business	155	2026-05-05 08:32:39.47681+02	1
+805	update	Business	149	2026-05-05 08:35:59.440182+02	1
+806	update	Business	134	2026-05-05 08:37:17.161523+02	1
+807	update	Business	143	2026-05-05 08:39:28.252005+02	1
+808	update	Business	147	2026-05-05 08:41:56.67039+02	1
+809	update	Business	149	2026-05-05 08:46:33.937105+02	1
+810	update	Owner	85	2026-05-06 15:04:57.057634+02	2
+811	update	Owner	85	2026-05-06 15:05:16.055981+02	2
+812	update	Owner	51	2026-05-07 07:56:19.131182+02	2
+813	update	Owner	6	2026-05-07 07:56:24.322072+02	2
+814	update	Owner	7	2026-05-07 07:56:29.557885+02	2
+815	update	Owner	134	2026-05-07 07:56:45.567028+02	2
+816	update	Owner	2	2026-05-07 07:56:50.728627+02	2
+817	update	Owner	9	2026-05-07 07:56:56.104943+02	2
+818	update	Owner	4	2026-05-07 07:57:01.597133+02	2
+819	update	Owner	10	2026-05-07 07:57:06.736543+02	2
+820	update	Owner	4	2026-05-07 07:57:12.793868+02	2
+821	update	Owner	10	2026-05-07 07:57:18.343435+02	2
+822	update	Owner	5	2026-05-07 07:57:23.263668+02	2
+823	update	Owner	21	2026-05-07 07:57:32.094484+02	2
+824	update	Owner	47	2026-05-07 07:57:39.181905+02	2
+825	update	Owner	22	2026-05-07 07:58:11.475171+02	2
+826	update	Owner	70	2026-05-07 07:58:19.108727+02	2
+827	update	Owner	62	2026-05-07 07:58:25.498035+02	2
+828	update	Owner	34	2026-05-07 07:58:57.675239+02	2
+829	update	Owner	80	2026-05-07 07:59:03.100467+02	2
+830	update	Owner	136	2026-05-07 07:59:10.484839+02	2
+831	update	Owner	80	2026-05-07 07:59:52.314016+02	2
+832	update	Owner	136	2026-05-07 08:00:02.23612+02	2
+833	update	Owner	106	2026-05-07 08:00:09.841787+02	2
+834	update	Owner	21	2026-05-07 08:02:49.684713+02	2
+835	update	Owner	21	2026-05-07 08:04:30.375401+02	2
+836	update	Owner	21	2026-05-07 08:05:27.097056+02	2
+837	update	Owner	37	2026-05-07 08:06:08.199648+02	2
+838	update	Owner	37	2026-05-07 08:06:14.36594+02	2
+839	update	Owner	105	2026-05-07 08:06:28.192963+02	2
+840	update	Owner	97	2026-05-07 08:06:37.120858+02	2
+841	update	Owner	101	2026-05-07 08:06:43.242418+02	2
+842	update	Owner	137	2026-05-07 08:07:10.368866+02	2
+843	update	Owner	15	2026-05-07 08:07:21.677642+02	2
+844	update	Owner	28	2026-05-07 08:07:28.005515+02	2
+845	update	Owner	75	2026-05-07 08:07:39.820647+02	2
+846	update	Business	12	2026-05-07 08:11:27.429607+02	2
+847	create	BusinessOwner	158	2026-05-07 08:11:27.435603+02	2
+848	update	Business	12	2026-05-07 08:11:56.26794+02	2
+849	delete	BusinessOwner	12	2026-05-07 08:11:56.275279+02	2
+850	update	Owner	11	2026-05-07 08:12:34.031945+02	2
+851	update	Owner	75	2026-05-07 08:14:35.398483+02	2
+852	update	Owner	152	2026-05-07 08:14:46.17845+02	2
+853	update	Owner	154	2026-05-07 08:20:01.29086+02	2
+854	update	Owner	65	2026-05-07 08:20:09.394515+02	2
+855	update	Owner	127	2026-05-07 08:20:17.811995+02	2
+856	update	Owner	130	2026-05-07 08:20:38.966444+02	2
+857	update	Owner	128	2026-05-07 08:20:46.532221+02	2
+858	update	Business	21	2026-05-07 08:23:29.132784+02	2
+859	update	BusinessOwner	21	2026-05-07 08:23:29.136881+02	2
+860	delete	BusinessOwner	22	2026-05-07 08:23:29.137788+02	2
+861	update	Owner	41	2026-05-07 08:25:41.248928+02	2
+862	update	Owner	100	2026-05-07 08:25:57.394281+02	2
+863	update	Owner	35	2026-05-07 08:26:21.767608+02	2
+864	update	Owner	83	2026-05-07 08:26:41.645772+02	2
+865	update	Owner	8	2026-05-07 08:28:06.958599+02	2
+866	update	Owner	88	2026-05-07 08:32:09.068437+02	2
+867	update	Owner	135	2026-05-07 08:38:07.273139+02	2
+868	update	Owner	38	2026-05-07 08:43:38.095021+02	2
+869	update	Owner	90	2026-05-07 08:43:57.940815+02	2
+870	update	Owner	26	2026-05-07 08:44:08.823621+02	2
+871	update	Owner	124	2026-05-07 08:44:18.178595+02	2
+872	update	Owner	115	2026-05-07 08:44:24.550754+02	2
+873	update	Owner	115	2026-05-07 08:45:08.049708+02	2
+874	update	Owner	48	2026-05-07 08:45:26.321599+02	2
+875	update	Owner	98	2026-05-07 08:47:41.454491+02	2
+876	update	Owner	138	2026-05-07 08:47:50.423368+02	2
+877	update	Owner	79	2026-05-07 08:47:57.753974+02	2
+878	update	Owner	102	2026-05-07 08:48:07.657226+02	2
+879	update	Owner	102	2026-05-07 08:49:04.793463+02	2
+880	update	Owner	56	2026-05-07 08:49:17.618563+02	2
+881	update	Owner	109	2026-05-07 08:58:30.88462+02	1
+882	update	Business	105	2026-05-07 08:58:44.682987+02	1
+883	update	Owner	126	2026-05-07 08:59:04.615734+02	1
+884	update	Owner	125	2026-05-07 08:59:44.185218+02	1
+885	update	Business	121	2026-05-07 08:59:47.136743+02	1
+886	update	Business	122	2026-05-07 09:00:03.932138+02	1
+887	update	Owner	148	2026-05-07 09:00:20.185837+02	1
+888	update	Business	144	2026-05-07 09:00:21.760981+02	1
+889	update	Owner	2	2026-05-07 09:00:42.77757+02	1
+890	update	Business	2	2026-05-07 09:00:46.064805+02	1
+891	update	Owner	3	2026-05-07 09:01:07.310361+02	1
+892	update	Business	3	2026-05-07 09:01:08.897542+02	1
+893	update	Business	133	2026-05-07 09:01:25.563286+02	1
+894	update	Owner	128	2026-05-07 09:01:48.02846+02	1
+895	update	Business	124	2026-05-07 09:01:49.870287+02	1
+896	update	Owner	158	2026-05-07 09:02:28.581572+02	1
+897	update	Business	154	2026-05-07 09:02:31.350516+02	1
+898	update	Owner	108	2026-05-07 09:02:48.132056+02	1
+899	update	Business	104	2026-05-07 09:02:49.524545+02	1
+900	update	Owner	113	2026-05-07 09:03:06.384188+02	1
+901	update	Business	109	2026-05-07 09:03:09.183014+02	1
+902	update	Owner	144	2026-05-07 09:03:26.416431+02	1
+903	update	Business	140	2026-05-07 09:03:27.945768+02	1
+904	update	Owner	118	2026-05-07 09:03:52.945194+02	1
+905	update	Business	114	2026-05-07 09:03:54.391623+02	1
+906	update	Owner	145	2026-05-07 09:04:08.701524+02	1
+907	update	Business	141	2026-05-07 09:04:10.247417+02	1
+908	update	Owner	112	2026-05-07 09:04:25.19473+02	1
+909	update	Business	108	2026-05-07 09:04:27.471246+02	1
+910	update	Owner	143	2026-05-07 09:04:46.994686+02	1
+911	update	Business	139	2026-05-07 09:04:49.232781+02	1
+912	update	Owner	117	2026-05-07 09:05:04.64499+02	1
+913	update	Business	113	2026-05-07 09:05:06.599707+02	1
+914	update	Owner	155	2026-05-07 09:05:32.748901+02	1
+915	update	Business	151	2026-05-07 09:05:35.827769+02	1
+916	update	Owner	8	2026-05-07 09:06:00.913215+02	1
+917	update	Business	9	2026-05-07 09:06:03.2587+02	1
+918	update	Business	98	2026-05-07 09:06:26.173989+02	1
+919	update	Owner	128	2026-05-07 09:12:19.08943+02	1
+920	update	Owner	109	2026-05-07 09:21:02.634299+02	1
+921	update	Owner	81	2026-05-07 09:21:29.559857+02	1
+922	update	Owner	91	2026-05-07 09:21:49.917158+02	1
+923	update	Owner	123	2026-05-07 09:22:09.215242+02	1
+924	update	Owner	148	2026-05-07 09:22:25.251382+02	1
+925	update	Owner	94	2026-05-07 09:22:39.393062+02	1
+926	update	Owner	141	2026-05-07 09:23:09.723737+02	1
+927	update	Owner	36	2026-05-07 09:28:16.187239+02	1
+928	update	Owner	141	2026-05-07 09:28:29.353978+02	1
+929	update	Owner	36	2026-05-07 09:28:49.716748+02	1
+930	update	Owner	78	2026-05-07 09:29:10.806527+02	1
+931	update	Owner	131	2026-05-07 09:29:23.226461+02	1
+932	update	Owner	42	2026-05-07 09:29:39.881804+02	1
+933	update	Owner	146	2026-05-07 09:30:03.673417+02	1
+934	update	Owner	159	2026-05-07 09:30:23.881656+02	1
+935	update	Owner	96	2026-05-07 09:30:37.201128+02	1
+936	update	Owner	40	2026-05-07 09:30:52.731119+02	1
+937	update	Owner	52	2026-05-07 09:33:23.580432+02	1
+938	update	Owner	29	2026-05-07 09:33:38.999223+02	1
+939	update	Owner	72	2026-05-07 09:33:54.666829+02	1
+940	update	Owner	53	2026-05-07 09:34:17.951299+02	1
+941	update	Owner	33	2026-05-07 09:34:29.038659+02	1
+942	update	Owner	33	2026-05-07 09:34:40.087516+02	1
+943	update	Owner	58	2026-05-07 09:34:51.565974+02	1
+944	update	Owner	39	2026-05-07 09:35:02.168835+02	1
+945	update	Owner	67	2026-05-07 09:35:16.240095+02	1
+946	update	Owner	67	2026-05-07 09:35:37.721245+02	1
+947	update	Owner	95	2026-05-07 09:35:56.037375+02	1
+948	update	Owner	13	2026-05-07 09:36:10.358219+02	1
+949	update	Owner	64	2026-05-07 09:36:20.217313+02	1
+950	update	Owner	55	2026-05-07 09:36:35.487205+02	1
+951	update	Owner	30	2026-05-07 09:36:48.554828+02	1
+952	update	Owner	153	2026-05-07 09:37:01.190514+02	1
+953	update	Owner	120	2026-05-07 09:37:14.081998+02	1
+954	update	Owner	110	2026-05-07 09:37:31.843481+02	1
+955	update	Owner	119	2026-05-07 09:37:44.193399+02	1
+956	update	Owner	149	2026-05-07 09:37:55.741799+02	1
+957	update	Owner	104	2026-05-07 09:38:12.565863+02	1
+958	update	Owner	73	2026-05-07 09:38:25.365246+02	1
+959	update	Owner	74	2026-05-07 09:38:44.515644+02	1
+960	update	Owner	122	2026-05-07 09:38:57.848275+02	1
+961	update	Owner	44	2026-05-07 09:39:12.347966+02	1
+962	update	Owner	45	2026-05-07 09:39:30.217585+02	1
+963	update	Owner	61	2026-05-07 09:39:43.31487+02	1
+964	update	Owner	126	2026-05-07 09:39:54.335431+02	1
+965	update	Owner	66	2026-05-07 09:40:03.256589+02	1
+966	update	Owner	17	2026-05-07 09:40:15.297848+02	1
+967	update	Owner	140	2026-05-07 09:40:27.786562+02	1
+968	update	Owner	84	2026-05-07 09:40:40.047642+02	1
+969	update	Owner	114	2026-05-07 09:40:49.162103+02	1
+970	update	Owner	103	2026-05-07 09:41:03.703923+02	1
+971	update	Owner	12	2026-05-07 09:41:11.011689+02	1
+972	update	Owner	82	2026-05-07 09:41:17.793615+02	1
+973	update	Owner	139	2026-05-07 09:41:23.980362+02	1
+974	update	Owner	139	2026-05-07 09:41:30.766402+02	1
+975	update	Owner	87	2026-05-07 09:41:37.949076+02	1
+976	update	Owner	27	2026-05-07 09:41:44.7987+02	1
+977	update	Owner	27	2026-05-07 09:41:51.243888+02	1
+978	update	Owner	57	2026-05-07 09:41:58.691557+02	1
+979	update	Owner	46	2026-05-07 09:42:28.314519+02	1
+980	update	Owner	57	2026-05-07 09:42:54.779464+02	1
+981	update	Owner	49	2026-05-07 09:43:01.71213+02	1
+982	update	Owner	14	2026-05-07 09:43:15.685824+02	1
+983	update	Owner	147	2026-05-07 09:44:08.361679+02	1
+984	update	Owner	50	2026-05-07 09:44:23.252526+02	1
+985	update	Owner	71	2026-05-07 09:44:31.820077+02	1
+986	update	Owner	155	2026-05-07 09:44:37.950408+02	1
+987	update	Owner	32	2026-05-07 09:44:48.354376+02	1
+988	update	Owner	31	2026-05-07 09:45:15.58659+02	1
+989	update	Owner	77	2026-05-07 09:45:28.362841+02	1
+990	update	Owner	18	2026-05-07 09:45:37.151447+02	1
+991	update	Owner	77	2026-05-07 09:45:53.233125+02	1
+992	update	Owner	92	2026-05-07 09:46:02.493406+02	1
+993	update	Owner	125	2026-05-07 09:46:11.041879+02	1
+994	update	Owner	92	2026-05-07 09:46:18.147335+02	1
+995	update	Owner	151	2026-05-07 09:46:28.831211+02	1
+996	update	Owner	63	2026-05-07 09:46:37.246811+02	1
+997	update	Owner	63	2026-05-07 09:46:44.036121+02	1
+998	update	Owner	18	2026-05-07 09:46:51.804393+02	1
+999	update	Owner	16	2026-05-07 09:46:59.914593+02	1
+1000	update	Owner	1	2026-05-07 09:47:12.049478+02	1
+1001	update	Owner	24	2026-05-07 09:47:20.71228+02	1
+1002	update	Owner	132	2026-05-07 09:47:31.654687+02	1
+1003	update	Owner	150	2026-05-07 09:47:41.564873+02	1
+1004	update	Owner	25	2026-05-07 09:47:51.818974+02	1
+1005	update	Owner	157	2026-05-07 09:48:01.817105+02	1
+1006	update	Owner	157	2026-05-07 09:48:14.005326+02	1
+1007	update	Owner	107	2026-05-07 09:48:25.058633+02	1
+1008	update	Owner	60	2026-05-07 09:48:35.395371+02	1
+1009	update	Owner	60	2026-05-07 09:48:48.579778+02	1
+1010	update	Owner	144	2026-05-07 09:48:58.537973+02	1
+1011	update	Owner	68	2026-05-07 09:49:08.528445+02	1
+1012	update	Owner	59	2026-05-07 09:49:24.91806+02	1
+1013	update	Owner	23	2026-05-07 09:49:35.680528+02	1
+1014	update	Owner	93	2026-05-07 09:49:45.326897+02	1
+1015	update	Owner	43	2026-05-07 09:49:54.873659+02	1
+1016	update	Owner	156	2026-05-07 09:50:08.055593+02	1
+1017	update	Owner	89	2026-05-07 09:50:21.003752+02	1
+1018	update	Owner	133	2026-05-07 09:50:30.822118+02	1
+1019	update	Owner	54	2026-05-07 09:50:41.090346+02	1
+1020	update	Owner	158	2026-05-07 09:50:54.52208+02	1
+1021	update	Owner	129	2026-05-07 09:51:06.562076+02	1
+1022	update	Owner	113	2026-05-07 09:51:15.120916+02	1
+1023	update	Owner	143	2026-05-07 09:51:25.450972+02	1
+1024	update	Owner	145	2026-05-07 09:51:35.74024+02	1
+1025	update	Owner	142	2026-05-07 09:51:48.337462+02	1
+1026	update	Owner	76	2026-05-07 09:51:57.342063+02	1
+1027	update	Owner	86	2026-05-07 09:52:10.325945+02	1
+1028	update	Owner	86	2026-05-07 10:53:04.351885+02	1
+1029	update	Owner	69	2026-05-07 10:53:14.054789+02	1
+1030	update	Owner	116	2026-05-07 10:53:30.882631+02	1
+1031	update	Owner	99	2026-05-07 10:53:42.441089+02	1
+1032	update	Owner	19	2026-05-07 10:53:52.972035+02	1
+1033	update	Owner	20	2026-05-07 10:54:03.866211+02	1
+1034	update	Owner	111	2026-05-07 10:54:17.337179+02	1
+1035	update	Owner	86	2026-05-07 10:54:26.618411+02	1
+1036	update	Owner	78	2026-05-08 09:16:27.4836+02	2
+1037	update	Business	143	2026-05-08 09:30:07.241689+02	1
+1038	create	Document	30	2026-05-08 09:30:08.344421+02	1
+1039	update	Business	147	2026-05-08 09:37:13.826372+02	1
+1040	create	Document	31	2026-05-08 09:37:15.149229+02	1
+1041	update	Business	154	2026-05-08 09:38:40.345018+02	1
+1042	create	Document	32	2026-05-08 09:38:42.137992+02	1
+1043	update	Business	149	2026-05-08 09:40:12.226826+02	1
+1044	create	Document	33	2026-05-08 09:40:12.948122+02	1
+1045	update	Business	149	2026-05-08 09:41:51.08945+02	1
+1046	update	Business	130	2026-05-08 09:42:44.348606+02	1
+1047	create	Document	34	2026-05-08 09:42:44.939579+02	1
+1048	update	Business	155	2026-05-08 09:43:30.482082+02	1
+1049	create	Document	35	2026-05-08 09:43:32.160779+02	1
+1050	update	Business	134	2026-05-08 09:45:04.571213+02	1
+1051	create	Document	36	2026-05-08 09:45:08.32211+02	1
+1052	update	Business	149	2026-05-08 11:57:58.523774+02	1
+1053	update	Document	33	2026-05-08 11:57:59.741101+02	1
+1054	update	Business	149	2026-05-08 11:58:20.162328+02	1
+1055	create	Document	37	2026-05-08 11:58:20.916634+02	1
+1056	update	Business	135	2026-05-08 11:59:09.653331+02	1
+1057	create	Document	38	2026-05-08 11:59:10.602069+02	1
+1058	update	Business	135	2026-05-08 11:59:18.375294+02	1
+1059	update	Business	152	2026-05-08 11:59:58.360719+02	1
+1060	create	Document	39	2026-05-08 12:00:00.346063+02	1
+1061	update	Business	152	2026-05-08 12:00:05.627284+02	1
+1062	update	Business	154	2026-05-08 12:00:24.865584+02	1
+1063	update	Business	130	2026-05-08 12:01:08.755825+02	1
+1064	update	Business	120	2026-05-08 12:01:46.304199+02	1
+1065	create	Document	40	2026-05-08 12:01:47.180825+02	1
+1066	update	Business	145	2026-05-08 12:02:58.140919+02	1
+1067	create	Document	41	2026-05-08 12:02:59.014609+02	1
+1068	update	Business	153	2026-05-08 12:04:11.227487+02	1
+1069	create	Document	42	2026-05-08 12:04:12.526693+02	1
+1070	update	Business	154	2026-05-08 12:04:54.033905+02	1
+1071	update	Business	153	2026-05-08 13:44:16.404977+02	1
+1072	update	Owner	121	2026-05-08 14:25:24.617487+02	2
+1073	update	Owner	11	2026-05-08 14:51:26.972984+02	2
+1074	update	Owner	141	2026-05-08 14:53:20.716192+02	2
+1075	update	Business	137	2026-05-08 14:53:42.144976+02	2
+1076	update	Owner	141	2026-05-08 14:54:16.180375+02	2
+1077	create	Owner	160	2026-05-21 09:35:53.467598+02	2
+1078	create	Business	156	2026-05-21 09:42:21.679568+02	2
+1079	create	BusinessOwner	159	2026-05-21 09:42:21.691976+02	2
+1080	create	Owner	161	2026-05-21 09:56:37.630291+02	2
+1081	create	Business	157	2026-05-21 09:57:22.227217+02	2
+1082	create	BusinessOwner	160	2026-05-21 09:57:22.230722+02	2
+1083	update	Business	157	2026-05-21 10:46:13.616886+02	2
+1084	create	Owner	162	2026-05-21 10:48:48.343175+02	2
+1085	create	Business	158	2026-05-21 10:49:19.185384+02	2
+1086	create	BusinessOwner	161	2026-05-21 10:49:19.188383+02	2
+1087	update	Business	156	2026-05-21 13:46:55.090967+02	2
+1088	update	Business	157	2026-05-21 13:47:52.829743+02	2
+1089	update	Business	157	2026-05-21 13:48:00.687238+02	2
+1090	update	Business	158	2026-05-21 13:48:30.261665+02	2
+1091	update	Business	158	2026-05-21 13:48:39.389068+02	2
+1092	create	Owner	163	2026-05-22 08:47:06.206019+02	2
+1093	create	Business	159	2026-05-22 08:47:20.206036+02	2
+1094	create	BusinessOwner	162	2026-05-22 08:47:20.210279+02	2
+1095	create	Owner	164	2026-05-22 08:53:25.124545+02	2
+1096	create	Business	160	2026-05-22 08:53:39.783567+02	2
+1097	create	BusinessOwner	163	2026-05-22 08:53:39.791656+02	2
+1098	create	Owner	165	2026-05-22 09:01:19.47505+02	2
+1099	create	Business	161	2026-05-22 09:01:26.280675+02	2
+1100	create	BusinessOwner	164	2026-05-22 09:01:26.287917+02	2
+1101	create	Owner	166	2026-05-22 09:09:19.232773+02	2
+1102	create	Business	162	2026-05-22 09:09:28.897421+02	2
+1103	create	BusinessOwner	165	2026-05-22 09:09:28.900411+02	2
+1104	update	Business	162	2026-05-22 09:45:52.979166+02	2
+1105	create	Document	43	2026-05-22 09:45:55.00592+02	2
+1106	update	Business	162	2026-05-22 09:47:01.85394+02	2
+1107	update	Business	162	2026-05-22 09:47:16.903201+02	2
+1108	update	Business	159	2026-05-22 09:47:54.740641+02	2
+1109	create	Document	44	2026-05-22 09:47:56.580391+02	2
+1110	create	Owner	167	2026-05-25 09:21:49.14701+02	2
+1111	create	Business	163	2026-05-25 09:22:17.053613+02	2
+1112	create	BusinessOwner	166	2026-05-25 09:22:17.066297+02	2
+1113	update	Business	163	2026-05-25 09:53:37.81288+02	2
+1114	create	Document	45	2026-05-25 09:53:38.5299+02	2
+1115	create	Owner	168	2026-05-25 10:55:48.181881+02	2
+1116	create	Business	164	2026-05-25 10:59:58.711614+02	2
+1117	create	BusinessOwner	167	2026-05-25 10:59:58.725101+02	2
+1118	create	Document	46	2026-05-25 10:59:59.445124+02	2
+1119	update	Business	164	2026-05-25 11:00:39.286297+02	2
+1120	update	Business	163	2026-05-25 11:01:11.703828+02	2
+1121	create	Business	165	2026-05-25 11:20:43.70925+02	2
+1122	create	Owner	169	2026-05-25 11:22:15.442109+02	2
+1123	update	Business	165	2026-05-25 11:22:20.427451+02	2
+1124	create	BusinessOwner	168	2026-05-25 11:22:20.427451+02	2
+1125	update	Business	165	2026-05-25 11:26:29.298301+02	2
+1126	create	Document	47	2026-05-25 11:26:30.147019+02	2
+1127	update	Business	38	2026-05-25 11:32:41.072888+02	2
+1128	create	Document	48	2026-05-25 11:32:41.678666+02	2
+1129	update	Business	14	2026-05-25 11:42:48.702433+02	2
+1130	create	Owner	170	2026-05-26 08:25:08.068805+02	2
+1131	update	Owner	170	2026-05-26 08:25:28.130716+02	2
+1132	create	Business	166	2026-05-26 08:25:37.73914+02	2
+1133	create	BusinessOwner	169	2026-05-26 08:25:37.73914+02	2
+1134	update	Business	166	2026-05-26 08:30:39.121266+02	2
+1135	create	Document	49	2026-05-26 08:30:39.933635+02	2
+1136	update	Business	166	2026-05-26 08:33:53.54135+02	2
+1137	create	Document	50	2026-05-26 08:33:53.876021+02	2
+1138	update	Business	166	2026-05-26 08:37:31.137671+02	2
+1139	create	Document	51	2026-05-26 08:37:31.663795+02	2
+1140	update	Business	166	2026-05-26 08:44:59.832172+02	2
+1141	create	Document	52	2026-05-26 08:45:00.395383+02	2
+1142	update	Business	166	2026-05-26 08:47:24.334869+02	2
+1143	create	Document	53	2026-05-26 08:47:25.054467+02	2
+1144	update	Business	166	2026-05-26 08:47:34.159605+02	2
+1145	update	Business	166	2026-05-26 08:48:05.512768+02	2
+1146	create	Owner	171	2026-05-26 09:13:40.137858+02	2
+1147	create	Business	167	2026-05-26 09:17:43.6953+02	2
+1148	create	BusinessOwner	170	2026-05-26 09:17:43.6953+02	2
+1149	create	Document	54	2026-05-26 09:17:44.578035+02	2
+1150	update	Business	152	2026-05-26 11:05:44.448455+02	2
+1151	create	Document	55	2026-05-26 11:05:45.177286+02	2
+1152	update	Business	151	2026-05-26 11:11:53.710633+02	2
+1153	create	Document	56	2026-05-26 11:11:53.951718+02	2
+1154	update	Business	151	2026-05-26 11:12:12.122349+02	2
+1155	create	Document	57	2026-05-26 11:12:12.666644+02	2
+1156	update	Business	151	2026-05-26 11:13:59.148857+02	2
+1157	update	Business	151	2026-05-26 11:15:57.043319+02	2
+1158	delete	Document	57	2026-05-26 11:15:57.054867+02	2
+1159	create	Document	58	2026-05-26 11:15:57.621029+02	2
+1160	update	Business	151	2026-05-26 11:16:13.461185+02	2
+1161	update	Business	14	2026-06-01 09:02:07.407033+02	2
+1162	create	Document	59	2026-06-01 09:02:08.824408+02	2
+1163	create	Owner	172	2026-06-01 09:07:57.405853+02	2
+1164	create	Business	168	2026-06-01 09:08:26.562331+02	2
+1165	create	BusinessOwner	171	2026-06-01 09:08:26.572025+02	2
+1166	create	Document	60	2026-06-01 09:08:28.652594+02	2
+1167	create	Owner	173	2026-06-01 09:13:21.302959+02	2
+1168	update	Owner	173	2026-06-01 09:13:50.425016+02	2
+1169	create	Business	169	2026-06-01 09:14:16.554772+02	2
+1170	create	BusinessOwner	172	2026-06-01 09:14:16.559773+02	2
+1171	create	Document	61	2026-06-01 09:14:18.572166+02	2
+1172	create	Owner	174	2026-06-01 09:19:21.565035+02	2
+1173	create	Business	170	2026-06-01 09:19:46.520139+02	2
+1174	create	BusinessOwner	173	2026-06-01 09:19:46.531826+02	2
+1175	create	Document	62	2026-06-01 09:19:48.955996+02	2
+1176	create	Owner	175	2026-06-01 09:24:59.627045+02	2
+1177	create	Business	171	2026-06-01 09:25:28.568766+02	2
+1178	create	BusinessOwner	174	2026-06-01 09:25:28.571804+02	2
+1179	create	Document	63	2026-06-01 09:25:30.866142+02	2
+1180	create	Owner	176	2026-06-01 09:29:39.051073+02	2
+1181	create	Business	172	2026-06-01 09:31:10.735754+02	2
+1182	create	BusinessOwner	175	2026-06-01 09:31:10.742283+02	2
+1183	create	Document	64	2026-06-01 09:31:13.244729+02	2
+1184	create	Owner	177	2026-06-01 09:36:24.947401+02	2
+1185	create	Business	173	2026-06-01 09:37:04.196524+02	2
+1186	create	BusinessOwner	176	2026-06-01 09:37:04.202527+02	2
+1187	create	Document	65	2026-06-01 09:37:06.551327+02	2
+1188	create	Owner	178	2026-06-01 09:41:28.872836+02	2
+1189	create	Business	174	2026-06-01 09:41:54.476593+02	2
+1190	create	BusinessOwner	177	2026-06-01 09:41:54.480604+02	2
+1191	create	Document	66	2026-06-01 09:41:56.582882+02	2
+1192	update	Business	174	2026-06-01 09:42:49.544697+02	2
+1193	update	Business	161	2026-06-01 09:48:32.99373+02	2
+1194	create	Document	67	2026-06-01 09:48:35.067799+02	2
+1195	update	Business	160	2026-06-01 09:51:29.990176+02	2
+1196	create	Document	68	2026-06-01 09:51:31.96942+02	2
+1197	create	Owner	179	2026-06-01 10:55:28.014855+02	2
+1198	create	Business	175	2026-06-01 10:55:57.896904+02	2
+1199	create	BusinessOwner	178	2026-06-01 10:55:57.900904+02	2
+1200	create	Document	69	2026-06-01 10:56:00.071841+02	2
+1201	create	Owner	180	2026-06-01 11:03:04.567344+02	2
+1202	create	Business	176	2026-06-01 11:03:24.694984+02	2
+1203	create	BusinessOwner	179	2026-06-01 11:03:24.698984+02	2
+1204	create	Document	70	2026-06-01 11:03:26.784326+02	2
+1205	update	Business	176	2026-06-01 11:04:18.741749+02	2
+1206	create	Owner	181	2026-06-01 11:07:29.764213+02	2
+1207	create	Business	177	2026-06-01 11:08:09.432324+02	2
+1208	create	BusinessOwner	180	2026-06-01 11:08:09.436848+02	2
+1209	create	Business	178	2026-06-01 11:10:43.61573+02	2
+1210	create	Owner	182	2026-06-01 11:12:11.167482+02	2
+1211	update	Business	178	2026-06-01 11:12:20.017876+02	2
+1212	create	BusinessOwner	181	2026-06-01 11:12:20.020878+02	2
+1213	update	Business	177	2026-06-01 12:23:38.801539+02	2
+1214	create	Document	71	2026-06-01 12:23:41.04944+02	2
+1215	update	Business	178	2026-06-01 12:25:15.251753+02	2
+1216	create	Document	72	2026-06-01 12:25:17.135727+02	2
+1217	update	Owner	48	2026-06-03 10:45:26.160328+02	2
+1218	update	Business	44	2026-06-03 10:45:41.665536+02	2
+1219	create	Owner	183	2026-06-03 11:27:06.200812+02	2
+1220	update	Owner	183	2026-06-03 11:27:17.52473+02	2
+1221	create	Business	179	2026-06-03 11:27:35.525607+02	2
+1222	create	BusinessOwner	182	2026-06-03 11:27:35.529609+02	2
+1223	create	Document	73	2026-06-03 11:27:36.250383+02	2
+1224	update	Business	179	2026-06-03 11:28:24.4381+02	2
+1225	update	Business	179	2026-06-03 11:34:31.460271+02	2
+1226	update	Business	97	2026-06-08 08:17:31.882171+02	1
+1227	create	Document	74	2026-06-08 08:17:34.19744+02	1
+1228	update	Business	96	2026-06-08 08:25:04.354345+02	1
+1229	create	Document	75	2026-06-08 08:25:06.064721+02	1
+1230	update	Business	9	2026-06-08 08:28:34.440147+02	1
+1231	create	Document	76	2026-06-08 08:28:36.358401+02	1
+1232	update	Business	98	2026-06-08 08:32:39.724324+02	1
+1233	create	Document	77	2026-06-08 08:32:40.848828+02	1
+1234	update	Business	98	2026-06-08 08:33:03.421928+02	1
+1235	create	Document	78	2026-06-08 08:33:04.46135+02	1
+1236	create	Owner	184	2026-06-08 09:34:12.023417+02	1
+1237	create	Business	180	2026-06-08 09:34:22.70797+02	1
+1238	create	BusinessOwner	183	2026-06-08 09:34:22.714969+02	1
+1239	update	Business	180	2026-06-08 09:34:42.115439+02	1
+1240	create	Owner	185	2026-06-08 09:43:34.813136+02	1
+1241	create	Business	181	2026-06-08 09:43:52.381354+02	1
+1242	create	BusinessOwner	184	2026-06-08 09:43:52.389037+02	1
+1243	create	Document	79	2026-06-08 09:43:52.713205+02	1
+1244	update	Business	93	2026-06-08 09:51:01.656769+02	1
+1245	create	Document	80	2026-06-08 09:51:02.263991+02	1
+1246	update	Owner	37	2026-06-08 12:29:40.325316+02	1
+1247	create	Business	182	2026-06-08 12:29:54.964069+02	1
+1248	create	BusinessOwner	185	2026-06-08 12:29:54.964069+02	1
+1249	create	Owner	186	2026-06-08 12:38:34.864686+02	1
+1250	create	Business	183	2026-06-08 12:38:45.827736+02	1
+1251	create	BusinessOwner	186	2026-06-08 12:38:45.827736+02	1
+1252	create	Owner	187	2026-06-08 12:43:00.073287+02	1
+1253	create	Business	184	2026-06-08 12:43:13.250682+02	1
+1254	create	BusinessOwner	187	2026-06-08 12:43:13.250682+02	1
+1255	create	Owner	188	2026-06-08 12:46:39.322606+02	1
+1256	create	Business	185	2026-06-08 12:49:12.595879+02	1
+1257	create	BusinessOwner	188	2026-06-08 12:49:12.595879+02	1
+1258	create	Business	186	2026-06-08 12:56:29.2636+02	1
+1259	create	Owner	189	2026-06-08 12:58:24.517083+02	1
+1260	update	Business	186	2026-06-08 12:58:33.677713+02	1
+1261	create	BusinessOwner	189	2026-06-08 12:58:33.677713+02	1
+1262	update	Business	186	2026-06-08 13:02:35.463255+02	1
+1263	create	Owner	190	2026-06-08 13:13:39.359519+02	1
+1264	create	Business	187	2026-06-08 13:13:59.639016+02	1
+1265	create	BusinessOwner	190	2026-06-08 13:13:59.642016+02	1
+1266	create	Owner	191	2026-06-08 13:28:12.407697+02	1
+1267	create	Business	188	2026-06-08 13:41:53.601557+02	1
+1268	create	BusinessOwner	191	2026-06-08 13:41:53.606584+02	1
+1269	create	Owner	192	2026-06-08 14:02:14.666382+02	1
+1270	create	Business	189	2026-06-08 14:02:24.459932+02	1
+1271	create	BusinessOwner	192	2026-06-08 14:02:24.462931+02	1
+1272	create	Owner	193	2026-06-08 14:18:28.974741+02	1
+1273	create	Business	190	2026-06-08 14:24:48.664113+02	1
+1274	create	BusinessOwner	193	2026-06-08 14:24:48.667112+02	1
+1275	create	Owner	194	2026-06-08 15:06:24.198504+02	1
+1276	create	Business	191	2026-06-08 15:06:37.287914+02	1
+1277	create	BusinessOwner	194	2026-06-08 15:06:37.293919+02	1
+1278	create	Owner	195	2026-06-08 15:24:57.68886+02	1
+1279	create	Business	192	2026-06-08 15:25:06.889539+02	1
+1280	create	BusinessOwner	195	2026-06-08 15:25:06.892539+02	1
+1281	update	Business	192	2026-06-08 15:25:42.778845+02	1
+1282	create	Owner	196	2026-06-08 15:33:13.844626+02	1
+1283	create	Business	193	2026-06-08 15:33:21.250058+02	1
+1284	create	BusinessOwner	196	2026-06-08 15:33:21.25306+02	1
+1285	create	Owner	197	2026-06-08 15:44:16.123508+02	1
+1286	update	Owner	197	2026-06-08 15:44:37.018571+02	1
+1287	create	Business	194	2026-06-08 15:46:48.561051+02	1
+1288	create	BusinessOwner	197	2026-06-08 15:46:48.564052+02	1
+1289	create	Owner	198	2026-06-09 08:00:58.282668+02	1
+1290	create	Business	195	2026-06-09 08:01:07.461089+02	1
+1291	create	BusinessOwner	198	2026-06-09 08:01:07.466094+02	1
+1292	create	Owner	199	2026-06-09 08:18:03.490875+02	1
+1293	update	Owner	199	2026-06-09 08:18:17.584989+02	1
+1294	create	Business	196	2026-06-09 08:19:18.077568+02	1
+1295	create	BusinessOwner	199	2026-06-09 08:19:18.081564+02	1
+1296	create	Owner	200	2026-06-09 08:28:23.51488+02	1
+1297	create	Business	197	2026-06-09 08:28:41.057751+02	1
+1298	create	BusinessOwner	200	2026-06-09 08:28:41.061725+02	1
+1299	create	Owner	201	2026-06-09 08:47:59.028627+02	1
+1300	create	Business	198	2026-06-09 08:48:09.258039+02	1
+1301	create	BusinessOwner	201	2026-06-09 08:48:09.261069+02	1
+1302	update	Owner	201	2026-06-09 08:48:41.169822+02	1
+1303	create	Owner	202	2026-06-09 08:51:30.620824+02	1
+1304	create	Business	199	2026-06-09 08:53:27.378969+02	1
+1305	create	BusinessOwner	202	2026-06-09 08:53:27.383008+02	1
+1306	update	Business	199	2026-06-09 08:54:33.83187+02	1
+1307	create	Owner	203	2026-06-09 09:05:39.861372+02	1
+1308	update	Owner	203	2026-06-09 09:06:00.735786+02	1
+1309	create	Business	200	2026-06-09 09:06:04.126962+02	1
+1310	create	BusinessOwner	203	2026-06-09 09:06:04.130954+02	1
+1311	update	Business	200	2026-06-09 09:07:32.311129+02	1
+1312	create	Owner	204	2026-06-09 09:11:26.59217+02	1
+1313	create	Owner	205	2026-06-09 09:15:05.754036+02	1
+1314	create	Business	201	2026-06-09 09:15:14.018491+02	1
+1315	create	BusinessOwner	204	2026-06-09 09:15:14.023488+02	1
+1316	update	Business	201	2026-06-09 09:16:14.727796+02	1
+1317	create	Owner	206	2026-06-09 09:21:15.728088+02	1
+1318	update	Owner	206	2026-06-09 09:46:34.594391+02	1
+1319	create	Business	202	2026-06-09 09:46:45.485011+02	1
+1320	create	BusinessOwner	205	2026-06-09 09:46:45.488049+02	1
+1321	update	Business	202	2026-06-09 09:48:56.760109+02	1
+1322	create	Owner	207	2026-06-09 11:34:50.94067+02	1
+1323	create	Business	203	2026-06-09 11:37:11.834417+02	1
+1324	create	BusinessOwner	206	2026-06-09 11:37:11.838424+02	1
+1325	create	Owner	208	2026-06-09 11:42:20.427185+02	1
+1326	create	Business	204	2026-06-09 11:43:52.626524+02	1
+1327	create	BusinessOwner	207	2026-06-09 11:43:52.631529+02	1
+1328	create	Owner	209	2026-06-09 11:48:42.060284+02	1
+1329	create	Business	205	2026-06-09 11:49:15.451796+02	1
+1330	create	BusinessOwner	208	2026-06-09 11:49:15.456794+02	1
+1331	create	Owner	210	2026-06-09 11:56:44.532651+02	1
+1332	update	Owner	210	2026-06-09 11:57:35.889229+02	1
+1333	create	Business	206	2026-06-09 11:59:23.26488+02	1
+1334	create	BusinessOwner	209	2026-06-09 11:59:23.27088+02	1
+1335	update	Business	206	2026-06-09 12:02:37.314915+02	1
+1336	update	Business	206	2026-06-09 12:03:11.699188+02	1
+1337	create	Owner	211	2026-06-09 12:20:07.916198+02	1
+1338	update	Owner	211	2026-06-09 12:27:42.753178+02	1
+1339	create	Business	207	2026-06-09 12:27:47.89654+02	1
+1340	create	BusinessOwner	210	2026-06-09 12:27:47.899508+02	1
+1341	create	Owner	212	2026-06-09 12:30:32.649839+02	1
+1342	create	Business	208	2026-06-09 12:30:55.578937+02	1
+1343	create	BusinessOwner	211	2026-06-09 12:30:55.585975+02	1
+1344	create	Owner	213	2026-06-09 13:47:58.093176+02	1
+1345	create	Business	209	2026-06-09 13:48:04.516405+02	1
+1346	create	BusinessOwner	212	2026-06-09 13:48:04.52041+02	1
+1347	update	Business	209	2026-06-09 13:48:37.610571+02	1
+1348	create	Owner	214	2026-06-09 13:59:37.670302+02	1
+1349	create	Business	210	2026-06-09 13:59:58.921498+02	1
+1350	create	BusinessOwner	213	2026-06-09 13:59:58.926498+02	1
+1351	create	Business	211	2026-06-09 14:18:52.434544+02	1
+1352	create	Owner	215	2026-06-09 14:21:01.724427+02	1
+1353	update	Business	211	2026-06-09 14:21:06.269827+02	1
+1354	create	BusinessOwner	214	2026-06-09 14:21:06.27183+02	1
+1355	create	Business	212	2026-06-09 15:20:04.340215+02	1
+1356	create	Owner	216	2026-06-09 15:21:10.591185+02	1
+1357	update	Business	212	2026-06-09 15:22:56.530077+02	1
+1358	create	BusinessOwner	215	2026-06-09 15:22:56.533106+02	1
+1359	update	Business	212	2026-06-09 15:23:26.469408+02	1
+1360	create	Document	81	2026-06-09 15:23:27.227939+02	1
+1361	update	Business	212	2026-06-09 15:23:50.402966+02	1
+1362	create	Document	82	2026-06-09 15:23:50.933074+02	1
+1363	update	Business	212	2026-06-09 15:29:58.23296+02	1
+1364	update	Owner	216	2026-06-09 15:30:23.672706+02	1
+1365	update	Business	212	2026-06-09 15:30:25.33156+02	1
+1366	create	Business	213	2026-06-10 08:17:46.314609+02	1
+1367	create	Owner	217	2026-06-10 08:19:16.883044+02	1
+1368	update	Business	213	2026-06-10 08:19:22.451941+02	1
+1369	create	BusinessOwner	216	2026-06-10 08:19:22.457915+02	1
+1370	create	Business	214	2026-06-10 08:25:06.604898+02	1
+1371	create	Owner	218	2026-06-10 08:29:42.366898+02	1
+1372	update	Business	214	2026-06-10 08:30:02.932573+02	1
+1373	create	BusinessOwner	217	2026-06-10 08:30:02.935573+02	1
+1374	update	Business	214	2026-06-10 08:30:23.110469+02	1
+1375	create	Owner	219	2026-06-10 08:35:52.644785+02	1
+1376	create	Business	215	2026-06-10 08:36:16.75972+02	1
+1377	create	BusinessOwner	218	2026-06-10 08:36:16.763726+02	1
+1378	create	Owner	220	2026-06-10 08:44:14.586218+02	1
+1379	create	Business	216	2026-06-10 08:44:32.086032+02	1
+1380	create	BusinessOwner	219	2026-06-10 08:44:32.091165+02	1
+1381	create	Owner	221	2026-06-10 08:48:33.292847+02	1
+1382	update	Owner	221	2026-06-10 08:48:41.127444+02	1
+1383	create	Business	217	2026-06-10 08:48:58.003434+02	1
+1384	create	BusinessOwner	220	2026-06-10 08:48:58.007434+02	1
+1385	create	Owner	222	2026-06-10 08:55:37.466816+02	1
+1386	create	Business	218	2026-06-10 08:57:51.620822+02	1
+1387	create	BusinessOwner	221	2026-06-10 08:57:51.625385+02	1
+1388	create	Owner	223	2026-06-10 09:02:49.352378+02	1
+1389	create	Business	219	2026-06-10 09:03:15.05779+02	1
+1390	create	BusinessOwner	222	2026-06-10 09:03:15.060792+02	1
+1391	update	Business	219	2026-06-10 09:03:32.873886+02	1
+1392	create	Owner	224	2026-06-10 09:11:16.842373+02	1
+1393	create	Business	220	2026-06-10 09:11:33.236967+02	1
+1394	create	BusinessOwner	223	2026-06-10 09:11:33.239966+02	1
+1395	create	Owner	225	2026-06-10 09:15:16.942716+02	1
+1396	create	Business	221	2026-06-10 09:15:58.390522+02	1
+1397	create	BusinessOwner	224	2026-06-10 09:15:58.393521+02	1
+1398	create	Owner	226	2026-06-10 09:22:37.552214+02	1
+1399	create	Business	222	2026-06-10 09:23:02.204882+02	1
+1400	create	BusinessOwner	225	2026-06-10 09:23:02.20788+02	1
+1401	create	Owner	227	2026-06-10 09:25:31.285106+02	1
+1402	create	Business	223	2026-06-10 09:25:52.899541+02	1
+1403	create	BusinessOwner	226	2026-06-10 09:25:52.90254+02	1
+1404	create	Owner	228	2026-06-10 11:47:32.79656+02	1
+1405	create	Business	224	2026-06-10 11:47:38.628941+02	1
+1406	create	BusinessOwner	227	2026-06-10 11:47:38.635388+02	1
+1407	update	Owner	228	2026-06-10 11:48:30.967092+02	1
+1408	create	Owner	229	2026-06-10 11:54:22.80284+02	1
+1409	create	Business	225	2026-06-10 11:54:29.647738+02	1
+1410	create	BusinessOwner	228	2026-06-10 11:54:29.650751+02	1
+1411	create	Owner	230	2026-06-10 11:58:43.644707+02	1
+1412	create	Business	226	2026-06-10 11:59:09.496215+02	1
+1413	create	BusinessOwner	229	2026-06-10 11:59:09.499379+02	1
+1414	create	Owner	231	2026-06-10 14:03:53.548858+02	1
+1415	create	Business	227	2026-06-10 14:04:23.884512+02	1
+1416	create	BusinessOwner	230	2026-06-10 14:04:23.891081+02	1
+1417	create	Owner	232	2026-06-10 14:13:31.329795+02	1
+1418	create	Business	228	2026-06-10 14:13:58.327651+02	1
+1419	create	BusinessOwner	231	2026-06-10 14:13:58.331618+02	1
+1420	update	Business	166	2026-06-10 14:15:07.453613+02	1
+1421	create	Business	229	2026-06-10 14:17:06.7562+02	1
+1422	create	Owner	233	2026-06-10 14:17:42.607082+02	1
+1423	update	Business	229	2026-06-10 14:19:13.809975+02	1
+1424	create	BusinessOwner	232	2026-06-10 14:19:13.812519+02	1
+1425	update	Business	229	2026-06-10 14:19:31.04318+02	1
+1426	create	Owner	234	2026-06-11 08:22:20.773228+02	1
+1427	update	Owner	234	2026-06-11 08:25:39.750435+02	1
+1428	create	Business	230	2026-06-11 08:26:56.195461+02	1
+1429	create	BusinessOwner	233	2026-06-11 08:26:56.203095+02	1
+1430	create	Owner	235	2026-06-11 08:46:16.486789+02	1
+1431	create	Business	231	2026-06-11 08:46:21.17825+02	1
+1432	create	BusinessOwner	234	2026-06-11 08:46:21.182249+02	1
+1433	update	Business	231	2026-06-11 08:46:56.488012+02	1
+1434	create	Owner	236	2026-06-11 08:54:23.190214+02	1
+1435	create	Business	232	2026-06-11 08:54:29.781502+02	1
+1436	create	BusinessOwner	235	2026-06-11 08:54:29.78554+02	1
+1437	update	Business	232	2026-06-11 08:54:58.861897+02	1
+1438	create	Owner	237	2026-06-11 09:08:00.360898+02	1
+1439	create	Business	233	2026-06-11 09:08:05.064237+02	1
+1440	create	BusinessOwner	236	2026-06-11 09:08:05.070768+02	1
+1441	update	Business	233	2026-06-11 09:08:33.18409+02	1
+1442	update	Business	164	2026-06-11 09:09:28.178976+02	1
+1443	create	Owner	238	2026-06-11 13:50:24.591102+02	1
+1444	create	Business	234	2026-06-11 13:50:31.104089+02	1
+1445	create	BusinessOwner	237	2026-06-11 13:50:31.111089+02	1
+1446	update	Business	234	2026-06-11 13:50:54.055452+02	1
+1447	update	Business	228	2026-06-11 13:53:03.489715+02	1
+1448	update	Business	234	2026-06-11 13:53:20.520654+02	1
+1449	create	Owner	239	2026-06-11 13:58:13.532855+02	1
+1450	create	Business	235	2026-06-11 13:58:18.630564+02	1
+1451	create	BusinessOwner	238	2026-06-11 13:58:18.633565+02	1
+1452	create	Business	236	2026-06-11 14:01:06.175457+02	1
+1453	create	Owner	240	2026-06-11 14:01:49.935256+02	1
+1454	update	Business	236	2026-06-11 14:01:54.074979+02	1
+1455	create	BusinessOwner	239	2026-06-11 14:01:54.078008+02	1
+1456	update	Business	236	2026-06-11 14:03:07.970451+02	1
+1457	create	Owner	241	2026-06-11 14:41:10.549813+02	1
+1458	create	Business	237	2026-06-11 14:41:16.863953+02	1
+1459	create	BusinessOwner	240	2026-06-11 14:41:16.86695+02	1
+1460	update	Business	237	2026-06-11 14:51:46.443708+02	1
+1461	update	Business	237	2026-06-11 15:00:13.05696+02	1
+1462	create	Owner	242	2026-06-11 15:04:54.588488+02	1
+1463	create	Business	238	2026-06-11 15:05:01.091838+02	1
+1464	create	BusinessOwner	241	2026-06-11 15:05:01.100843+02	1
+1465	create	Owner	243	2026-06-11 15:08:29.599366+02	1
+1466	create	Business	239	2026-06-11 15:08:36.767059+02	1
+1467	create	BusinessOwner	242	2026-06-11 15:08:36.771058+02	1
+1468	create	Owner	244	2026-06-11 15:12:38.551293+02	1
+1469	create	Business	240	2026-06-11 15:12:44.533298+02	1
+1470	create	BusinessOwner	243	2026-06-11 15:12:44.537306+02	1
+1471	create	Owner	245	2026-06-11 15:17:18.358455+02	1
+1472	create	Business	241	2026-06-11 15:17:45.145069+02	1
+1473	create	BusinessOwner	244	2026-06-11 15:17:45.149069+02	1
+1474	create	Owner	246	2026-06-12 08:22:04.807638+02	1
+1475	create	Business	242	2026-06-12 08:31:28.209347+02	1
+1476	create	BusinessOwner	245	2026-06-12 08:31:28.21785+02	1
+1477	create	Business	243	2026-06-12 08:42:31.48591+02	1
+1478	create	Owner	247	2026-06-12 08:45:08.54613+02	1
+1479	update	Business	243	2026-06-12 08:45:25.768016+02	1
+1480	create	BusinessOwner	246	2026-06-12 08:45:25.769985+02	1
+1481	create	Owner	248	2026-06-12 09:08:19.795346+02	1
+1482	update	Owner	248	2026-06-12 09:08:38.641966+02	1
+1483	create	Business	244	2026-06-12 09:08:43.309043+02	1
+1484	create	BusinessOwner	247	2026-06-12 09:08:43.314043+02	1
+1485	update	Owner	248	2026-06-12 09:09:23.562494+02	1
+1486	update	Business	244	2026-06-12 09:10:28.530492+02	1
+1487	update	Business	244	2026-06-12 09:10:38.643457+02	1
+1488	create	Owner	249	2026-06-12 09:21:06.358678+02	1
+1489	create	Business	245	2026-06-12 09:21:22.977627+02	1
+1490	create	BusinessOwner	248	2026-06-12 09:21:22.981627+02	1
+1491	create	Owner	250	2026-06-12 09:39:46.179381+02	1
+1492	create	Business	246	2026-06-12 09:39:52.308089+02	1
+1493	create	BusinessOwner	249	2026-06-12 09:39:52.31309+02	1
+1494	create	Owner	251	2026-06-12 09:48:44.259356+02	1
+1495	create	Business	247	2026-06-12 09:49:21.223393+02	1
+1496	create	BusinessOwner	250	2026-06-12 09:49:21.234414+02	1
+1497	create	Owner	252	2026-06-12 11:29:48.29831+02	1
+1498	create	Business	248	2026-06-12 11:29:54.240064+02	1
+1499	create	BusinessOwner	251	2026-06-12 11:29:54.249118+02	1
 \.
 
 
@@ -2450,98 +4284,255 @@ COPY public.registry_auditlog (id, action, table_name, record_id, action_time, u
 -- Data for Name: registry_business; Type: TABLE DATA; Schema: public; Owner: registry_user
 --
 
-COPY public.registry_business (id, name, registration_number, tax_number, industry, address, city, postal_code, phone, email, status, date_registered, notes, created_at, updated_at, deleted_at, is_deleted, activity_code_id, assigned_clerk_id, bank_account, end_date, internal_notes, is_vat_registered, number_of_employees, start_date, business_type, profession_id, obrt_type, ending_registration_number) FROM stdin;
-2	TR “DET-DAIRE”	02/II-20-1/99	\N	trgovina	43.Drinske brigade br. 7.	Goražde	73000	\N	\N	active	1999-01-11		2026-02-18 08:38:36.55018+01	2026-02-18 08:38:36.55018+01	\N	f	1	\N	\N	\N		t	1	1999-01-11	osnovno	\N	\N	\N
-5	STR” H&S”	02/II-20-446/99	\N	trgovina	Zaima Imamovića br.50	Goražde	73000	\N	\N	inactive	1999-09-28		2026-02-18 16:03:06.010217+01	2026-02-18 16:06:07.55447+01	\N	f	608	\N	\N	2021-09-30		f	1	1999-10-08	osnovno	\N	\N	\N
-10	UR ,,HORSE''	03-1-22-993/11	\N	ugostiteljstvo	Zaima Imamovića bb	Goražde	73000	\N	\N	inactive	2011-02-18	03-1-22-1360/11\r\n03.03.2011\r\nPrestanak\r\n02.03.2011.	2026-03-06 08:22:40.321863+01	2026-03-06 08:23:40.438925+01	\N	f	438	\N	\N	2011-03-02		f	2	2011-02-18	osnovno	95	\N	\N
-13	Obrtnička radnja-salon za masažu "THAI"	03-1-17-1-55/26	\N	obrt	ul. Zaima Imamovića 8A ("Trgovke")	Goražde	73000	061/044-096	\N	active	2026-01-23		2026-03-12 08:19:37.41157+01	2026-03-13 10:34:03.586014+01	\N	f	602	\N	\N	\N		f	0	2026-02-03	dopunsko	589	\N	\N
-3	TR „E&I SHOP“	03-1-16-1-384	11	trgovina	Šukrije Kukavice br.4.	Goražde	\N	\N	\N	active	2021-03-19		2026-02-18 08:53:24.44979+01	2026-02-23 08:07:18.706019+01	\N	f	608	\N	\N	\N		f	1	2021-04-01	osnovno	\N	\N	\N
-9	UR pizzeria „TEMPO DI PIZZA“	03-1-18-516/25	\N	ugostiteljstvo	Ul. Sinan paše Sijerčića br.3	Goražde	73000	061/431-305	\N	active	2025-04-14	..1	2026-03-06 08:15:37.898045+01	2026-03-06 09:11:44.303116+01	\N	f	435	\N	\N	\N		f	\N	2025-04-21	osnovno	94	\N	\N
-14	obrtnička radnja - autopraonica "K&N"	03-1-17-1-1526/25	\N	obrt	ul. 31.Drinske brigade br.132	Goražde	73000	061/927-347	\N	active	2025-11-17		2026-03-12 09:21:34.594678+01	2026-03-13 10:35:45.720563+01	\N	f	323	\N	\N	\N		f	\N	2025-11-26	dopunsko	126	\N	\N
-11	UR ,,HORSE''	03-1-22-405/10	\N	ugostiteljstvo	Zaima Imamovića bb	Goražde	73000	\N	\N	inactive	2010-04-12	Prestanak 14.01.2011.\r\nBroj: 03-1-22-70/11\r\nOd 14.01.2011.	2026-03-06 09:20:55.169158+01	2026-03-06 09:20:55.169158+01	\N	f	438	\N	\N	2011-01-14		f	2	2010-04-16	osnovno	95	\N	\N
-15	TR "MYTHS PERFUMES"	03-1-16-1-1499/25	\N	trgovina	Ul. Zaima Imamovića br.7	Goražde	73000	060/318 6980	\N	active	2025-11-10		2026-03-12 09:27:04.331786+01	2026-03-13 10:36:33.853078+01	\N	f	401	\N	\N	\N		f	\N	2025-11-22	osnovno	219	\N	\N
-23	Obrtnička radnja "PRO STUDIO"	03-1-17-1-392/25	\N	obrt	ul. Maršala Tita br.5	Goražde	73000	061/271-356	\N	active	2025-03-24	-Zajedničko obavljanje djelatnosti	2026-04-16 13:03:05.105379+02	2026-04-16 13:03:36.379287+02	\N	f	612	\N	\N	\N		f	\N	2025-04-03	dopunsko	592	obrt	\N
-17	Samostalni poljoprivredni proizvođač "AGRO POVRĆE"	03-1-17-1-1509/24	\N	obrt	ul.22.maj br.85 A	Goražde	73000	062/582-779	\N	inactive	2024-10-30		2026-04-14 08:47:59.983477+02	2026-04-14 13:11:05.102763+02	\N	f	4	\N	\N	2025-11-08		f	\N	2024-11-08	osnovno	591	srodna_djelatnost	03-1-17-1-1465/25
-1	OR "FOTOPRŠEŠ"	02-1-33-388/19	9999999	obrt	Trg Branilaca	Goražde	73000	061915115	fotoprses@gmail.com	active	2026-01-11	zabilješke.	2026-01-11 20:37:02.502132+01	2026-03-09 08:37:00.520216+01	\N	f	5	\N	\N	\N		f	1	\N	dopunsko	\N	\N	\N
-6	SUR  "ONIX"	02/III354-16/ 97	\N	ugostiteljstvo	Berič	Goražde	73000	\N	\N	inactive	1997-04-14	03-1-22-1163/10\r\n06.08.2010\r\nPrestanak 05.08.2010	2026-03-05 13:20:56.993256+01	2026-03-05 13:22:08.544929+01	\N	f	435	\N	\N	2010-08-05		f	1	1997-04-14	dopunsko	330	\N	\N
-7	SUR “Stari grad”	02/XXI-354-4/96	\N	ugostiteljstvo	Kulina Bana bb.	Goražde	73000	\N	\N	active	1996-01-19		2026-03-05 13:28:57.763586+01	2026-03-05 13:28:57.763586+01	\N	f	435	\N	\N	\N		f	3	1996-01-12	osnovno	94	\N	\N
-8	SUR „AL TONNO“	03-1-22-258/08	\N	ugostiteljstvo	Zaima Imamovića bb	Goražde	73000	\N	\N	inactive	2008-03-11	03-1-22-1-346\r\n03.04.2012\r\nPrestanak\r\n31.03.2012	2026-03-05 13:38:42.999467+01	2026-03-06 08:17:07.003831+01	\N	f	435	\N	\N	2012-03-31		f	2	2008-03-14	osnovno	94	\N	\N
-24	Domaća radinost  "ROMANOV"	03-1-17-1-422/25	\N	obrt	naselje Perjni	Goražde	73000	061/863-636	\N	active	2025-03-24		2026-04-16 13:24:15.11264+02	2026-04-16 13:24:15.11264+02	\N	f	23	\N	\N	\N		f	\N	2025-04-02	dopunsko	591	domaca_radinost	\N
-16	Ugostiteljska radnja restoran-prenoćište "KOD NATE"	03-1-18-1-49/26	\N	ugostiteljstvo	ul. 1.slavne višegradske brigade br 7A	Goražde	73000	062220886	\N	active	2026-01-15	Rješenje o utvrđivanju minimalnih uslova ugostiteljskog objekta vrste restoran-prenoćište\r\nBroj rješenja: 03-1-18-1-07/26 od 13.01.2026. godine	2026-03-25 13:22:33.862608+01	2026-04-08 09:15:39.08409+02	\N	f	435	\N	\N	\N		f	\N	2026-01-24	osnovno	590	\N	\N
-25	AUTOŠKOLA "TOP DRIVER-VOZAČ"	03-1-17-1-442/25	\N	obrt	ul. Zaima Imamovića bb (Trgovke)	Goražde	73000	060/329-8461	\N	active	2025-03-28	Rješenje ministarstva za obrazovanje, mlade, nauku, kulturu i sport BPK Goraže (broj: UP-1:10-23-24/25 od 11.04.2025.godine (licenca)	2026-04-16 13:34:13.216615+02	2026-04-16 13:34:13.216615+02	\N	f	555	\N	\N	\N		f	\N	2025-04-12	osnovno	593	obrt	\N
-19	Samostalni poljoprivredni proizvođač "Benos"	03-1-17-1-1447/22	\N	obrt	selo Kalac	Goražde	73000	062/538-273	\N	inactive	2022-09-15		2026-04-14 09:30:20.764956+02	2026-04-15 07:53:51.555828+02	\N	f	19	\N	\N	2026-01-08		f	\N	2022-09-15	osnovno	591	srodna_djelatnost	03-1-17-1-25/2
-20	Obrtnička radnja "Servis +"	03-1-17-1-1416/23	\N	obrt	ul. Zaima Imamovića br.7	Goražde	73000	061/056-361	\N	active	2023-10-23		2026-04-15 09:12:30.589921+02	2026-04-15 09:12:50.885956+02	\N	f	592	\N	\N	2023-10-31		f	\N	2023-10-23	osnovno	74	obrt	03-1-17-1-1446/25
-22	Domaća radinost "EKO MED"	03-1-17-1-346/25	\N	obrt	ul. Ušanovića bb	Goražde	73000	062/246-701	\N	active	2025-03-14		2026-04-16 10:45:11.418274+02	2026-04-16 10:45:11.418274+02	\N	f	26	\N	\N	\N		f	\N	2025-03-27	dopunsko	591	domaca_radinost	\N
-18	Obrtnička djelatnost "MK LINK"	03-1-17-1-934/24	\N	obrt	ul. 1.slavne višegradske brigade br.9	Goražde	73000	061/988-623	\N	inactive	2024-06-28		2026-04-14 09:07:14.10275+02	2026-04-15 12:52:13.539547+02	\N	f	461	\N	\N	2025-11-05		f	\N	2024-06-28	osnovno	524	obrt	03-1-17-1-1492/25
-21	Obrtnička radnja "NextGen CNC-CNC nove generacije"	03-1-17-1-1744/24	\N	obrt	naselje Mravinjac	Goražde	73000	061/967-374  -  060/300-3456	\N	active	2025-01-06	- Zajedničko obavljanje obrta\r\n- Vanjskotrgovinsko poslovanje	2026-04-16 09:04:19.377189+02	2026-04-16 10:45:30.999657+02	\N	f	196	\N	\N	\N		f	\N	2025-01-16	dopunsko	233	obrt	\N
-12	Obrtnička-autolimarska radnja "KIĆO"	03-1-17-1971/25	\N	obrt	Naselje Zupčići br. 160	Goražde	73000	\N	\N	active	2025-07-28		2026-03-11 13:55:21.64928+01	2026-04-23 13:29:22.051371+02	2026-04-23 13:29:22.051371+02	t	323	\N	\N	\N		f	1	2025-09-01	osnovno	234	\N	\N
-26	Obrtnička radnja "E HODŽIĆ"	03-1-17-1-447/25	\N	obrt	ul. 31.drinske brigade br.132	Goražde	73000	062/002-176	\N	active	2025-04-02		2026-04-16 13:51:21.339247+02	2026-04-16 13:52:49.85903+02	\N	f	323	\N	\N	2025-07-31		f	\N	2025-04-12	osnovno	594	obrt	03-1-17-1-1010/25
-27	Obrtnička radnja "KADRIĆ"	03-1-17-1-469/25	\N	obrt	ul. Bolnička br.52A	Goražde	73000	061/297-998	\N	active	2025-04-04		2026-04-16 14:04:50.9947+02	2026-04-16 14:04:50.9947+02	\N	f	113	\N	\N	\N		f	\N	2025-04-15	osnovno	116	obrt	\N
-28	Domaća radinost "Kokoline"	03-1-17-1-472/25	\N	obrt	Posestra bb	Goražde	73000	061/514-470	\N	active	2025-04-07		2026-04-16 14:13:02.798523+02	2026-04-16 14:13:02.798523+02	\N	f	25	\N	\N	\N		f	\N	2025-04-19	osnovno	591	domaca_radinost	\N
-29	Obrtnička radnja-Frizerski salon  za žene "NAFAKA"	03-1-17-1-485/25	\N	obrt	ul. Fočanska br.31	Goražde	73000	062/450-485	\N	active	2025-04-07		2026-04-16 14:30:53.629259+02	2026-04-16 14:30:53.629259+02	\N	f	600	\N	\N	\N		f	\N	2025-04-19	dopunsko	96	obrt	\N
-30	Srodna djelatnost "Ifeta"	03-1-17-1-491/25	\N	obrt	ul. Bekta Gacka br.7B	Goražde	73000	061/506-140	\N	active	2025-04-09		2026-04-16 14:37:39.126697+02	2026-04-16 14:37:39.126697+02	\N	f	35	\N	\N	\N		f	\N	2025-04-22	osnovno	591	srodna_djelatnost	\N
-31	Obrtnička djelatnost "Ćulesker"	031-1-17-1-501/25	\N	obrt	ul.22.maj br.297	Goražde	73000	062/503-970	\N	active	2025-04-16		2026-04-16 14:47:52.597042+02	2026-04-16 14:47:52.597042+02	\N	f	316	\N	\N	\N		f	\N	2025-04-25	osnovno	595	obrt	\N
-32	Domaća radinost "ARKA"	03-1-17-1-536/25	\N	obrt	ul. Braće Homoraša br.35	Goražde	73000	061/802-612	\N	active	2025-04-16		2026-04-16 14:58:08.213815+02	2026-04-16 15:01:31.080177+02	\N	f	40	\N	\N	\N		f	\N	2025-04-26	dopunsko	596	domaca_radinost	\N
-33	Obrtnička djelatnost "SVILEN KONAC"	03-1-17-1-518/25	\N	obrt	ul. Zmaja od Bosne br.16	Goražde	73000	061/466-480	\N	active	2025-04-21		2026-04-16 15:07:01.291046+02	2026-04-16 15:07:01.291046+02	\N	f	101	\N	\N	\N		f	\N	2025-04-30	osnovno	118	obrt	\N
-34	Samostalni poljoprivredni proizvođač "STOLAC"	03-1-17-1-519/25	\N	obrt	Ilovača	Goražde	73000	061/466-480	\N	active	2025-04-21		2026-04-16 15:41:10.198172+02	2026-04-16 15:41:10.198172+02	\N	f	4	\N	\N	\N		f	\N	2025-05-06	osnovno	591	srodna_djelatnost	\N
-36	Samostalni poljoprivredni proizvođač "ENSI"	03-1-17-1-530/25	\N	obrt	Mravinjac	Goražde	73000	061/968-571	\N	active	2025-04-21		2026-04-17 08:35:09.079445+02	2026-04-17 08:35:09.079445+02	\N	f	4	\N	\N	\N		f	\N	2025-05-06	osnovno	591	srodna_djelatnost	\N
-35	Samostalni poljoprivredni proizvođač "HRELJA"	03-1-17-1-527/25	\N	obrt	ul. 1.drinske brigade br.6	Goražde	73000	061/330-764	\N	active	2025-04-21		2026-04-17 08:06:53.265385+02	2026-04-17 08:35:46.688654+02	\N	f	12	\N	\N	\N		f	\N	2025-05-06	osnovno	591	srodna_djelatnost	\N
-37	Domaća radinost "SLATKA MALINA"	03-1-17-1-531/25	\N	obrt	Mravinjac bb	Goražde	73000	038/822462	\N	active	2025-04-21		2026-04-17 09:09:10.672228+02	2026-04-17 09:12:04.654898+02	\N	f	613	\N	\N	\N		f	\N	2025-05-06	osnovno	591	domaca_radinost	\N
-38	Domaća radinost "ELEGANT HS"	03-1-17-1-538/25	\N	obrt	ul. 22.maj br.287	Goražde	73000	062/196-108	\N	active	2025-04-22		2026-04-17 13:30:38.973097+02	2026-04-17 13:30:38.973097+02	\N	f	174	\N	\N	\N		f	\N	2025-04-22	osnovno	597	domaca_radinost	\N
-39	Obrtnička radnja-Kozmetički salon "Denira 387"	03-1-17-1-551/25	\N	obrt	ul.43.drinske brigade br.4B	Goražde	73000	061/286-139	\N	active	2025-04-22		2026-04-17 13:42:00.923618+02	2026-04-17 13:42:00.923618+02	\N	f	600	\N	\N	\N		f	\N	2025-05-06	osnovno	444	obrt	\N
-40	Domaća radinost "KLEKA 2021"	03-1-17-1-543/25	\N	obrt	ul. Jašarevića Meha br.5	Goražde	73000	062/875-016	\N	active	2025-04-23		2026-04-17 14:14:06.173961+02	2026-04-17 14:14:06.173961+02	\N	f	35	\N	\N	\N		f	\N	2025-05-06	osnovno	591	domaca_radinost	\N
-41	Domaća radinost "M H N"	03-1-17-1-544/25	\N	obrt	ul. Jašarević Zlata br.5	Goražde	73000	062/053-364	\N	active	2025-04-23		2026-04-17 14:32:51.495483+02	2026-04-17 14:32:51.495483+02	\N	f	35	\N	\N	\N		f	\N	2025-05-06	osnovno	591	domaca_radinost	\N
-42	Obrtnička radnja "AUTOSERVIS MANDIĆ"	03-1-17-1-555/25	\N	obrt	ul. Čajnička br.71	Goražde	73000	065/412-628	\N	active	2025-04-25		2026-04-17 14:44:37.340138+02	2026-04-17 14:44:37.340138+02	\N	f	323	\N	\N	\N		f	\N	2025-04-25	osnovno	114	obrt	\N
-43	Samostalni poljoprivredni proizvođač "AZRA"	03-1-17-1-568/25	\N	obrt	Hubjeri	Goražde	73000	060/3123 362	\N	active	2025-04-30		2026-04-17 14:49:01.568007+02	2026-04-17 14:49:01.568007+02	\N	f	4	\N	\N	\N		f	\N	2025-05-14	osnovno	591	srodna_djelatnost	\N
-44	Samostalni poljoprivredni proizvođač "Hare"	03-1-17-1-552/25	\N	obrt	ul. Ruždije Islamagića br.70	Goražde	73000	060/3123 362	\N	active	2025-05-05		2026-04-17 15:01:54.884135+02	2026-04-17 15:01:54.884135+02	\N	f	613	\N	\N	\N		f	\N	2025-05-14	osnovno	591	srodna_djelatnost	\N
-45	Samostalni poljoprivredni proizvođač "EMĆO"	03-1-17-1-596/25	\N	obrt	Guskovići	Goražde	73000	062/246-259	\N	active	2025-04-05		2026-04-17 15:09:06.677892+02	2026-04-17 15:09:06.677892+02	\N	f	4	\N	\N	\N		f	\N	2025-05-15	osnovno	591	srodna_djelatnost	\N
-4	„ALDI“	03-1-20-113/55	\N	obrt	Muhidina Mašića Munje 3	Goražde	73000	\N	\N	inactive	2004-06-29	.	2026-02-18 15:52:28.860017+01	2026-04-20 07:32:00.869702+02	2026-04-15 14:23:35.200115+02	t	377	\N	\N	2010-09-13		f	1	2004-06-29	osnovno	219	stari_zanat	00-00-00/10
-46	Samostalni poljoprivredni proizvođač "Vedo"	03-1-17-1-657/25	\N	obrt	Kušeši	Goražde	73000	\N	\N	active	2025-05-07		2026-04-20 11:49:09.151406+02	2026-04-20 11:49:09.151406+02	\N	f	12	\N	\N	\N		f	\N	2025-05-20	osnovno	591	srodna_djelatnost	\N
-47	Obrtnička radnja-Frizerski salon "Enela"	03-1-17-1-674/25	\N	obrt	ul. Zdravstvenih radnika br.11B	Goražde	73000	062/947-704	\N	active	2025-05-12		2026-04-20 11:53:38.681055+02	2026-04-20 11:53:38.681055+02	\N	f	600	\N	\N	\N		f	\N	2025-05-21	osnovno	96	obrt	\N
-48	Obrtnička automehaničarska radnja "MOMO"	12.05.2025.	\N	obrt	ul. Braće Bezdroba bb	Goražde	73000	062/832-126	\N	active	2025-05-20		2026-04-20 12:04:02.6178+02	2026-04-20 12:04:02.6178+02	\N	f	323	\N	\N	\N		f	\N	2025-05-20	dopunsko	114	obrt	\N
-49	Domaća radinost "AMČE"	03-1-17-1-679/25	\N	obrt	Gunjevići	Goražde	73000	061761043	\N	active	2025-05-12		2026-04-20 12:30:13.786482+02	2026-04-20 12:30:13.786482+02	\N	f	23	\N	\N	\N		f	\N	2025-05-22	osnovno	591	domaca_radinost	\N
-50	Srodna djelatnost "TATARIN"	03-1-17-1-663/25	\N	obrt	ul.1.maj br.9	Goražde	73000	061/044-051	\N	active	2025-05-13		2026-04-20 12:39:06.023414+02	2026-04-20 12:39:06.023414+02	\N	f	35	\N	\N	\N		f	\N	2025-05-21	dopunsko	591	srodna_djelatnost	\N
-51	Obrtnička radnja "Elma"	03-1-17-1-689/25	\N	obrt	ul. Ferida Dizdarevića bb	Goražde	73000	062/383-709	\N	active	2025-05-14		2026-04-20 12:51:32.766808+02	2026-04-20 12:51:32.766808+02	\N	f	69	\N	\N	\N		f	\N	2025-05-23	osnovno	598	obrt	\N
-52	Domaća radinost "Džino"	03-1-17-1-675/25	\N	obrt	Dešava	Goražde	73000	061/161-883	\N	active	2025-05-19		2026-04-20 12:58:26.849575+02	2026-04-20 12:58:26.849575+02	\N	f	23	\N	\N	\N		f	\N	2025-05-29	osnovno	591	domaca_radinost	\N
-53	Obrtnička djelatnost "HMZ"	03-1-17-1-696/25	\N	obrt	ul. Salih bega Kuljuha br.17	Goražde	73000	061/040-939	\N	active	2025-05-19		2026-04-20 13:01:51.833328+02	2026-04-20 13:01:51.833328+02	\N	f	316	\N	\N	\N		f	\N	2025-05-28	osnovno	595	obrt	\N
-54	Domaća radinost "ĆAMILA"	03-1-17-1-707/25	\N	obrt	ul. Enesa Turkovića br.23B	Goražde	73000	062/989-190	\N	active	2025-05-19		2026-04-20 13:09:39.480693+02	2026-04-20 13:09:39.480693+02	\N	f	106	\N	\N	\N		f	\N	2025-05-30	osnovno	599	domaca_radinost	\N
-55	Domaća radinost "PREMIUM CLEAN-ČIŠĆENJE"	03-1-17-1-710/25	\N	obrt	ul. Zmaja od Bosne br.32	Goražde	73000	061-304-811	\N	active	2025-05-19		2026-04-20 13:39:54.812723+02	2026-04-20 13:39:54.812723+02	\N	f	599	\N	\N	\N		f	\N	2025-05-29	dopunsko	600	domaca_radinost	\N
-56	Domaća radinost "DNH"	03-1-17-1-705/25	\N	obrt	ul. Dževada Omerhodžića br.121	Goražde	73000	038/222-333	\N	active	2025-05-21		2026-04-20 13:48:38.726539+02	2026-04-20 13:49:32.301635+02	\N	f	266	\N	\N	\N		f	\N	2025-06-03	osnovno	601	domaca_radinost	\N
-57	Domaća radinost "SELIŠTA"	03-1-17-1-706/25	\N	obrt	ul. Srebrenička bb	Goražde	73000	065/615-711	\N	active	2025-05-21		2026-04-20 13:58:13.721478+02	2026-04-20 13:59:08.892937+02	\N	f	272	\N	\N	\N		f	\N	2025-05-30	osnovno	602	domaca_radinost	\N
-58	Obrtnička djelatnost "AEN SOLUTIONS-RJEŠENJA"	03-1-17-1-734/25	\N	obrt	ul. Enesa Turkovića br.15	Goražde	73000	061/569-385	\N	active	2025-05-22		2026-04-20 14:24:26.894134+02	2026-04-20 14:24:26.894134+02	\N	f	533	\N	\N	\N		f	\N	2025-05-31	osnovno	603	obrt	\N
-59	Obrtnička djelatnost "B&B"	03-1-17-1-781/25	\N	obrt	ul. Srebrenička br.10	Goražde	73000	060/327-8377	\N	active	2025-06-09		2026-04-20 14:52:48.095416+02	2026-04-20 14:52:48.095416+02	\N	f	93	\N	\N	\N		f	\N	2025-06-19	osnovno	353	stari_zanat	\N
-60	Samostalni poljoprivredni proizvođač "AJLA"	03-1-17-1-784/25	\N	obrt	ul. Ferida Dizdarevića bb	Goražde	73000	061/183-147	\N	active	2025-06-09		2026-04-23 08:48:22.835833+02	2026-04-23 08:48:22.835833+02	\N	f	4	\N	\N	\N		f	\N	2025-06-19	osnovno	591	srodna_djelatnost	\N
-61	Obrtničko - kovačka radnja "SEJO"	03-1-17-1-787/25	\N	obrt	ul. Meha Hubjera br.4	Goražde	73000	\N	\N	active	2025-06-19		2026-04-23 09:11:10.249631+02	2026-04-23 09:11:10.249631+02	\N	f	615	\N	\N	\N		f	\N	2025-06-19	osnovno	604	stari_zanat	\N
-62	Samostalni poljoprivredni proizvođač "DOMAĆE JE NAJBOLJE"	03-1-17-1-788/25	\N	obrt	Kolovarice bb	Goražde	73000	061/946-290	\N	active	2025-06-09		2026-04-23 09:15:00.526736+02	2026-04-23 09:49:00.111334+02	\N	f	4	\N	\N	\N		f	\N	2025-06-21	osnovno	591	srodna_djelatnost	\N
-63	Samostalni poljoprivredni proizvođač "Zelena dolina"	03-1-17-1-798/25	\N	obrt	Hubjeri br.8	Goražde	73000	061/496-976	\N	active	2025-06-09		2026-04-23 09:55:42.403413+02	2026-04-23 09:55:42.403413+02	\N	f	4	\N	\N	\N		f	\N	2025-06-21	osnovno	591	srodna_djelatnost	\N
-65	Samostalni poljoprivredni proizvođač "ŠERI"	03-1-17-1-822/25	\N	obrt	Kučine bb	Goražde	73000	062/089-666	\N	active	2025-06-11		2026-04-23 11:50:36.34457+02	2026-04-23 11:50:36.34457+02	\N	f	4	\N	\N	\N		f	\N	2025-06-20	osnovno	591	srodna_djelatnost	\N
-66	Obrtnička djelatnost "GUARDIAN"	03-1-17-1-862/25	\N	obrt	ul. Zaima Imamovića br.34B	Goražde	73000	060/318-6986	\N	active	2025-06-23		2026-04-23 12:04:59.700772+02	2026-04-23 12:04:59.700772+02	\N	f	584	\N	\N	\N		f	\N	2025-07-02	osnovno	605	obrt	\N
-68	Samostalni poljoprivredni proizvođač "HAJR"	03-1-17-1-915/25	\N	obrt	ul. Mevsuda Bajića Baje br.11	Goražde	73000	062/537-485	\N	active	2025-07-03		2026-04-23 12:53:56.013024+02	2026-04-23 12:53:56.013024+02	\N	f	4	\N	\N	\N		f	\N	2025-07-12	osnovno	591	srodna_djelatnost	\N
-69	Samostalni poljoprivredni proizvođač "VOĆKO"	03-1-17-1-936/25	\N	obrt	ul.43.drinske brigade br.10	Goražde	73000	062/002-130	\N	active	2025-07-09		2026-04-23 12:58:13.736833+02	2026-04-23 12:58:13.736833+02	\N	f	12	\N	\N	\N		f	\N	2025-07-19	osnovno	591	obrt	\N
-70	Samostalni poljoprivredni proizvođač "Pablo"	03-1-17-1-996/25	\N	obrt	naselje Sadba	Goražde	73000	062/228-300	\N	active	2025-07-24		2026-04-23 13:23:01.302366+02	2026-04-23 13:23:01.302366+02	\N	f	4	\N	\N	\N		f	\N	2025-08-06	osnovno	591	obrt	\N
-71	Obrtnička -autolimarska radnja "KIĆO"	03-1-17-1-971/25	\N	obrt	naselje Zupčići	Goražde	73000	061/550-627	\N	active	2025-07-28		2026-04-23 13:28:00.068827+02	2026-04-23 13:28:00.068827+02	\N	f	323	\N	\N	\N		f	\N	2025-08-08	osnovno	234	obrt	\N
-64	Obrtnička radnja "E&F"	03-1-17-1-796/25	\N	obrt	ul. Muhidina Mašića Munje br.97	Goražde	73000	062/959-624	\N	active	2025-06-11	Radi se o automatskoj autopraonici na kovanice	2026-04-23 11:45:09.671996+02	2026-04-23 13:30:39.572565+02	\N	f	599	\N	\N	\N		f	\N	2025-06-21	dopunsko	600	obrt	\N
-72	Obrtničko-frizerska radnja "BARBER SHOP SANIN"	03-1-17-1-1230/25	\N	obrt	ul. Ferida Dizdarevića br.37	Goražde	73000	062/603-855	\N	active	2025-09-15	Rješenje broj: 03-1-17-1-1006/25 od 29.07.2025. (osnivanje)\r\novo rješenje se mjenja zbog naziva obrta (Obrtničko - frizerska radnja "BARBER SHOP SANA")	2026-04-23 13:37:29.254063+02	2026-04-23 13:37:29.254063+02	\N	f	600	\N	\N	\N		f	\N	2025-08-08	osnovno	216	stari_zanat	\N
-73	Obrtnička djelatnost "AMO Beauty studio"	03-1-17-1-1013/25	\N	obrt	ul.1.slavne višegradske brigade br.7	Goražde	73000	062/861-265	\N	active	2025-07-30		2026-04-23 13:58:16.237312+02	2026-04-23 13:58:16.237312+02	\N	f	600	\N	\N	\N		f	\N	2025-08-09	dopunsko	444	obrt	\N
-74	Obrtničko-frizerska radnja "Barber shop Enis"	03-1-17-1-1007/25	\N	obrt	ul. Maršala Tita bb	Goražde	73000	061/271-508	\N	active	2025-07-31		2026-04-23 14:06:18.103889+02	2026-04-23 14:06:18.103889+02	\N	f	600	\N	\N	\N		f	\N	2025-07-31	osnovno	216	stari_zanat	\N
-75	Obrtnička radnja "DŽANKOVIĆ ARMS"	03-1-17-1-1022/25	\N	obrt	ul. Čajnička bb	Goražde	73000	061/516-059	\N	active	2025-08-04	Održavanje i popravak oružja	2026-04-23 14:30:28.522712+02	2026-04-23 14:31:28.547262+02	\N	f	273	\N	\N	\N		f	\N	2025-08-15	dopunsko	607	stari_zanat	\N
-76	Javni prijevoz tereta	03-1-23-1-1085/25	\N	obrt	Zubovići	Goražde	73000	060/302-7774	\N	active	2025-08-12	privremeno rješenje broj: 03-1-23-1-958/25 od 17.07.2025	2026-04-24 08:04:39.274521+02	2026-04-24 08:04:39.274521+02	\N	f	416	\N	\N	\N	Marka: MAN, Tip:L34, Registracija: O07-T-749	f	\N	2025-08-12	osnovno	243	obrt	\N
-67	Javni prijevoz putnika	03-1-23-1-899/25	\N	obrt	ul.Huseina Žige br.53	Goražde	73000	061/167-061	\N	active	2025-07-09	Privremeno rješenje broj: 03-1-23-1-842/25 od 16.06.2025.	2026-04-23 12:36:02.911205+02	2026-04-24 08:05:36.122524+02	\N	f	414	\N	\N	\N	Vozilo Marke: MERCEDES-BENZ, \r\nTip:211, \r\nRegistarske oznake TA 415575	f	\N	2025-07-01	osnovno	606	obrt	\N
-77	Domaća radinost "Garaplija"	03-1-17-1-1078/25	\N	obrt	Osječani	Goražde	73000	062/089-622	\N	active	2025-08-13		2026-04-24 08:13:18.718326+02	2026-04-24 08:13:18.718326+02	\N	f	19	\N	\N	\N		f	\N	2025-08-26	osnovno	591	domaca_radinost	\N
-78	Javni prijevoz tereta	03-1-23-1-1102/25	\N	obrt	ul. Hajra Lakovića br.1	Goražde	73000	060/3437-400	\N	active	2025-08-18	Privremeno rješenje broj: 03-1-23-1-994/25 od 24.07.2025.	2026-04-24 08:21:04.145276+02	2026-04-24 08:21:04.145276+02	\N	f	416	\N	\N	\N	Marka: RENAULT, Tip: VB, Registracija: E68-M-480	f	\N	2025-08-18	osnovno	243	obrt	\N
-79	Samostalni poljoprivredni proizvođač "LEKI"	03-1-17-1-1101/25	\N	obrt	ul.22.maj br.103	Goražde	73000	062/195-869	\N	active	2025-08-19		2026-04-24 08:34:14.386655+02	2026-04-24 08:34:40.552608+02	\N	f	4	\N	\N	\N		f	\N	2025-08-29	osnovno	591	srodna_djelatnost	\N
-80	Domaća radinost "EMKO"	03-1-17-1-1115/25	\N	obrt	ul. Ibre Čelika br.44	Goražde	73000	061/708-875	\N	active	2025-08-25		2026-04-24 08:45:03.444748+02	2026-04-24 08:45:03.444748+02	\N	f	599	\N	\N	\N		f	\N	2025-09-03	dopunsko	600	domaca_radinost	\N
-81	AUTOŠKOLA "KENAN"	03-1-17-1-1130/25	\N	obrt	ul. Ruždije Islamagića bb	Goražde	73000	061/331-098	\N	active	2025-08-29	- Osposobljavanje kandidata iz upravljanja motornim vozilom B,C i CE kategorije i C1i C1E potkategorije	2026-04-24 08:53:04.76785+02	2026-04-24 08:53:04.76785+02	\N	f	555	\N	\N	\N		f	\N	2025-09-09	osnovno	593	obrt	\N
-82	Samostalni poljoprivredni proizvođač "AGRO"	03-1-17-1-1134/25	\N	obrt	ul. Enesa Turkovića br.41	Goražde	73000	061/075-057	\N	active	2025-09-08		2026-04-24 08:59:04.477857+02	2026-04-24 08:59:04.477857+02	\N	f	4	\N	\N	\N		f	\N	2025-09-19	osnovno	591	srodna_djelatnost	\N
-83	Samostalni poljoprivredni proizvođač "MA"	03-1-17-1-1155/25	\N	obrt	ul. 1.slavne višegradske brigade br.31	Goražde	73000	061/506-048	\N	active	2025-09-09		2026-04-24 09:01:49.954466+02	2026-04-24 09:03:56.043894+02	\N	f	4	\N	\N	\N		f	\N	2025-09-19	osnovno	591	srodna_djelatnost	\N
-84	Obrtnička djelatnost "DELTA CONSULTING"	03-1-17-1-1288/25	\N	obrt	ul. 1.slavne višegradske brigade br.19	Goražde	73000	062/856-231	\N	active	2025-10-03		2026-04-24 09:09:37.280507+02	2026-04-24 09:09:37.280507+02	\N	f	492	\N	\N	\N		f	\N	2025-10-14	osnovno	414	obrt	\N
-85	Samostalni poljoprivredni proizvođač "MERJEM"	03-1-17-1-1346/25	\N	obrt	ul.43.drinske brigade br.9	Goražde	73000	061/915-373	\N	active	2025-10-10		2026-04-24 09:19:48.92394+02	2026-04-24 09:22:22.084793+02	\N	f	4	\N	\N	\N		f	\N	2025-10-22	osnovno	591	srodna_djelatnost	\N
-86	Samostalni poljoprivredni proizvođač "FATIMA PRIRODNI PROIZVOD"	03-1-17-1-1347/25	\N	obrt	ul. Jusufa Duhovića br.2	Goražde	73000	061/613-010	\N	active	2025-10-10		2026-04-24 09:26:23.008738+02	2026-04-24 09:26:23.008738+02	\N	f	4	\N	\N	\N		f	\N	2025-10-22	osnovno	591	srodna_djelatnost	\N
-87	Obrtnička djelatnost "UNIKAT ARCHITECTURE"	03-1-17-1-1407/25	\N	obrt	ul. Zaima Imamovića bb	Goražde	73000	062/113-560	\N	active	2025-10-21		2026-04-24 09:36:14.851199+02	2026-04-24 09:36:14.851199+02	\N	f	493	\N	\N	\N		f	\N	2025-11-06	dopunsko	41	obrt	\N
-88	Obrtnička radnja-Kozmetički salon "Le Toucher de Fee"-"Dodir Vile"	03-1-17-1-1512/25	\N	obrt	ul. Seada Sofovića Sofe bb	Goražde	73000	061/330-994	\N	active	2025-11-13		2026-04-24 11:56:32.766498+02	2026-04-24 11:56:32.766498+02	\N	f	600	\N	\N	\N	Voditelj obrta: Šišić Edmina, ul. Jusufa Duhovića br.5, Goražde	f	\N	2025-11-22	dodatno	444	obrt	\N
-89	Obrtnička radnja-Kozmetički salon "LEVANTINE BEAUTY"	03-1-17-1-1535/25	\N	obrt	ul.43.drinske brigade (Lamela H4)	Goražde	73000	061/880-710	\N	active	2025-11-19		2026-04-24 12:01:43.98826+02	2026-04-24 12:02:43.852642+02	\N	f	600	\N	\N	\N		f	\N	2025-12-06	osnovno	444	obrt	\N
-90	Obrtnička radnja "Zlatar časovničar Hadžimešić"	03-1-17-1-1598/25	\N	obrt	ul. Ferida Dizdarevića br.35	Goražde	73000	061/376-430	\N	active	2025-12-16		2026-04-24 14:42:10.548262+02	2026-04-24 14:42:10.548262+02	\N	f	265	\N	\N	\N		f	\N	2025-12-26	dopunsko	608	stari_zanat	\N
-91	Ugostiteljska radnja caffe bar "Pub"	03-1-18-1-395/25	\N	ugostiteljstvo	ul. Zaima Imamovića br.32	Goražde	73000	062/450-310	\N	active	2025-03-19		2026-04-24 14:52:05.228739+02	2026-04-24 14:52:05.228739+02	\N	f	438	\N	\N	\N		f	\N	2025-03-24	osnovno	590	\N	\N
+COPY public.registry_business (id, name, registration_number, tax_number, industry, address, city, postal_code, phone, email, status, date_registered, notes, created_at, updated_at, deleted_at, is_deleted, activity_code_id, assigned_clerk_id, bank_account, end_date, internal_notes, is_vat_registered, number_of_employees, start_date, business_type, profession_id, obrt_type, ending_registration_number, is_foreign_trade) FROM stdin;
+10	UR ,,HORSE''	03-1-22-993/11	\N	ugostiteljstvo	Zaima Imamovića bb	Goražde	73000	\N	\N	inactive	2011-02-18	03-1-22-1360/11\r\n03.03.2011\r\nPrestanak\r\n02.03.2011.	2026-03-06 08:22:40.321863+01	2026-03-06 08:23:40.438925+01	\N	f	438	\N	\N	2011-03-02		f	2	2011-02-18	osnovno	95	\N	\N	f
+13	Obrtnička radnja-salon za masažu "THAI"	03-1-17-1-55/26	\N	obrt	ul. Zaima Imamovića 8A ("Trgovke")	Goražde	73000	061/044-096	\N	active	2026-01-23		2026-03-12 08:19:37.41157+01	2026-03-13 10:34:03.586014+01	\N	f	602	\N	\N	\N		f	0	2026-02-03	dopunsko	589	\N	\N	f
+3	TR „E&I SHOP“	03-1-16-1-384	11	trgovina	Šukrije Kukavice br.4.	Goražde	\N	\N	\N	inactive	2021-03-19		2026-02-18 08:53:24.44979+01	2026-05-07 09:01:08.895538+02	2026-04-29 09:01:07.998373+02	t	608	\N	\N	\N		f	1	2021-04-01	osnovno	\N	\N	\N	f
+5	STR” H&S”	02/II-20-446/99	\N	trgovina	Zaima Imamovića br.50	Goražde	73000	\N	\N	inactive	1999-09-28		2026-02-18 16:03:06.010217+01	2026-04-27 11:25:05.103272+02	2026-04-27 11:25:05.102265+02	t	608	\N	\N	2021-09-30		f	1	1999-10-08	osnovno	\N	\N	\N	f
+14	obrtnička radnja - autopraonica "K&N"	03-1-17-1-589/26	\N	obrt	ul. 31.Drinske brigade br.132	Goražde	73000	061/927-347	\N	active	2026-04-30	-Rješenje broj: 03-1-17-1-1526/25 od 17.11.2025.godine (dopunsko zanimanje)	2026-03-12 09:21:34.594678+01	2026-06-01 09:02:07.394003+02	\N	f	323	\N	\N	\N		f	\N	2025-11-26	dodatno	594	obrt	\N	f
+11	UR ,,HORSE''	03-1-22-405/10	\N	ugostiteljstvo	Zaima Imamovića bb	Goražde	73000	\N	\N	inactive	2010-04-12	Prestanak 14.01.2011.\r\nBroj: 03-1-22-70/11\r\nOd 14.01.2011.	2026-03-06 09:20:55.169158+01	2026-03-06 09:20:55.169158+01	\N	f	438	\N	\N	2011-01-14		f	2	2010-04-16	osnovno	95	\N	\N	f
+15	TR "MYTHS PERFUMES"	03-1-16-1-1499/25	\N	trgovina	Ul. Zaima Imamovića br.7	Goražde	73000	060/318 6980	\N	active	2025-11-10		2026-03-12 09:27:04.331786+01	2026-03-13 10:36:33.853078+01	\N	f	401	\N	\N	\N		f	\N	2025-11-22	osnovno	219	\N	\N	f
+23	Obrtnička radnja "PRO STUDIO"	03-1-17-1-392/25	\N	obrt	ul. Maršala Tita br.5	Goražde	73000	061/271-356	\N	active	2025-03-24	-Zajedničko obavljanje djelatnosti	2026-04-16 13:03:05.105379+02	2026-04-16 13:03:36.379287+02	\N	f	612	\N	\N	\N		f	\N	2025-04-03	dopunsko	592	obrt	\N	f
+17	Samostalni poljoprivredni proizvođač "AGRO POVRĆE"	03-1-17-1-1509/24	\N	obrt	ul.22.maj br.85 A	Goražde	73000	062/582-779	\N	inactive	2024-10-30		2026-04-14 08:47:59.983477+02	2026-04-14 13:11:05.102763+02	\N	f	4	\N	\N	2025-11-08		f	\N	2024-11-08	osnovno	591	srodna_djelatnost	03-1-17-1-1465/25	f
+6	SUR  "ONIX"	02/III354-16/ 97	\N	ugostiteljstvo	Berič	Goražde	73000	\N	\N	inactive	1997-04-14	03-1-22-1163/10\r\n06.08.2010\r\nPrestanak 05.08.2010	2026-03-05 13:20:56.993256+01	2026-03-05 13:22:08.544929+01	\N	f	435	\N	\N	2010-08-05		f	1	1997-04-14	dopunsko	330	\N	\N	f
+7	SUR “Stari grad”	02/XXI-354-4/96	\N	ugostiteljstvo	Kulina Bana bb.	Goražde	73000	\N	\N	active	1996-01-19		2026-03-05 13:28:57.763586+01	2026-03-05 13:28:57.763586+01	\N	f	435	\N	\N	\N		f	3	1996-01-12	osnovno	94	\N	\N	f
+24	Domaća radinost  "ROMANOV"	03-1-17-1-422/25	\N	obrt	naselje Perjni	Goražde	73000	061/863-636	\N	active	2025-03-24		2026-04-16 13:24:15.11264+02	2026-04-16 13:24:15.11264+02	\N	f	23	\N	\N	\N		f	\N	2025-04-02	dopunsko	591	domaca_radinost	\N	f
+16	Ugostiteljska radnja restoran-prenoćište "KOD NATE"	03-1-18-1-49/26	\N	ugostiteljstvo	ul. 1.slavne višegradske brigade br 7A	Goražde	73000	062220886	\N	active	2026-01-15	Rješenje o utvrđivanju minimalnih uslova ugostiteljskog objekta vrste restoran-prenoćište\r\nBroj rješenja: 03-1-18-1-07/26 od 13.01.2026. godine	2026-03-25 13:22:33.862608+01	2026-04-08 09:15:39.08409+02	\N	f	435	\N	\N	\N		f	\N	2026-01-24	osnovno	590	\N	\N	f
+8	SUR „AL TONNO“	03-1-22-258/08	\N	ugostiteljstvo	Zaima Imamovića bb	Goražde	73000	\N	\N	inactive	2008-03-11	03-1-22-1-346\r\n03.04.2012\r\nPrestanak\r\n31.03.2012	2026-03-05 13:38:42.999467+01	2026-04-24 15:07:44.188428+02	2026-04-24 15:07:44.188428+02	t	435	\N	\N	2012-03-31		f	2	2008-03-14	osnovno	94	\N	\N	f
+25	AUTOŠKOLA "TOP DRIVER-VOZAČ"	03-1-17-1-442/25	\N	obrt	ul. Zaima Imamovića bb (Trgovke)	Goražde	73000	060/329-8461	\N	active	2025-03-28	Rješenje ministarstva za obrazovanje, mlade, nauku, kulturu i sport BPK Goraže (broj: UP-1:10-23-24/25 od 11.04.2025.godine (licenca)	2026-04-16 13:34:13.216615+02	2026-04-16 13:34:13.216615+02	\N	f	555	\N	\N	\N		f	\N	2025-04-12	osnovno	593	obrt	\N	f
+19	Samostalni poljoprivredni proizvođač "Benos"	03-1-17-1-1447/22	\N	obrt	selo Kalac	Goražde	73000	062/538-273	\N	inactive	2022-09-15		2026-04-14 09:30:20.764956+02	2026-04-15 07:53:51.555828+02	\N	f	19	\N	\N	2026-01-08		f	\N	2022-09-15	osnovno	591	srodna_djelatnost	03-1-17-1-25/2	f
+20	Obrtnička radnja "Servis +"	03-1-17-1-1416/23	\N	obrt	ul. Zaima Imamovića br.7	Goražde	73000	061/056-361	\N	active	2023-10-23		2026-04-15 09:12:30.589921+02	2026-04-15 09:12:50.885956+02	\N	f	592	\N	\N	2023-10-31		f	\N	2023-10-23	osnovno	74	obrt	03-1-17-1-1446/25	f
+22	Domaća radinost "EKO MED"	03-1-17-1-346/25	\N	obrt	ul. Ušanovića bb	Goražde	73000	062/246-701	\N	active	2025-03-14		2026-04-16 10:45:11.418274+02	2026-04-16 10:45:11.418274+02	\N	f	26	\N	\N	\N		f	\N	2025-03-27	dopunsko	591	domaca_radinost	\N	f
+18	Obrtnička djelatnost "MK LINK"	03-1-17-1-934/24	\N	obrt	ul. 1.slavne višegradske brigade br.9	Goražde	73000	061/988-623	\N	inactive	2024-06-28		2026-04-14 09:07:14.10275+02	2026-04-15 12:52:13.539547+02	\N	f	461	\N	\N	2025-11-05		f	\N	2024-06-28	osnovno	524	obrt	03-1-17-1-1492/25	f
+2	TR “DET-DAIRE”	02/II-20-1/99	\N	trgovina	43.Drinske brigade br. 7.	Goražde	73000	\N	\N	active	1999-01-11		2026-02-18 08:38:36.55018+01	2026-05-07 09:00:46.063804+02	2026-04-29 09:52:19.412925+02	t	1	\N	\N	\N		t	1	1999-01-11	osnovno	\N	\N	\N	f
+12	Obrtnička-autolimarska radnja "KIĆO"	03-1-17-1971/25	\N	obrt	Naselje Zupčići br. 160	Goražde	73000	\N	\N	active	2025-07-28		2026-03-11 13:55:21.64928+01	2026-05-07 08:11:56.266941+02	2026-04-23 13:29:22.051371+02	t	323	\N	\N	\N		f	1	2025-09-01	osnovno	234	obrt	\N	f
+26	Obrtnička radnja "E HODŽIĆ"	03-1-17-1-447/25	\N	obrt	ul. 31.drinske brigade br.132	Goražde	73000	062/002-176	\N	active	2025-04-02		2026-04-16 13:51:21.339247+02	2026-04-16 13:52:49.85903+02	\N	f	323	\N	\N	2025-07-31		f	\N	2025-04-12	osnovno	594	obrt	03-1-17-1-1010/25	f
+27	Obrtnička radnja "KADRIĆ"	03-1-17-1-469/25	\N	obrt	ul. Bolnička br.52A	Goražde	73000	061/297-998	\N	active	2025-04-04		2026-04-16 14:04:50.9947+02	2026-04-16 14:04:50.9947+02	\N	f	113	\N	\N	\N		f	\N	2025-04-15	osnovno	116	obrt	\N	f
+28	Domaća radinost "Kokoline"	03-1-17-1-472/25	\N	obrt	Posestra bb	Goražde	73000	061/514-470	\N	active	2025-04-07		2026-04-16 14:13:02.798523+02	2026-04-16 14:13:02.798523+02	\N	f	25	\N	\N	\N		f	\N	2025-04-19	osnovno	591	domaca_radinost	\N	f
+29	Obrtnička radnja-Frizerski salon  za žene "NAFAKA"	03-1-17-1-485/25	\N	obrt	ul. Fočanska br.31	Goražde	73000	062/450-485	\N	active	2025-04-07		2026-04-16 14:30:53.629259+02	2026-04-16 14:30:53.629259+02	\N	f	600	\N	\N	\N		f	\N	2025-04-19	dopunsko	96	obrt	\N	f
+30	Srodna djelatnost "Ifeta"	03-1-17-1-491/25	\N	obrt	ul. Bekta Gacka br.7B	Goražde	73000	061/506-140	\N	active	2025-04-09		2026-04-16 14:37:39.126697+02	2026-04-16 14:37:39.126697+02	\N	f	35	\N	\N	\N		f	\N	2025-04-22	osnovno	591	srodna_djelatnost	\N	f
+31	Obrtnička djelatnost "Ćulesker"	031-1-17-1-501/25	\N	obrt	ul.22.maj br.297	Goražde	73000	062/503-970	\N	active	2025-04-16		2026-04-16 14:47:52.597042+02	2026-04-16 14:47:52.597042+02	\N	f	316	\N	\N	\N		f	\N	2025-04-25	osnovno	595	obrt	\N	f
+1	OR "FOTOPRŠEŠ"	02-1-33-388/19	9999999	obrt	Trg Branilaca	Goražde	73000	061915115	fotoprses@gmail.com	active	2026-01-11	zabilješke.	2026-01-11 20:37:02.502132+01	2026-04-29 11:10:55.112012+02	2026-04-29 11:10:55.112012+02	t	5	\N	\N	\N		f	1	\N	dopunsko	\N	\N	\N	f
+9	Ugostiteljska radnja  pizzeria „TEMPO DI PIZZA“	03-1-18-516/25	\N	ugostiteljstvo	Ul. Sinan paše Sijerčića br.3	Goražde	73000	061/431-305	\N	active	2025-04-14	..1	2026-03-06 08:15:37.898045+01	2026-06-08 08:28:34.439146+02	\N	f	435	\N	\N	\N		f	\N	2025-04-21	osnovno	590	\N	\N	f
+32	Domaća radinost "ARKA"	03-1-17-1-536/25	\N	obrt	ul. Braće Homoraša br.35	Goražde	73000	061/802-612	\N	active	2025-04-16		2026-04-16 14:58:08.213815+02	2026-04-16 15:01:31.080177+02	\N	f	40	\N	\N	\N		f	\N	2025-04-26	dopunsko	596	domaca_radinost	\N	f
+33	Obrtnička djelatnost "SVILEN KONAC"	03-1-17-1-518/25	\N	obrt	ul. Zmaja od Bosne br.16	Goražde	73000	061/466-480	\N	active	2025-04-21		2026-04-16 15:07:01.291046+02	2026-04-16 15:07:01.291046+02	\N	f	101	\N	\N	\N		f	\N	2025-04-30	osnovno	118	obrt	\N	f
+34	Samostalni poljoprivredni proizvođač "STOLAC"	03-1-17-1-519/25	\N	obrt	Ilovača	Goražde	73000	061/466-480	\N	active	2025-04-21		2026-04-16 15:41:10.198172+02	2026-04-16 15:41:10.198172+02	\N	f	4	\N	\N	\N		f	\N	2025-05-06	osnovno	591	srodna_djelatnost	\N	f
+36	Samostalni poljoprivredni proizvođač "ENSI"	03-1-17-1-530/25	\N	obrt	Mravinjac	Goražde	73000	061/968-571	\N	active	2025-04-21		2026-04-17 08:35:09.079445+02	2026-04-17 08:35:09.079445+02	\N	f	4	\N	\N	\N		f	\N	2025-05-06	osnovno	591	srodna_djelatnost	\N	f
+35	Samostalni poljoprivredni proizvođač "HRELJA"	03-1-17-1-527/25	\N	obrt	ul. 1.drinske brigade br.6	Goražde	73000	061/330-764	\N	active	2025-04-21		2026-04-17 08:06:53.265385+02	2026-04-17 08:35:46.688654+02	\N	f	12	\N	\N	\N		f	\N	2025-05-06	osnovno	591	srodna_djelatnost	\N	f
+37	Domaća radinost "SLATKA MALINA"	03-1-17-1-531/25	\N	obrt	Mravinjac bb	Goražde	73000	038/822462	\N	active	2025-04-21		2026-04-17 09:09:10.672228+02	2026-04-17 09:12:04.654898+02	\N	f	613	\N	\N	\N		f	\N	2025-05-06	osnovno	591	domaca_radinost	\N	f
+39	Obrtnička radnja-Kozmetički salon "Denira 387"	03-1-17-1-551/25	\N	obrt	ul.43.drinske brigade br.4B	Goražde	73000	061/286-139	\N	active	2025-04-22		2026-04-17 13:42:00.923618+02	2026-04-17 13:42:00.923618+02	\N	f	600	\N	\N	\N		f	\N	2025-05-06	osnovno	444	obrt	\N	f
+40	Domaća radinost "KLEKA 2021"	03-1-17-1-543/25	\N	obrt	ul. Jašarevića Meha br.5	Goražde	73000	062/875-016	\N	active	2025-04-23		2026-04-17 14:14:06.173961+02	2026-04-17 14:14:06.173961+02	\N	f	35	\N	\N	\N		f	\N	2025-05-06	osnovno	591	domaca_radinost	\N	f
+41	Domaća radinost "M H N"	03-1-17-1-544/25	\N	obrt	ul. Jašarević Zlata br.5	Goražde	73000	062/053-364	\N	active	2025-04-23		2026-04-17 14:32:51.495483+02	2026-04-17 14:32:51.495483+02	\N	f	35	\N	\N	\N		f	\N	2025-05-06	osnovno	591	domaca_radinost	\N	f
+42	Obrtnička radnja "AUTOSERVIS MANDIĆ"	03-1-17-1-555/25	\N	obrt	ul. Čajnička br.71	Goražde	73000	065/412-628	\N	active	2025-04-25		2026-04-17 14:44:37.340138+02	2026-04-17 14:44:37.340138+02	\N	f	323	\N	\N	\N		f	\N	2025-04-25	osnovno	114	obrt	\N	f
+43	Samostalni poljoprivredni proizvođač "AZRA"	03-1-17-1-568/25	\N	obrt	Hubjeri	Goražde	73000	060/3123 362	\N	active	2025-04-30		2026-04-17 14:49:01.568007+02	2026-04-17 14:49:01.568007+02	\N	f	4	\N	\N	\N		f	\N	2025-05-14	osnovno	591	srodna_djelatnost	\N	f
+45	Samostalni poljoprivredni proizvođač "EMĆO"	03-1-17-1-596/25	\N	obrt	Guskovići	Goražde	73000	062/246-259	\N	active	2025-04-05		2026-04-17 15:09:06.677892+02	2026-04-17 15:09:06.677892+02	\N	f	4	\N	\N	\N		f	\N	2025-05-15	osnovno	591	srodna_djelatnost	\N	f
+38	Domaća radinost "ELEGANT HS"	03-1-17-1-538/25	\N	obrt	ul. 22.maj br.287	Goražde	73000	062/196-108	\N	inactive	2025-04-22		2026-04-17 13:30:38.973097+02	2026-05-25 11:32:41.072888+02	\N	f	174	\N	\N	2026-04-30		f	\N	2025-04-22	osnovno	597	domaca_radinost	03-1-17-1-535/26	f
+46	Samostalni poljoprivredni proizvođač "Vedo"	03-1-17-1-657/25	\N	obrt	Kušeši	Goražde	73000	\N	\N	active	2025-05-07		2026-04-20 11:49:09.151406+02	2026-04-20 11:49:09.151406+02	\N	f	12	\N	\N	\N		f	\N	2025-05-20	osnovno	591	srodna_djelatnost	\N	f
+47	Obrtnička radnja-Frizerski salon "Enela"	03-1-17-1-674/25	\N	obrt	ul. Zdravstvenih radnika br.11B	Goražde	73000	062/947-704	\N	active	2025-05-12		2026-04-20 11:53:38.681055+02	2026-04-20 11:53:38.681055+02	\N	f	600	\N	\N	\N		f	\N	2025-05-21	osnovno	96	obrt	\N	f
+48	Obrtnička automehaničarska radnja "MOMO"	12.05.2025.	\N	obrt	ul. Braće Bezdroba bb	Goražde	73000	062/832-126	\N	active	2025-05-20		2026-04-20 12:04:02.6178+02	2026-04-20 12:04:02.6178+02	\N	f	323	\N	\N	\N		f	\N	2025-05-20	dopunsko	114	obrt	\N	f
+49	Domaća radinost "AMČE"	03-1-17-1-679/25	\N	obrt	Gunjevići	Goražde	73000	061761043	\N	active	2025-05-12		2026-04-20 12:30:13.786482+02	2026-04-20 12:30:13.786482+02	\N	f	23	\N	\N	\N		f	\N	2025-05-22	osnovno	591	domaca_radinost	\N	f
+50	Srodna djelatnost "TATARIN"	03-1-17-1-663/25	\N	obrt	ul.1.maj br.9	Goražde	73000	061/044-051	\N	active	2025-05-13		2026-04-20 12:39:06.023414+02	2026-04-20 12:39:06.023414+02	\N	f	35	\N	\N	\N		f	\N	2025-05-21	dopunsko	591	srodna_djelatnost	\N	f
+51	Obrtnička radnja "Elma"	03-1-17-1-689/25	\N	obrt	ul. Ferida Dizdarevića bb	Goražde	73000	062/383-709	\N	active	2025-05-14		2026-04-20 12:51:32.766808+02	2026-04-20 12:51:32.766808+02	\N	f	69	\N	\N	\N		f	\N	2025-05-23	osnovno	598	obrt	\N	f
+52	Domaća radinost "Džino"	03-1-17-1-675/25	\N	obrt	Dešava	Goražde	73000	061/161-883	\N	active	2025-05-19		2026-04-20 12:58:26.849575+02	2026-04-20 12:58:26.849575+02	\N	f	23	\N	\N	\N		f	\N	2025-05-29	osnovno	591	domaca_radinost	\N	f
+53	Obrtnička djelatnost "HMZ"	03-1-17-1-696/25	\N	obrt	ul. Salih bega Kuljuha br.17	Goražde	73000	061/040-939	\N	active	2025-05-19		2026-04-20 13:01:51.833328+02	2026-04-20 13:01:51.833328+02	\N	f	316	\N	\N	\N		f	\N	2025-05-28	osnovno	595	obrt	\N	f
+54	Domaća radinost "ĆAMILA"	03-1-17-1-707/25	\N	obrt	ul. Enesa Turkovića br.23B	Goražde	73000	062/989-190	\N	active	2025-05-19		2026-04-20 13:09:39.480693+02	2026-04-20 13:09:39.480693+02	\N	f	106	\N	\N	\N		f	\N	2025-05-30	osnovno	599	domaca_radinost	\N	f
+55	Domaća radinost "PREMIUM CLEAN-ČIŠĆENJE"	03-1-17-1-710/25	\N	obrt	ul. Zmaja od Bosne br.32	Goražde	73000	061-304-811	\N	active	2025-05-19		2026-04-20 13:39:54.812723+02	2026-04-20 13:39:54.812723+02	\N	f	599	\N	\N	\N		f	\N	2025-05-29	dopunsko	600	domaca_radinost	\N	f
+56	Domaća radinost "DNH"	03-1-17-1-705/25	\N	obrt	ul. Dževada Omerhodžića br.121	Goražde	73000	038/222-333	\N	active	2025-05-21		2026-04-20 13:48:38.726539+02	2026-04-20 13:49:32.301635+02	\N	f	266	\N	\N	\N		f	\N	2025-06-03	osnovno	601	domaca_radinost	\N	f
+57	Domaća radinost "SELIŠTA"	03-1-17-1-706/25	\N	obrt	ul. Srebrenička bb	Goražde	73000	065/615-711	\N	active	2025-05-21		2026-04-20 13:58:13.721478+02	2026-04-20 13:59:08.892937+02	\N	f	272	\N	\N	\N		f	\N	2025-05-30	osnovno	602	domaca_radinost	\N	f
+58	Obrtnička djelatnost "AEN SOLUTIONS-RJEŠENJA"	03-1-17-1-734/25	\N	obrt	ul. Enesa Turkovića br.15	Goražde	73000	061/569-385	\N	active	2025-05-22		2026-04-20 14:24:26.894134+02	2026-04-20 14:24:26.894134+02	\N	f	533	\N	\N	\N		f	\N	2025-05-31	osnovno	603	obrt	\N	f
+59	Obrtnička djelatnost "B&B"	03-1-17-1-781/25	\N	obrt	ul. Srebrenička br.10	Goražde	73000	060/327-8377	\N	active	2025-06-09		2026-04-20 14:52:48.095416+02	2026-04-20 14:52:48.095416+02	\N	f	93	\N	\N	\N		f	\N	2025-06-19	osnovno	353	stari_zanat	\N	f
+60	Samostalni poljoprivredni proizvođač "AJLA"	03-1-17-1-784/25	\N	obrt	ul. Ferida Dizdarevića bb	Goražde	73000	061/183-147	\N	active	2025-06-09		2026-04-23 08:48:22.835833+02	2026-04-23 08:48:22.835833+02	\N	f	4	\N	\N	\N		f	\N	2025-06-19	osnovno	591	srodna_djelatnost	\N	f
+61	Obrtničko - kovačka radnja "SEJO"	03-1-17-1-787/25	\N	obrt	ul. Meha Hubjera br.4	Goražde	73000	\N	\N	active	2025-06-19		2026-04-23 09:11:10.249631+02	2026-04-23 09:11:10.249631+02	\N	f	615	\N	\N	\N		f	\N	2025-06-19	osnovno	604	stari_zanat	\N	f
+62	Samostalni poljoprivredni proizvođač "DOMAĆE JE NAJBOLJE"	03-1-17-1-788/25	\N	obrt	Kolovarice bb	Goražde	73000	061/946-290	\N	active	2025-06-09		2026-04-23 09:15:00.526736+02	2026-04-23 09:49:00.111334+02	\N	f	4	\N	\N	\N		f	\N	2025-06-21	osnovno	591	srodna_djelatnost	\N	f
+63	Samostalni poljoprivredni proizvođač "Zelena dolina"	03-1-17-1-798/25	\N	obrt	Hubjeri br.8	Goražde	73000	061/496-976	\N	active	2025-06-09		2026-04-23 09:55:42.403413+02	2026-04-23 09:55:42.403413+02	\N	f	4	\N	\N	\N		f	\N	2025-06-21	osnovno	591	srodna_djelatnost	\N	f
+44	Samostalni poljoprivredni proizvođač "Hare"	03-1-17-1-552/25	\N	obrt	ul. Ruždije Islamagića br.70	Goražde	73000	066/341-952	\N	active	2025-05-05		2026-04-17 15:01:54.884135+02	2026-06-03 10:45:41.664534+02	\N	f	613	\N	\N	\N		f	\N	2025-05-14	osnovno	591	srodna_djelatnost	\N	f
+65	Samostalni poljoprivredni proizvođač "ŠERI"	03-1-17-1-822/25	\N	obrt	Kučine bb	Goražde	73000	062/089-666	\N	active	2025-06-11		2026-04-23 11:50:36.34457+02	2026-04-23 11:50:36.34457+02	\N	f	4	\N	\N	\N		f	\N	2025-06-20	osnovno	591	srodna_djelatnost	\N	f
+66	Obrtnička djelatnost "GUARDIAN"	03-1-17-1-862/25	\N	obrt	ul. Zaima Imamovića br.34B	Goražde	73000	060/318-6986	\N	active	2025-06-23		2026-04-23 12:04:59.700772+02	2026-04-23 12:04:59.700772+02	\N	f	584	\N	\N	\N		f	\N	2025-07-02	osnovno	605	obrt	\N	f
+68	Samostalni poljoprivredni proizvođač "HAJR"	03-1-17-1-915/25	\N	obrt	ul. Mevsuda Bajića Baje br.11	Goražde	73000	062/537-485	\N	active	2025-07-03		2026-04-23 12:53:56.013024+02	2026-04-23 12:53:56.013024+02	\N	f	4	\N	\N	\N		f	\N	2025-07-12	osnovno	591	srodna_djelatnost	\N	f
+69	Samostalni poljoprivredni proizvođač "VOĆKO"	03-1-17-1-936/25	\N	obrt	ul.43.drinske brigade br.10	Goražde	73000	062/002-130	\N	active	2025-07-09		2026-04-23 12:58:13.736833+02	2026-04-23 12:58:13.736833+02	\N	f	12	\N	\N	\N		f	\N	2025-07-19	osnovno	591	obrt	\N	f
+70	Samostalni poljoprivredni proizvođač "Pablo"	03-1-17-1-996/25	\N	obrt	naselje Sadba	Goražde	73000	062/228-300	\N	active	2025-07-24		2026-04-23 13:23:01.302366+02	2026-04-23 13:23:01.302366+02	\N	f	4	\N	\N	\N		f	\N	2025-08-06	osnovno	591	obrt	\N	f
+71	Obrtnička -autolimarska radnja "KIĆO"	03-1-17-1-971/25	\N	obrt	naselje Zupčići	Goražde	73000	061/550-627	\N	active	2025-07-28		2026-04-23 13:28:00.068827+02	2026-04-23 13:28:00.068827+02	\N	f	323	\N	\N	\N		f	\N	2025-08-08	osnovno	234	obrt	\N	f
+64	Obrtnička radnja "E&F"	03-1-17-1-796/25	\N	obrt	ul. Muhidina Mašića Munje br.97	Goražde	73000	062/959-624	\N	active	2025-06-11	Radi se o automatskoj autopraonici na kovanice	2026-04-23 11:45:09.671996+02	2026-04-23 13:30:39.572565+02	\N	f	599	\N	\N	\N		f	\N	2025-06-21	dopunsko	600	obrt	\N	f
+72	Obrtničko-frizerska radnja "BARBER SHOP SANIN"	03-1-17-1-1230/25	\N	obrt	ul. Ferida Dizdarevića br.37	Goražde	73000	062/603-855	\N	active	2025-09-15	Rješenje broj: 03-1-17-1-1006/25 od 29.07.2025. (osnivanje)\r\novo rješenje se mjenja zbog naziva obrta (Obrtničko - frizerska radnja "BARBER SHOP SANA")	2026-04-23 13:37:29.254063+02	2026-04-23 13:37:29.254063+02	\N	f	600	\N	\N	\N		f	\N	2025-08-08	osnovno	216	stari_zanat	\N	f
+73	Obrtnička djelatnost "AMO Beauty studio"	03-1-17-1-1013/25	\N	obrt	ul.1.slavne višegradske brigade br.7	Goražde	73000	062/861-265	\N	active	2025-07-30		2026-04-23 13:58:16.237312+02	2026-04-23 13:58:16.237312+02	\N	f	600	\N	\N	\N		f	\N	2025-08-09	dopunsko	444	obrt	\N	f
+74	Obrtničko-frizerska radnja "Barber shop Enis"	03-1-17-1-1007/25	\N	obrt	ul. Maršala Tita bb	Goražde	73000	061/271-508	\N	active	2025-07-31		2026-04-23 14:06:18.103889+02	2026-04-23 14:06:18.103889+02	\N	f	600	\N	\N	\N		f	\N	2025-07-31	osnovno	216	stari_zanat	\N	f
+75	Obrtnička radnja "DŽANKOVIĆ ARMS"	03-1-17-1-1022/25	\N	obrt	ul. Čajnička bb	Goražde	73000	061/516-059	\N	active	2025-08-04	Održavanje i popravak oružja	2026-04-23 14:30:28.522712+02	2026-04-23 14:31:28.547262+02	\N	f	273	\N	\N	\N		f	\N	2025-08-15	dopunsko	607	stari_zanat	\N	f
+76	Javni prijevoz tereta	03-1-23-1-1085/25	\N	obrt	Zubovići	Goražde	73000	060/302-7774	\N	active	2025-08-12	privremeno rješenje broj: 03-1-23-1-958/25 od 17.07.2025	2026-04-24 08:04:39.274521+02	2026-04-24 08:04:39.274521+02	\N	f	416	\N	\N	\N	Marka: MAN, Tip:L34, Registracija: O07-T-749	f	\N	2025-08-12	osnovno	243	obrt	\N	f
+67	Javni prijevoz putnika	03-1-23-1-899/25	\N	obrt	ul.Huseina Žige br.53	Goražde	73000	061/167-061	\N	active	2025-07-09	Privremeno rješenje broj: 03-1-23-1-842/25 od 16.06.2025.	2026-04-23 12:36:02.911205+02	2026-04-24 08:05:36.122524+02	\N	f	414	\N	\N	\N	Vozilo Marke: MERCEDES-BENZ, \r\nTip:211, \r\nRegistarske oznake TA 415575	f	\N	2025-07-01	osnovno	606	obrt	\N	f
+77	Domaća radinost "Garaplija"	03-1-17-1-1078/25	\N	obrt	Osječani	Goražde	73000	062/089-622	\N	active	2025-08-13		2026-04-24 08:13:18.718326+02	2026-04-24 08:13:18.718326+02	\N	f	19	\N	\N	\N		f	\N	2025-08-26	osnovno	591	domaca_radinost	\N	f
+78	Javni prijevoz tereta	03-1-23-1-1102/25	\N	obrt	ul. Hajra Lakovića br.1	Goražde	73000	060/3437-400	\N	active	2025-08-18	Privremeno rješenje broj: 03-1-23-1-994/25 od 24.07.2025.	2026-04-24 08:21:04.145276+02	2026-04-24 08:21:04.145276+02	\N	f	416	\N	\N	\N	Marka: RENAULT, Tip: VB, Registracija: E68-M-480	f	\N	2025-08-18	osnovno	243	obrt	\N	f
+79	Samostalni poljoprivredni proizvođač "LEKI"	03-1-17-1-1101/25	\N	obrt	ul.22.maj br.103	Goražde	73000	062/195-869	\N	active	2025-08-19		2026-04-24 08:34:14.386655+02	2026-04-24 08:34:40.552608+02	\N	f	4	\N	\N	\N		f	\N	2025-08-29	osnovno	591	srodna_djelatnost	\N	f
+80	Domaća radinost "EMKO"	03-1-17-1-1115/25	\N	obrt	ul. Ibre Čelika br.44	Goražde	73000	061/708-875	\N	active	2025-08-25		2026-04-24 08:45:03.444748+02	2026-04-24 08:45:03.444748+02	\N	f	599	\N	\N	\N		f	\N	2025-09-03	dopunsko	600	domaca_radinost	\N	f
+81	AUTOŠKOLA "KENAN"	03-1-17-1-1130/25	\N	obrt	ul. Ruždije Islamagića bb	Goražde	73000	061/331-098	\N	active	2025-08-29	- Osposobljavanje kandidata iz upravljanja motornim vozilom B,C i CE kategorije i C1i C1E potkategorije	2026-04-24 08:53:04.76785+02	2026-04-24 08:53:04.76785+02	\N	f	555	\N	\N	\N		f	\N	2025-09-09	osnovno	593	obrt	\N	f
+82	Samostalni poljoprivredni proizvođač "AGRO"	03-1-17-1-1134/25	\N	obrt	ul. Enesa Turkovića br.41	Goražde	73000	061/075-057	\N	active	2025-09-08		2026-04-24 08:59:04.477857+02	2026-04-24 08:59:04.477857+02	\N	f	4	\N	\N	\N		f	\N	2025-09-19	osnovno	591	srodna_djelatnost	\N	f
+83	Samostalni poljoprivredni proizvođač "MA"	03-1-17-1-1155/25	\N	obrt	ul. 1.slavne višegradske brigade br.31	Goražde	73000	061/506-048	\N	active	2025-09-09		2026-04-24 09:01:49.954466+02	2026-04-24 09:03:56.043894+02	\N	f	4	\N	\N	\N		f	\N	2025-09-19	osnovno	591	srodna_djelatnost	\N	f
+84	Obrtnička djelatnost "DELTA CONSULTING"	03-1-17-1-1288/25	\N	obrt	ul. 1.slavne višegradske brigade br.19	Goražde	73000	062/856-231	\N	active	2025-10-03		2026-04-24 09:09:37.280507+02	2026-04-24 09:09:37.280507+02	\N	f	492	\N	\N	\N		f	\N	2025-10-14	osnovno	414	obrt	\N	f
+85	Samostalni poljoprivredni proizvođač "MERJEM"	03-1-17-1-1346/25	\N	obrt	ul.43.drinske brigade br.9	Goražde	73000	061/915-373	\N	active	2025-10-10		2026-04-24 09:19:48.92394+02	2026-04-24 09:22:22.084793+02	\N	f	4	\N	\N	\N		f	\N	2025-10-22	osnovno	591	srodna_djelatnost	\N	f
+86	Samostalni poljoprivredni proizvođač "FATIMA PRIRODNI PROIZVOD"	03-1-17-1-1347/25	\N	obrt	ul. Jusufa Duhovića br.2	Goražde	73000	061/613-010	\N	active	2025-10-10		2026-04-24 09:26:23.008738+02	2026-04-24 09:26:23.008738+02	\N	f	4	\N	\N	\N		f	\N	2025-10-22	osnovno	591	srodna_djelatnost	\N	f
+87	Obrtnička djelatnost "UNIKAT ARCHITECTURE"	03-1-17-1-1407/25	\N	obrt	ul. Zaima Imamovića bb	Goražde	73000	062/113-560	\N	active	2025-10-21		2026-04-24 09:36:14.851199+02	2026-04-24 09:36:14.851199+02	\N	f	493	\N	\N	\N		f	\N	2025-11-06	dopunsko	41	obrt	\N	f
+88	Obrtnička radnja-Kozmetički salon "Le Toucher de Fee"-"Dodir Vile"	03-1-17-1-1512/25	\N	obrt	ul. Seada Sofovića Sofe bb	Goražde	73000	061/330-994	\N	active	2025-11-13		2026-04-24 11:56:32.766498+02	2026-04-24 11:56:32.766498+02	\N	f	600	\N	\N	\N	Voditelj obrta: Šišić Edmina, ul. Jusufa Duhovića br.5, Goražde	f	\N	2025-11-22	dodatno	444	obrt	\N	f
+89	Obrtnička radnja-Kozmetički salon "LEVANTINE BEAUTY"	03-1-17-1-1535/25	\N	obrt	ul.43.drinske brigade (Lamela H4)	Goražde	73000	061/880-710	\N	active	2025-11-19		2026-04-24 12:01:43.98826+02	2026-04-24 12:02:43.852642+02	\N	f	600	\N	\N	\N		f	\N	2025-12-06	osnovno	444	obrt	\N	f
+90	Obrtnička radnja "Zlatar časovničar Hadžimešić"	03-1-17-1-1598/25	\N	obrt	ul. Ferida Dizdarevića br.35	Goražde	73000	061/376-430	\N	active	2025-12-16		2026-04-24 14:42:10.548262+02	2026-04-24 14:42:10.548262+02	\N	f	265	\N	\N	\N		f	\N	2025-12-26	dopunsko	608	stari_zanat	\N	f
+91	Ugostiteljska radnja caffe bar "Pub"	03-1-18-1-395/25	\N	ugostiteljstvo	ul. Zaima Imamovića br.32	Goražde	73000	062/450-310	\N	active	2025-03-19		2026-04-24 14:52:05.228739+02	2026-04-24 14:52:05.228739+02	\N	f	438	\N	\N	\N		f	\N	2025-03-24	osnovno	590	\N	\N	f
+92	Ugostiteljska radnja caffe bar "HETO"	03-1-18-1-441/25	\N	ugostiteljstvo	ul.43.drinske brigade br.22	Goražde	73000	060/306 8195	\N	active	2025-03-28		2026-04-24 15:00:55.075176+02	2026-04-24 15:00:55.075176+02	\N	f	438	\N	\N	\N		f	\N	2025-04-07	osnovno	590	\N	\N	f
+94	Ugostiteljska radnja fast food "Alf"	03-1-18-1-939/25	\N	ugostiteljstvo	ul. Zaima Imamovića bb (mikrolokalitet "Gradska dvorana"lokacija 1)	Goražde	73000	061/904-777	\N	active	2025-07-11		2026-04-27 08:31:49.259943+02	2026-04-27 08:34:10.433443+02	\N	f	435	\N	\N	\N		f	\N	2025-07-17	osnovno	590	\N	\N	f
+106	TR "B art"	03-1-20-1-2011/17	\N	trgovina	ul. Kulina bana bb	Goražde	73000	\N	\N	inactive	2017-12-04		2026-04-27 11:45:39.474072+02	2026-04-27 11:52:38.143226+02	\N	f	404	\N	\N	2018-02-28		f	\N	2017-12-15	osnovno	219	\N	03-1-20-1-325/18	f
+95	Ugostiteljska radnja fast food-pizzeria "DONER HAUS"	03-1-18-1-1280/25	\N	ugostiteljstvo	ul. Maršala Tita br.1	Goražde	73000	061/399-131	\N	active	2025-09-24	Mjenja se rješenje broj:03-1-18-1-1139/25 od 01.09.2025.godine sa početkom rada 24.09.2025.godine iz razloga promjene vrste ugostiteljske radnje	2026-04-27 08:52:20.244534+02	2026-04-27 09:13:00.707947+02	\N	f	435	\N	\N	\N		f	\N	2025-09-01	osnovno	590	\N	\N	f
+159	Domaća radinost "DILA"	03-1-17-1-395/26	\N	obrt	ul. Ferida Dizdarevića bb	Goražde	73000	062/538-388	\N	active	2026-04-03		2026-05-22 08:47:20.204067+02	2026-05-22 09:47:54.738641+02	\N	f	106	\N	\N	\N		f	\N	2026-04-15	osnovno	599	domaca_radinost	\N	f
+107	TR "Elegant"	03-1-20-1-2013/17	\N	trgovina	ul. Ferida Dizdarevića bb	Goražde	73000	\N	\N	active	2017-12-05	Mjenja se rješenje broj: 03-1-20-2544/11 od 17.08.2011.godine sa početkom rada 05.12.2017.godine, iz razloga promjene sjedišta radnja (ul. Sinan paše Sijerčića bb)	2026-04-27 11:51:01.75943+02	2026-04-27 11:51:01.75943+02	\N	f	397	\N	\N	\N		f	\N	2011-09-01	osnovno	219	\N	\N	f
+113	Trgovac pojedinac "MEDA"	03-1-20-1-1116/18	\N	trgovina	Zelena pijaca, ul. Kulina bana u Fojnici\r\nGradska tržnica, Hadžići\r\nPijaca, ul. Žrtava genocida u Srebrenici, Breza\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	061-523-014	\N	inactive	2018-07-12		2026-04-27 14:11:55.045474+02	2026-05-07 09:05:06.598705+02	\N	f	407	\N	\N	2019-07-18		f	\N	2018-07-18	osnovno	219	\N	03-1-20-1-1035/19	f
+115	TR "B art"	03-1-20-1-1672/18	\N	trgovina	ul. Kulina bana bb	Goražde	73000	\N	\N	inactive	2018-10-01		2026-04-27 14:25:52.366492+02	2026-04-28 08:31:04.604076+02	\N	f	404	\N	\N	2019-07-16		f	\N	2018-10-15	osnovno	219	\N	03-1-20-1-1015/19	f
+110	TR "SECOND HAND"	03-1-20-1-711/18	\N	trgovina	ul. Sinan paše Sijerčića br.11	Goražde	73000	062/917-625	\N	inactive	2018-05-04	- Mjenja se rješenje broj: 03-1-20-1-2658/15 od 23.12.2015.godine  sa početkom rada 07.05.2025. godine, iz razloga promjene sjedišta radnje (ul. Kulina bana br.7)	2026-04-27 12:51:14.700811+02	2026-04-28 11:00:12.46058+02	\N	f	608	\N	\N	2020-02-29		f	\N	2016-01-04	osnovno	219	\N	03-1-16-1-550/20	f
+111	TR "KEA"	03-1-20-1-701/18	\N	trgovina	ul. Sinan paše Sijerčića br.7/1	Goražde	73000	062/917-625	\N	active	2018-05-04		2026-04-27 13:06:04.263521+02	2026-04-27 13:06:04.263521+02	\N	f	608	\N	\N	\N		f	\N	2018-05-10	osnovno	219	\N	\N	f
+114	Trgovac pojedinac "Aladin"	03-1-20-1-1496/18	\N	trgovina	Gradska tržnica, Hadžići\r\nPijaca, ul. Žrtava genocida u Srebrenici, Breza\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	062/769-187	\N	inactive	2018-09-11		2026-04-27 14:20:33.657776+02	2026-05-07 09:03:54.38962+02	\N	f	407	\N	\N	2019-10-31		f	\N	2018-09-20	osnovno	219	\N	03-1-20-1-1749/19	f
+99	TR "PARK"	03-1-20-1-546/18	\N	trgovina	ul. Alije Hodžića br.3	Goražde	73000	\N	\N	inactive	2018-04-13	- Mjenja se rješenje broj:03-1-20-1-404/17 od 10.03.2017.godine, sa početkom rada 12.05.2017.godine iz razloga promjene sjedišta ugostiteljske radnje sa adresom ul. 43.drinske brigade bb\r\n- Mjenja se rješenje broj:03-1-20-1-766/17 od 12.05.2017., sa početkom rada 13.04.2018, iz razloga promjena vrste i predmeta poslovanja (45.32-trgovina na malo djelovima i priborom za motorna vozila)	2026-04-27 09:36:33.235339+02	2026-04-27 13:16:27.585182+02	\N	f	1	\N	\N	2018-06-30		f	\N	2017-03-20	osnovno	219	\N	03-1-20-1-1016/18	f
+108	Trgovac pojedinac "ELMIN"	03-1-20-1-331/18	\N	trgovina	Zelena pijaca, ul. Kulina bana u Fojnici\r\nGradska tržnica, Hadžići\r\nGradska tržnica "Olovo", ul. Školska bb u Olovu\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	\N	\N	inactive	2018-03-21		2026-04-27 11:56:36.944032+02	2026-05-07 09:04:27.469248+02	\N	f	407	\N	\N	2021-06-02		f	\N	2018-04-04	osnovno	219	\N	03-1-16-1-729/21	f
+103	TR "SELLY S NEW STYLE"	03-1-20-1-986/18	\N	trgovina	ul. Maršala Tita br.11	Goražde	73000	\N	\N	inactive	2018-06-20	Mjenja se rješenje broj: 03-1-20-1-1797/17 od 24.10.2017.godine sa početkom rada 20.06.2018.godine, iz razloga promjene sjedišta radnje (ul.Kulina bana bb)	2026-04-27 11:23:42.142596+02	2026-04-27 13:15:31.652925+02	\N	f	397	\N	\N	2018-06-22		f	\N	2017-11-06	osnovno	219	\N	03-1-20-1-999/18	f
+100	TR "Dressmania"	03-1-20-1-1187/17	\N	trgovina	ul.43.drinske brigade bb	Goražde	73000	\N	\N	inactive	2017-07-17		2026-04-27 09:50:14.407218+02	2026-04-28 08:35:18.346774+02	\N	f	397	\N	\N	2019-08-10		f	\N	2017-08-01	osnovno	219	\N	03-1-20-1-1106/19	f
+101	TR "A&S TRADE"	03-1-20-1-1872/17	\N	trgovina	ul. Ibrahima Čelika bb	Goražde	73000	\N	\N	inactive	2017-11-06	Mjenja se rješenje broj: 03-1-20-1-1392/17 od 11.08.2017.godine sa početkom rada 06.11.2017. iz razloga promjene vrste i predmeta poslovanja (45.32-trgovina na malo djelovima i priborom za motorna vozila u spec.prodavnicama)	2026-04-27 11:06:14.060469+02	2026-04-27 14:27:35.641527+02	\N	f	375	\N	\N	2018-11-30		f	\N	2017-09-04	osnovno	219	\N	03-1-20-1-1982/18	f
+116	TR "JOY"	03-1-20-1-2146/18	\N	trgovina	ul. Zaima Imamovića bb (mikrolokalitet "Gradska dvorana", lokacija br.3	Goražde	73000	\N	\N	active	2019-01-03		2026-04-27 14:30:55.9031+02	2026-04-27 14:32:00.747063+02	\N	f	1	\N	\N	\N		f	\N	2019-01-07	osnovno	219	\N	\N	f
+117	TR "MOBITELI"	03-1-20-1-123/19	\N	trgovina	ul. Zaima Imamovića bb	Goražde	73000	\N	\N	active	2019-01-25		2026-04-27 14:34:28.181089+02	2026-04-27 14:34:28.181089+02	\N	f	385	\N	\N	\N		f	\N	2019-02-01	osnovno	219	\N	\N	f
+102	TR "Obuci se ba"	03-1-20-1-1794/17	\N	trgovina	ul.31.drinske brigade br.120	Goražde	73000	\N	\N	inactive	2017-10-24		2026-04-27 11:19:57.51403+02	2026-04-28 08:29:24.208333+02	\N	f	608	\N	\N	2019-06-14		f	\N	2017-11-01	osnovno	219	\N	03-1-20-1-860/19	f
+93	Ugostiteljska radnja fast food "NUR"	03-1-18-1-1163/25	\N	ugostiteljstvo	ul.Kulina bana br.17	Goražde	73000	\N	\N	inactive	2025-09-08	Mjenja se rješenje broj: 03-1-18-1-880/25 od 25.06.2025.godine sa početkom rada 08.09.2025. iz razloga promjene sjedišta firme sa adrese 1.maj bb	2026-04-27 08:27:43.042913+02	2026-06-08 09:51:01.655771+02	\N	f	435	\N	\N	2025-09-30		f	\N	2025-07-10	osnovno	590	\N	03-1-18-1-1332/25	f
+112	TR "MATRIX"	03-1-20-1-1035/18	\N	trgovina	ul.25.novembra br.25	Goražde	73000	\N	\N	inactive	2018-07-02		2026-04-27 14:08:26.057865+02	2026-04-29 08:30:32.100644+02	\N	f	325	\N	\N	2020-07-06		f	\N	2018-07-14	osnovno	219	\N	03-1-16-1-1046/20	f
+105	TR "UNIQUE"	03-1-20-1-1867/17	\N	trgovina	ul. Kulina bana br.8	Goražde	73000	\N	\N	inactive	2017-11-06		2026-04-27 11:35:48.339158+02	2026-05-07 08:58:44.682021+02	\N	f	401	\N	\N	2018-05-16		f	\N	2017-11-20	osnovno	219	\N	03-1-20-1-768/18	f
+163	Obrtnička djelatnost "Majstor u kući"	03-1-17-1-453/26	\N	obrt	ul. Čajnička br.16	Goražde	73000	061/833-963	\N	inactive	2023-04-11		2026-05-25 09:22:17.053613+02	2026-05-25 11:01:11.703828+02	\N	f	314	\N	\N	2026-03-15		f	\N	2023-04-11	osnovno	231	obrt	03-1-17-1-312/26	f
+96	Ugostiteljska radnja pečenjarnica "Quart"	03-1-18-1-1149/25	\N	ugostiteljstvo	ul. Muhidina Mašića Munje bb	Goražde	73000	060/358-8129	\N	active	2025-09-03		2026-04-27 09:00:21.254334+02	2026-06-08 08:25:04.353345+02	\N	f	435	\N	\N	\N		f	\N	2025-09-04	osnovno	590	\N	\N	f
+211	Domaća radinost "MIMICA"	03-1-17-1-545/24	\N	obrt	naselje Ilovača bb	Goražde	73000	061/239-031	\N	inactive	2024-04-05		2026-06-09 14:18:52.432537+02	2026-06-09 14:21:06.267795+02	\N	f	4	\N	\N	2025-05-13		f	\N	2024-04-16	osnovno	591	domaca_radinost	03-1-17-1-694/25	f
+118	TR "SIEMPE"	03-1-20-1-695/19	\N	trgovina	ul. Kulina bana br.23	Goražde	73000	062/616-362	\N	active	2019-05-15		2026-04-28 08:26:55.767408+02	2026-04-28 08:26:55.767408+02	\N	f	608	\N	\N	\N		f	\N	2019-06-01	osnovno	219	\N	\N	f
+119	TR "FILIGRAN"	03-1-20-1-1437/19	\N	trgovina	ul. Rabite bb (TC Hipermarket Goražde)	Goražde	73000	062/328-141	\N	active	2019-09-11		2026-04-28 08:41:44.609403+02	2026-04-28 08:41:44.609403+02	\N	f	403	\N	\N	\N		f	\N	2019-09-21	osnovno	219	\N	\N	f
+133	TR baby shop "JUNIOR"	03-1-16-1-1521/21	\N	trgovina	ul. Trg branilaca bb	Goražde	73000	061/909-215	\N	active	2021-11-29	- Mjenja se rješenje broj: 03-1-20-180/03 od 17.07.2003.godine\r\n- Mjenja se rješenje broj: 03-1-20-1-1945/12 od 29.11.2012.godine, sa početkom rada 29.11.2021. iz razloga dopune predmeta poslovanja	2026-04-29 09:41:10.667841+02	2026-05-07 09:01:25.561286+02	\N	f	397	\N	\N	\N		f	\N	2003-07-18	osnovno	219	\N	\N	f
+126	TR "DINA"	03-1-16-1-949/20	\N	trgovina	ul. Trg branilaca br.4E	Goražde	73000	\N	\N	active	2020-06-19	Mjenja se rješenje broj: 03-1-20-1-2688/14 od 16.10.2014.godine, sa početkom rada 19.06.2020. godine iz razloga promjene sjedišta radnje (Kulina bana br.3)	2026-04-29 08:28:43.39907+02	2026-04-29 08:28:43.39907+02	\N	f	387	\N	\N	\N		f	\N	2014-11-01	osnovno	219	\N	\N	f
+127	TR "MARKET VOĆARNA HALILOVIĆ"	03-1-16-1-1156/20	\N	trgovina	ul. Meha Drljevića bb	Goražde	73000	\N	\N	active	2020-10-08	Mjenja se rješenje broj: 03-1-20-196/10 od 10.03.2021. godine, sa početkom rada 08.10.2020.godine, iz razloga promjene sjedišta radnje (Kulina bana -lokacija 7)	2026-04-29 08:39:10.051402+02	2026-04-29 08:39:56.526665+02	\N	f	1	\N	\N	\N		f	\N	2010-03-10	osnovno	219	\N	\N	f
+130	TR "E&I SHOP"	03-1-16-1-308/23	\N	trgovina	ul. Kulina bana br.7	Goražde	73000	062-053-460	\N	inactive	2023-03-07	-Mjenja se rješenje broj: 03-1-16-1-384/21 od 19.03.2021.godine iz razloga promjene sjedišta radnja (ul. Šukrije Kukavice br.4)	2026-04-29 09:00:09.758293+02	2026-05-08 12:01:08.754832+02	\N	f	608	\N	\N	2025-05-31		f	\N	2021-04-01	osnovno	219	\N	03-1-16-1-769/25	f
+4	„ALDI“	03-1-20-113/55	\N	obrt	Muhidina Mašića Munje 3	Goražde	73000	\N	\N	inactive	2004-06-29	.	2026-02-18 15:52:28.860017+01	2026-04-29 12:47:21.746771+02	2026-04-15 14:23:35.200115+02	t	377	\N	\N	2010-09-13		f	1	2004-06-29	osnovno	219	stari_zanat	00-00-00/10	f
+129	TR "MAK"	03-1-16-1-293/21	\N	trgovina	ul. Zaima Imamovića bb (lokacija br.2-kod OŠ Fahrudina Fahra Baščelije)	Goražde	73000	\N	\N	inactive	2021-03-02		2026-04-29 08:57:12.457032+02	2026-04-29 09:01:57.636436+02	\N	f	608	\N	\N	2021-04-01		f	\N	2021-03-15	osnovno	219	\N	03-1-16-1-435/21	f
+122	TR "ZIBIJA"	03-1-16-1-556/20	\N	trgovina	ul. Sinan paše Sijerčića br.17 A	Goražde	73000	\N	\N	active	2020-02-28	Mjenja se rješenje broj: 03-1-20-25/12 od 16.01.2012. godine sa početkom rada 01.03.2020. godine iz razloga promjene sjedišta radnje (Ul. Fazlagića bb (Gradska tržnica)	2026-04-28 11:03:24.441054+02	2026-05-07 09:00:03.930593+02	\N	f	397	\N	\N	\N		f	\N	2012-02-01	osnovno	219	\N	\N	f
+125	TR "AIDA"	03-1-16-1-941/20	\N	trgovina	ul. Panorama br.2A	Goražde	73000	\N	\N	inactive	2020-06-19	Mjenja se rješenje broj:03-1-20-1-743/13 od 27.03.2013. sa početkom rada 19.06.2020., iz razloga promjene sjedišta radnje (ul. Fazlagića-Gradska tržnica)	2026-04-29 08:22:10.423725+02	2026-05-04 15:03:03.707923+02	\N	f	397	\N	\N	2024-10-10		f	\N	2013-04-10	osnovno	219	\N	03-1-16-1-1471/24	f
+123	TR "GIFT SHOP"	03-1-16-1-1589/21	\N	trgovina	ul. Trg branilaca bb	Goražde	73000	061-470-280	\N	active	2021-12-13	Mjenja se rješenje broj: 03-1-16-1-566/20 od 04.03.2020. sa početkom rada 15.12.2021. iz razloga promjene sjedišta firme  (ul. Maršala Tita br.11)	2026-04-28 11:12:02.962715+02	2026-04-29 09:49:08.926693+02	\N	f	379	\N	\N	\N		f	\N	2020-03-18	osnovno	219	\N	\N	f
+131	TR "LOZJE"	03-1-16-1-1622/21	\N	trgovina	naselje Berič	Goražde	73000	061/399-478	\N	active	2021-12-22	Mjenja se rješenje broj: 03-1-16-1-906/21 od 13.07.2021.gdoine, sa početkom rada 03.01.2022.godine iz razloga promjene sjedišta radnje (ul.22.maj br.171)	2026-04-29 09:09:50.37737+02	2026-04-29 11:25:37.701119+02	\N	f	1	\N	\N	\N		f	\N	2021-07-26	osnovno	219	\N	\N	f
+138	TR "Kids fashion i nakit Lejla"	03-1-16-1-523/22	\N	trgovina	ul. Zaima Imamovića bb (Trgovke)	Goražde	73000	061/665-860	\N	inactive	2022-04-19		2026-04-30 09:48:42.696115+02	2026-05-04 14:57:00.475551+02	\N	f	397	\N	\N	2023-04-30		f	\N	2022-05-01	osnovno	219	\N	03-1-16-1-685/24	f
+132	TR "ALENKO"	03-1-16-1-1343/21	\N	trgovina	ul. 31.drinske brigade br.292	Goražde	73000	060/304-35-66	\N	inactive	2021-11-01		2026-04-29 09:21:03.099893+02	2026-05-04 14:25:55.500743+02	\N	f	388	\N	\N	2023-05-31		f	\N	2021-11-01	osnovno	219	\N	03-1-16-1-679/23	f
+137	TR "Pet shop Arka"	03-1-16-1-542/22	\N	trgovina	ul. Zaima Imamovića br.50 A	Goražde	73000	061/802-612	\N	inactive	2022-04-15		2026-04-30 09:43:16.420097+02	2026-05-08 14:53:42.143975+02	\N	f	402	\N	\N	2023-08-31		f	\N	2022-05-01	osnovno	219	\N	03-1-16-1-1139/23	f
+139	Trgovac pojedinac "MEDA"	03-1-16-1-547/22	\N	trgovina	Gradska tržnica, Hadžići\r\nPijaca, ul. Žrtava genocida u Srebrenici, Breza\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	061-523-014	\N	inactive	2022-04-20		2026-04-30 09:52:36.056805+02	2026-05-07 09:04:49.230779+02	\N	f	407	\N	\N	2023-05-15		f	\N	2022-05-05	osnovno	219	\N	03-1-16-1-642/23	f
+141	Trgovac pojedinac "ELMIN"	03-1-16-1-619/22	\N	trgovina	Gradska tržnica, Hadžići\r\nGradska tržnica "Olovo", ul. Školska bb, Olovo\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	061-330-957	\N	inactive	2022-04-29		2026-04-30 10:50:58.729863+02	2026-05-07 09:04:10.245457+02	\N	f	407	\N	\N	2023-12-31		f	\N	2022-05-12	osnovno	219	\N	03-1-16-1-1730/23	f
+109	Trgovac pojedinac "AJŠA"	03-1-20-1-434/18	\N	trgovina	Zelena pijaca, ul. Kulina bana u Fojnici\r\nGradska tržnica, Hadžići\r\nGradska tržnica "Olovo", ul. Školska bb u Olovu\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	\N	\N	inactive	2018-03-26		2026-04-27 12:00:16.45697+02	2026-05-07 09:03:09.181048+02	\N	f	407	\N	\N	2019-04-15		f	\N	2018-04-04	osnovno	219	\N	03-1-20-1-561/19	f
+134	TR "QUART"	03-1-16-1-1598/21	\N	trgovina	ul. Muhidina Mašića Munje bb	Goražde	73000	061/360-844	\N	inactive	2021-12-13		2026-04-29 11:23:02.882279+02	2026-05-08 09:45:04.569214+02	\N	f	377	\N	\N	2025-08-29		f	\N	2021-12-15	osnovno	219	\N	03-1-16-1-1138/25	f
+121	TR "ZIKRIJA"	03-1-20-1-1759/19	\N	trgovina	ul. Sinan paše  Sijerčića br.11	Goražde	73000	\N	\N	inactive	2019-11-06		2026-04-28 09:35:47.514164+02	2026-05-07 08:59:47.135712+02	\N	f	401	\N	\N	2021-05-28		f	\N	2019-11-20	osnovno	219	\N	03-1-16-1-711/21	f
+124	TR N&N"	03-1-16-1-633/20	\N	trgovina	ul. Alije Hodžića bb	Goražde	73000	\N	\N	active	2020-03-18		2026-04-28 11:16:15.714027+02	2026-05-07 09:01:49.869287+02	\N	f	1	\N	\N	\N		f	\N	2020-04-01	osnovno	219	\N	\N	f
+140	Trgovac pojedinac "Aladin"	03-1-16-1-571/22	\N	trgovina	Gradska tržnica, Hadžići\r\nPijaca, ul. Žrtava genocida u Srebrenici, Breza\r\nGradska pijaca, Banovac u Ilijašu	Goražde	73000	062/769-187	\N	inactive	2022-05-05		2026-04-30 10:30:07.552361+02	2026-05-07 09:03:27.943765+02	\N	f	407	\N	\N	2023-05-15		f	\N	2022-05-05	osnovno	219	\N	03-1-16-1-630/23	f
+135	TR "Second hand LD"	03-1-16-1-38/25	\N	trgovina	ul. 43.drinske brigade bb. (Lamela H3)	Goražde	73000	061/360 595	\N	active	2025-01-15	-Mjenja se rješenje broj: 03-1-16-1-1669/21 od 30.12.2021. iz raloga promjene sjedišta radnje (ul. 43.drinske brigade br.16A), sa početkom rada 15.01.2025.	2026-04-29 11:29:42.525246+02	2026-05-08 11:59:18.374291+02	\N	f	608	\N	\N	\N		f	\N	2022-01-10	osnovno	219	\N	\N	f
+162	Obrtnička - automehaničarska radnja "VEDO"	03-1-17-1-393/26	\N	obrt	naselje Zupčići bb, Grad Goražde	Goražde	73000	062/327-898	\N	active	2026-04-14		2026-05-22 09:09:28.895411+02	2026-05-22 09:47:16.902214+02	\N	f	323	\N	\N	\N		f	\N	2026-04-14	osnovno	114	obrt	\N	f
+164	Domaća radinost "OKUS PRIRODE"	03-1-17-1-686/24	\N	obrt	selo Plesi	Goražde	73000	061/246-703	\N	inactive	2024-05-06		2026-05-25 10:59:58.711614+02	2026-06-11 09:09:28.177471+02	\N	f	4	\N	\N	2026-03-31		f	\N	2024-05-06	osnovno	591	domaca_radinost	03-1-17-1-346/26	f
+136	TR "Baby Shop Džejla"	03-1-16-1-085/22	\N	trgovina	ul.Zaima Imamovića br.7	Goražde	73000	061/667 272	\N	active	2022-07-29	mjenja se rješenje broj.03-1-16-1-491/22 od 04.04.2022., sa početkom rada 01.08.2022., iz razloga promjene sjedišta radnje (ul.43.drinske brigade br.2)	2026-04-30 09:38:05.156695+02	2026-04-30 11:42:13.262781+02	\N	f	397	\N	\N	2022-10-18		f	\N	2022-04-15	osnovno	219	\N	03-1-16-1-1699/22	f
+142	TR "MOBILEX"	03-1-16-1-1910/22	\N	trgovina	ul. Rabite bb (TC Hipermarket Goražde)	Goražde	73000	060/34 95 016	\N	active	2022-12-07	- Mjenja se rješenje broj: 03-1-16-1-706/22 od 19.05.2022.godine, sa početkom rada 07.12.2022.godine iz razloga dopune predmeta poslovanja	2026-04-30 10:55:27.646991+02	2026-04-30 12:04:42.337064+02	\N	f	385	\N	\N	\N		f	\N	2022-06-01	osnovno	219	\N	\N	f
+154	TR second hand shop "SABININA SVAŠTARIJA"	03-1-16-1-825/25	\N	trgovina	ul.43.drinske brigade br.10	Goražde	73000	062/674-588	\N	active	2025-06-16		2026-05-05 08:29:20.332034+02	2026-05-08 12:04:54.032905+02	\N	f	608	\N	\N	\N		f	\N	2025-07-01	osnovno	219	\N	\N	f
+128	TR "E&E"	03-1-16-1-1669/21	\N	trgovina	ul. Sinan paše Sijerčića br.3	Goražde	73000	\N	\N	inactive	2022-10-12	- Mjenja se rješenje broj: 03-1-20-2872/11 od 17.10.2011.godine, sa početkom rada 13.01.2021.godine iz razloga promjene sjedišta radnje (ul. Sinan paše Sijerčića-lokacija broj 6).\r\n- Mjenja se rješenje broj: 03-1-16-1-36/21 od 13.01.2021.godine , sa početkom rada 12.10.2022., iz razloga promjene sjedišta radnje (ul. Sinan paše Sijerčića br.3)	2026-04-29 08:52:25.566358+02	2026-05-04 14:04:50.29181+02	\N	f	1	\N	\N	2023-03-31		f	\N	2011-11-01	osnovno	219	\N	03-1-16-1-416/23	f
+146	TR "PRLJA"	03-1-16-1-418/23	\N	trgovina	ul. Sinan paše Sijerčića br.7	Goražde	73000	\N	\N	active	2023-03-31		2026-05-04 14:14:07.335905+02	2026-05-04 14:14:07.335905+02	\N	f	1	\N	\N	\N		f	\N	2023-04-01	osnovno	219	\N	\N	f
+104	TR"BEAUTY CORNER"	03-1-16-1-9/21	\N	trgovina	ul. Ferida Dizdarevića br.13	Goražde	73000	061/499-633	\N	inactive	2021-01-08	Mjenja se rješenje broj: 03-1-20-1-1826/17 od 31.10.2017. godine sa početkom rada 08.01.2021.godine iz razloga promjene  sjedišta radnje (ul. Ferida Dizdarevića br.17)	2026-04-27 11:31:33.486899+02	2026-05-07 09:02:49.522573+02	\N	f	401	\N	\N	2023-03-31		f	\N	2017-12-01	osnovno	219	\N	03-1-16-1-422/23	f
+148	TR " BEV PLAST"	03-1-16-1-488/23	\N	trgovina	ul. Ferida Dizdarevića br.37	Goražde	73000	\N	\N	inactive	2023-04-17		2026-05-04 14:22:25.998069+02	2026-05-04 14:50:59.34991+02	\N	f	388	\N	\N	2023-10-04		f	\N	2023-05-01	osnovno	219	\N	03-1-16-1-1342/23	f
+150	TR "ALENKO"	03-1-16-1-1576/23	\N	trgovina	ul. 31. drinske brigade br.292	Goražde	73000	Tel. 061/376-390	\N	active	2023-11-17		2026-05-04 14:54:20.26046+02	2026-05-04 14:54:37.857019+02	\N	f	388	\N	\N	\N		f	\N	2023-12-01	osnovno	219	\N	\N	f
+151	Trgovinska djelatnost "SCE"	03-1-16-1-1155/24	\N	trgovina	ul. Zaima Imamovića bb	Goražde	73000	062/790-217	\N	inactive	2024-07-31		2026-05-04 15:02:03.174204+02	2026-05-26 11:16:13.461185+02	2026-05-26 11:13:59.133146+02	t	409	\N	\N	2026-02-09		f	\N	2024-08-06	osnovno	219	\N	03-1-16-1-169/26	f
+157	Smještajni objekat-studio apartman u domaćinstvu "Amorea"	03-1-18-1-304/26	\N	ugostiteljstvo	Zupčići bb	Goražde	73000	061-601-617	\N	active	2026-03-27		2026-05-21 09:57:22.226218+02	2026-05-21 13:48:00.686226+02	\N	f	432	\N	\N	\N		f	\N	2026-03-27	paušalno	609	\N	\N	f
+21	Obrtnička radnja "NextGen CNC-CNC nove generacije"	03-1-17-1-1744/24	\N	obrt	naselje Mravinjac	Goražde	73000	061/967-374  -  060/300-3456	\N	active	2025-01-06	- Zajedničko obavljanje obrta\r\n- Vanjskotrgovinsko poslovanje	2026-04-16 09:04:19.377189+02	2026-05-07 08:23:29.127489+02	\N	f	196	\N	\N	\N		f	\N	2025-01-16	dopunsko	233	obrt	\N	f
+144	TR "ZLATARA REFAN"	03-1-16-1-1813/22	\N	trgovina	ul. Zaima Imamovića br.22	Goražde	73000	061/964-863	\N	active	2022-11-16		2026-04-30 11:45:43.501618+02	2026-05-07 09:00:21.759001+02	\N	f	403	\N	\N	\N		f	\N	2022-11-18	osnovno	219	\N	\N	f
+161	Domaća radinost "A.I.FELICIJA"	03-1-17-1-208/26	\N	obrt	ul. Seada Sofovića Sofe br.14.	Goražde	73000	061/981-581	\N	active	2026-02-18		2026-05-22 09:01:26.278509+02	2026-06-01 09:48:32.991556+02	\N	f	272	\N	\N	\N		f	\N	2026-02-28	dopunsko	602	domaca_radinost	\N	f
+143	TR "B&M"	03-1-16-1-1665/22	\N	trgovina	ul. Sinan paše Sijerčića br.14	Goražde	73000	\N	\N	inactive	2022-10-17	Razlog zatvaranja radnje je smrt Mlatišuma Kenana, zahtjev podnesen od strane Mlatišuma Edine supruge imenovanog.	2026-04-30 11:40:50.712408+02	2026-05-08 09:30:07.240657+02	\N	f	397	\N	\N	2025-08-16		f	\N	2022-11-01	osnovno	219	\N	03-1-16-1-1136/25	f
+147	TR "MIX SHOP"	03-1-16-1-1264/25	\N	trgovina	ul. 1.slavne višegradske brigade br.61	Goražde	73000	062/578-396	\N	active	2025-09-22	Mjenja se rješenje broj: 03-1-16-1-472/23 od 07.04.2023.godine iz razloga dopune predmeta poslovanja sa početkom rada 22.09.2025.	2026-05-04 14:18:22.255548+02	2026-05-08 09:37:13.825371+02	\N	f	608	\N	\N	\N		f	\N	2023-04-24	osnovno	219	\N	\N	f
+155	TR "BUTIK AMELA"	03-1-16-1-1029/25	\N	trgovina	ul. Zaima Imamovića bb	Goražde	73000	060/302-4839	\N	active	2025-07-31		2026-05-05 08:32:07.631628+02	2026-05-08 09:43:30.480082+02	\N	f	397	\N	\N	\N		f	\N	2025-08-07	osnovno	219	\N	\N	f
+120	TR "DAMIR"	03-1-16-1-660/25	\N	trgovina	ul. Kulina bana br.8	Goražde	73000	\N	\N	active	2025-05-15	-Mjenja se rješenje broj: 03-1-20-1-1664/19 od 16.10.2019.godine iz razloga promjene predmeta poslovanja (47.91), početak rada 15.05.2025.	2026-04-28 08:45:09.390258+02	2026-05-08 12:01:46.302169+02	\N	f	409	\N	\N	\N		f	\N	2019-11-01	osnovno	219	\N	\N	f
+149	TR "DARIS"	03-1-16-1-1389/25	\N	trgovina	ul. Zaima Imamovića br.27	Goražde	73000	061/820-697	\N	active	2025-10-17	-Mjenja se rješenje broj: 03-1-16-1-1065/23 od 17.08.2023. iz razloga promjene sjedišta radnje (ul. Ruždije Islamagića br.29) sa početkom rada 04.08.2025.\r\n-Mjenja se rješenje broj:03-1-16-1-1047/25 od 04.08.2025.iz razloga dopune predmeta poslovanja u okviru iste šifre, sa početkom rada 17.10.2025.	2026-05-04 14:47:54.367563+02	2026-05-08 11:58:20.16033+02	\N	f	608	\N	\N	\N		f	\N	2023-09-01	osnovno	219	\N	\N	f
+145	TR "NISVETA"	03-1-16-1-750/25	\N	trgovina	ul. Alije Hodžića br.5	Goražde	73000	\N	\N	active	2025-06-02	-Osnivanje, broj rješenja: 03-1-20-146/11 od 02.02.2011. (adresa Fazlagića bb-Gradske tržnica sa predmetom poslovanja trgovina na malo odjećom).\r\n-Mjenja se rješenje broj: 03-1-20-146/11 od 02.02.2011.,   iz razloga promjene promjene sjedišta radnje sa novom adresom ul. Alije Hodžića br.5)- broj:03-1-20-1-2358 od 30.10.2015.\r\n- Mjenja se rješenje broj: broj:03-1-20-1-2358 od 30.10.2015 iz razloga dopune predmeta poslovanja (trgovina na malo rabljenom odjećom i obućom)-broj: 03-1-16-1-272 /23  od 28.02.2023.	2026-05-04 13:58:35.825119+02	2026-05-08 12:02:58.139895+02	\N	f	409	\N	\N	\N		f	\N	2011-02-10	osnovno	219	\N	\N	f
+153	TR "ELEKTRONSKA PRODAVNICA ZAZA"	03-1-16-1-682/25	\N	trgovina	ul. Ruždije Islamagića br.19	Goražde	73000	061/580-559	\N	active	2025-05-14		2026-05-05 08:19:56.727544+02	2026-05-08 13:44:16.40398+02	\N	f	409	\N	\N	\N		f	\N	2025-05-23	osnovno	219	\N	\N	f
+156	Smještajni objekat-kuća za odmor u domaćinstvu "Villa Palma"	06-1-18-1-328/26	\N	ugostiteljstvo	Zupčići br.11	Goražde	73000	062/474-888	\N	active	2026-03-19		2026-05-21 09:42:21.67311+02	2026-05-21 13:46:55.08993+02	\N	f	432	\N	\N	\N		f	\N	2026-03-19	paušalno	609	\N	\N	f
+158	Smještajni objekat-studio apartman u domaćinstvu "Konak"	03-1-18-1-341/26	\N	ugostiteljstvo	ul. Selvera Sijerčića br.10.	Goražde	73000	062/907-105	\N	active	2026-03-31		2026-05-21 10:49:19.184354+02	2026-05-21 13:48:39.388098+02	\N	f	432	\N	\N	\N		f	\N	2026-03-31	paušalno	609	\N	\N	f
+160	Domaća radinost "OKUS PRIRODE"	03-1-17-1-419/26	\N	obrt	selo Plesi bb	Goražde	73000	062/017-636	\N	active	2026-04-06		2026-05-22 08:53:39.782567+02	2026-06-01 09:51:29.989179+02	\N	f	4	\N	\N	\N		f	\N	2026-04-15	osnovno	591	domaca_radinost	\N	f
+172	Samostalni poljoprivredni proizvođač "E&M"	03-1-17-1-427/26	\N	obrt	naselje Džindići bb	Goražde	73000	062/538-544	\N	active	2026-04-08		2026-06-01 09:31:10.734753+02	2026-06-01 09:31:10.734753+02	\N	f	4	\N	\N	\N		f	\N	2026-04-22	osnovno	591	srodna_djelatnost	\N	f
+165	Obrtničko-limarska radnja "SELAK"	03-1-17-1-1465/22	\N	obrt	ul.Muhidina Mašića Munje bb	Goražde	73000	061/297-932	\N	inactive	2022-09-19	- Rrješenja broj: 03-1-21-49/10  iz 2010.god\r\n- Rješenje broj: 03-1-21-3177/11 od 24.11.2011.godine  sa sjedištem u Hasana Kikića broj 44	2026-05-25 11:20:43.70925+02	2026-05-25 11:26:29.298301+02	\N	f	198	\N	\N	2026-04-07		f	\N	2011-11-24	osnovno	610	stari_zanat	03-1-17-1-443/26	f
+173	Domaća radinost "VILA"	03-1-17-1-412/26	\N	obrt	naselje Ilovača bb	Goražde	73000	061/866-840	\N	active	2026-04-06		2026-06-01 09:37:04.194528+02	2026-06-01 09:37:04.194528+02	\N	f	4	\N	\N	\N		f	\N	2026-04-16	osnovno	591	domaca_radinost	\N	f
+174	Domaća radinost "KLUPKO"	03-1-17-1-413/26	\N	obrt	ul. Rogatička br.5	Goražde	73000	062/590-281	\N	active	2026-04-06		2026-06-01 09:41:54.475594+02	2026-06-01 09:42:49.542129+02	\N	f	106	\N	\N	\N		f	\N	2026-04-16	osnovno	599	domaca_radinost	\N	f
+175	Domaća radinost "ALDA"	03-1-17-1-390/26	\N	obrt	ul.1.slavne višegradske brigade br.61	Goražde	73000	062/896-656	\N	active	2026-04-02		2026-06-01 10:55:57.895904+02	2026-06-01 10:55:57.895904+02	\N	f	35	\N	\N	\N		f	\N	2026-04-14	osnovno	591	domaca_radinost	\N	f
+176	Obrtnička radnja "HEM"	03-1-17-1-573/26	\N	obrt	ul. Dževada Omerhodžića br.6	Goražde	730000	060/3434-395	\N	active	2026-04-28		2026-06-01 11:03:24.692471+02	2026-06-01 11:04:18.74075+02	\N	f	261	\N	\N	\N		f	\N	2026-05-07	osnovno	351	obrt	\N	f
+167	UR bosanska kafana "GAZIJE"	03-1-22-1-1181/13	\N	ugostiteljstvo	ul. Trg branilaca bb	Goražde	73000	062/331-302	\N	inactive	2013-05-27		2026-05-26 09:17:43.6953+02	2026-05-26 09:17:43.6953+02	\N	f	438	\N	\N	2026-04-30	površina poslovnog prostora 32 m2	f	\N	2013-06-03	osnovno	590	\N	03-1-18-1-570/26	f
+152	TR "MD prestige boutique"	03-1-16-1-489/25	\N	trgovina	ul.43.drinske brigade br.4	Goražde	73000	062/608-771	\N	inactive	2025-04-09		2026-05-05 08:11:16.115171+02	2026-05-26 11:05:44.446449+02	\N	f	397	\N	\N	2026-04-21		f	\N	2025-04-21	osnovno	219	\N	03-1-16-1-532/26	f
+168	Domaća radinost "KADIRA"	03-1-17-1-522/26	\N	obrt	ul. Braće Smajovića br.43	Goražde	73000	\N	\N	active	2026-04-24		2026-06-01 09:08:26.553323+02	2026-06-01 09:08:26.553323+02	\N	f	106	\N	\N	\N		f	\N	2026-05-05	osnovno	599	domaca_radinost	\N	f
+169	Domaća radinost "BINKA"	03-1-17-1-529/26	\N	obrt	ul. Omera Vrane br.3	Goražde	73000	062/223-703	\N	active	2026-04-23		2026-06-01 09:14:16.553772+02	2026-06-01 09:14:16.553772+02	\N	f	106	\N	\N	\N		f	\N	2026-05-06	osnovno	599	domaca_radinost	\N	f
+170	Domaća radinost "ZIS"	03-1-17-1-481/26	\N	obrt	Hubjeri bb	Goražde	73000	060/3539-466	\N	active	2026-04-13		2026-06-01 09:19:46.519168+02	2026-06-01 09:19:46.519168+02	\N	f	19	\N	\N	\N		f	\N	2026-04-23	osnovno	591	domaca_radinost	\N	f
+171	Domaća radinost "ALTIJANA"	03-1-17-1-464/26	\N	obrt	Posestra bb	Goražde	73000	062/315-062	\N	active	2026-04-10		2026-06-01 09:25:28.567767+02	2026-06-01 09:25:28.567767+02	\N	f	23	\N	\N	\N		f	\N	2026-04-24	osnovno	591	domaca_radinost	\N	f
+177	Samostalni poljoprivredni proizvođač "MOJ ZAVIČAJ"	03-1-17-1-367/26	\N	obrt	ul. Ibra Mujkovića br.4	Goražde	73000	061/594-338	\N	active	2026-03-27		2026-06-01 11:08:09.43132+02	2026-06-01 12:23:38.798539+02	\N	f	4	\N	\N	\N		f	\N	2026-04-07	osnovno	591	srodna_djelatnost	\N	f
+178	Obrtnička radnja "AUTO-SERVIS ADIS"	03-1-17-1-394/26	\N	obrt	naselje Osanica	Goražde	730000	062/020-630	\N	active	2026-04-02		2026-06-01 11:10:43.61473+02	2026-06-01 12:25:15.250743+02	\N	f	323	\N	\N	\N		f	\N	2026-04-14	osnovno	114	obrt	\N	f
+180	Smještajni objekat-kuća za odmor u domaćinstvu "Drinska oaza"	03-1-18-1-1483/25	\N	ugostiteljstvo	naselje Osanica	Goražde	73000	060/3278-306	\N	active	2025-11-19		2026-06-08 09:34:22.706971+02	2026-06-08 09:34:42.114438+02	\N	f	432	\N	\N	\N		f	\N	2025-11-19	paušalno	609	\N	\N	f
+179	UR caffe bar "DERBI"	03-1-22-1-1804/18	\N	ugostiteljstvo	ul. Ferida Dizdarevića bb	Goražde	730000	\N	\N	inactive	2018-10-24	-Rješenje broj: 03/II-22-34/01 od 29.01.2001.godine	2026-06-03 11:27:35.524606+02	2026-06-03 11:34:31.459266+02	\N	f	438	\N	\N	2025-11-14		f	\N	2001-01-29	osnovno	590	\N	03-1-18-1-533/26	f
+97	Ugostiteljska radnja fast food "Ena"	03-1-18-1-1394/25	\N	ugostiteljstvo	ul.1.maj bb	Goražde	73000	061/887-151	\N	active	2025-10-16		2026-04-27 09:20:07.8505+02	2026-06-08 08:17:31.880143+02	\N	f	435	\N	\N	\N		f	\N	2025-10-20	osnovno	590	\N	\N	f
+98	Ugostiteljska radnja aščinica-ćevabdžinica "Kutak"	03-1-18-1-1608/25	\N	ugostiteljstvo	ul. Ruždije Islamagića br.17	Goražde	73000	061/936-699	\N	active	2025-12-04	Mjenja se rješenje broj:03-1-18-1-1474/24 od 16.10.2024. godine sa početkom rada 05.12.2025. iz razloga promjene sjedišta ugostiteljske radnje sa adresom ul. Kulina bana br.9	2026-04-27 09:30:00.417932+02	2026-06-08 08:33:03.420927+02	\N	f	435	\N	\N	\N		f	\N	2024-11-01	osnovno	590	\N	\N	f
+181	UR buffet "M&M"	03-1-18-1-662/23	\N	ugostiteljstvo	naselje Mravinjac bb	Goražde	73000	060/3588-661	\N	inactive	2023-05-19		2026-06-08 09:43:52.380354+02	2026-06-08 09:43:52.380354+02	\N	f	438	\N	\N	2025-10-31		f	\N	2023-05-24	osnovno	590	\N	03-1-18-1-436/25	f
+182	Obrtnička djelatnost "SVILEN KONAC"	03-1-17-1-1780/23	\N	obrt	ul. Zmaja od Bosne br.16.	Goražde	73000	061/466-480	\N	inactive	2024-01-04		2026-06-08 12:29:54.964069+02	2026-06-08 12:29:54.964069+02	\N	f	101	\N	\N	2025-02-03		f	\N	2024-01-13	dopunsko	118	obrt	03-1-17-1-140/25	f
+183	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-202/24	\N	obrt	naselje Ratkovići	Goražde	73000	060/329-9328	\N	active	2024-02-01	Privremeno rješenje: 03-1-23-1-11/24 od 05.01.2024.	2026-06-08 12:38:45.827736+02	2026-06-08 12:38:45.827736+02	\N	f	414	\N	\N	\N		f	\N	2024-02-01	osnovno	606	obrt	\N	f
+184	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-206/24	\N	obrt	naselje Potrkuša	Goražde	73000	061/301-520	\N	active	2024-02-01	privremeno rješenje broj: 03-1-23-1-12/24 od 05.01.2024.	2026-06-08 12:43:13.250682+02	2026-06-08 12:43:13.250682+02	\N	f	414	\N	\N	\N		f	\N	2024-02-01	osnovno	606	obrt	\N	f
+185	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-1586/25	\N	obrt	ul. Ferida Dizdarevića br.26	Goražde	73000	060/321-4014	\N	active	2025-11-28	- privremeno rješenje broj: 03-1-23-1-91/24 od 18.01.2024.\r\n-Mjenja se rješenje broj: 03-1-23-1-1655 od 05.12.2024. iz razloga promjene motornog vozila	2026-06-08 12:49:12.595879+02	2026-06-08 12:49:12.595879+02	\N	f	414	\N	\N	\N		f	\N	2024-02-01	osnovno	606	obrt	\N	f
+187	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-216/24	\N	obrt	selo Kučine bb	Goražde	73000	061/741-305	\N	active	2024-02-01	- Privremeno rješenje broj:03-1-23-1-45/24 od 11.01.2024.	2026-06-08 13:13:59.638015+02	2026-06-08 13:13:59.638015+02	\N	f	414	\N	\N	\N		f	\N	2024-02-01	osnovno	606	obrt	\N	f
+186	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-1395/24	\N	obrt	ul.1.slavne višegradske brigade br.29	Goražde	73000	062/140-484	\N	inactive	2024-09-30	- Privremeno rješenje broj:03-1-23-1-18/24 od 05.01.2024.\r\n- Mjenja se rješenje broj: 03-1-23-1-209/24 od 01.02.2024. iz razloga primjene motornog vozila	2026-06-08 12:56:29.2636+02	2026-06-08 13:02:35.463255+02	\N	f	414	\N	\N	2025-10-09		f	\N	2024-02-01	osnovno	606	obrt	03-1-23-1-1376/25	f
+188	Obrtnička radnja za proizvodnju aluminijske i PVC stolarije "ALU - PLASTIK"	03-1-17-1-208/24	\N	obrt	ul. Braće Posvandžić br.7	Goražde	73000	061/206-586	\N	active	2024-02-02	- Rješenje o osnivanju broj.03-1-21-191/07 od 28.02.2007.\r\n- Rješenje broj: 03-1-21-1896/09 od 02.12.2009.godine iz razloga promjene poslovnog sjedišta (ranije ul.Himze Ćurovca br.40)\r\n-Rješenje broj: 03-1-21-1-471/13 od 28.02.20213. godine iz razloga usklađivanja sa važećim zakonskim propisom\r\n- Rješenje broj: 03-1-17-1-1079/22 od 25.07.20222. godine iz razloga usklađivanja sa važećim zakonskim propisom	2026-06-08 13:41:53.599554+02	2026-06-08 13:41:53.599554+02	\N	f	152	\N	\N	\N		f	\N	2007-03-01	osnovno	116	obrt	\N	t
+189	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-191/25	\N	obrt	naselje Berič	Goražde	73000	062/317-312	\N	active	2025-02-19	-Privremeno rješenje broj: 03-1-27-1-1505/17 od 06.09.2017.\r\n- Rješenje broj: 03-1-27-1-1610/17 od 20.09.2017.godine , najava početka rada\r\n-Rješenje broj: 03-1-23-1-855/22 od 13.06.2022. godine, usklađivanje sa zakonskim propisima\r\n-Rješenje broj: 03-1-23-1-214/24 od 07.02.2024., promjena motornog vozila	2026-06-08 14:02:24.458931+02	2026-06-08 14:02:24.458931+02	\N	f	414	\N	\N	\N		f	\N	2017-09-20	osnovno	606	obrt	\N	f
+190	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-223/24	\N	obrt	naselje Osanica	Goražde	73000	061/761-052	\N	active	2024-02-07	- Privremeno rješenje broj: 03-1-27-1-1697/19 od 22.10.2019. godine\r\n-Rješenje broj: 03-1-27-1-1753/19 od 31.10.2019. godine , najava početka rada\r\n-Rješenje broj: 03-1-23-1-1536 od 28.09.2022.godine, usklađivanje sa zakonskim propisima	2026-06-08 14:24:48.663111+02	2026-06-08 14:24:48.663111+02	\N	f	414	\N	\N	\N		f	\N	2019-11-01	osnovno	606	obrt	\N	f
+191	Domaća radinost "POLJOPLOD"	03-1-17-1-222/24	\N	obrt	selo Bratiš	Goražde	73000	061/313-948	\N	active	2024-02-09		2026-06-08 15:06:37.285917+02	2026-06-08 15:06:37.285917+02	\N	f	23	\N	\N	\N		f	\N	2024-02-23	osnovno	591	domaca_radinost	\N	f
+192	Pržionica kafe "EMINA"	03-1-17-1-281/24	\N	obrt	ul. Maršala Tita bb	Goražde	73000	038/227-867	\N	active	2024-02-15	- Rješenje o osnivanju broj: 03-1-21-1-1260/16 od 21.07.2016.godine\r\n- Rješenje broj: 03-1-17-1-1532 od 30.09.2022.godine, usklađivanje sa zakonskim propisima	2026-06-08 15:25:06.888542+02	2026-06-08 15:25:42.777808+02	\N	f	74	\N	\N	\N		f	\N	2016-08-01	osnovno	611	obrt	\N	t
+193	Obrtnička radnja "SANTANA"	03-1-17-1-330/24	\N	obrt	ul. 22.Maj bb	Goražde	73000	\N	\N	active	2024-02-23	- Rješenje o privremenom prekidu rada broj: 03-1-21-1-2188/16 od 08.12.2016.godine (zdravstveni problemi) od 07.12.2016-07.03.2017.\r\n- Zaključak o ponovnom početku rada broj:03-1-21-1-385 od 08.03.2017.godine	2026-06-08 15:33:21.249059+02	2026-06-08 15:33:21.249059+02	\N	f	323	\N	\N	\N		f	\N	2015-07-02	osnovno	114	obrt	\N	f
+194	Obrtnička radnja-Kozmetički salon "Shades of beauty"	03-1-17-1-1474/25	\N	obrt	ul. Ibra Čelika br.4	Goražde	73000	061/533-766	\N	active	2025-11-06	- Rješenje o osnivanju broj: 03-1-17-1-524/23 od 24.04.2023.godine (sjedište ul. Maršala Tita bb)\r\n- Rješenje broj: 03-1-17-1-337/24 od 04.03.2024. godine iz razloga promjene sjedišta firme (ul. Trg branilaca bb)\r\n- Rješenje broj: 03-1-17-1-1590/24 od 13.11.2024.godine iz razloga promjene prezimena i adrese prebivališta obrtnika	2026-06-08 15:46:48.560052+02	2026-06-08 15:46:48.560052+02	\N	f	600	\N	\N	\N		f	\N	2023-05-04	osnovno	444	obrt	\N	f
+195	Obrtnička radnja "TTM"	03-1-17-1-1047/23	\N	obrt	naselje Mravinjac	Goražde	73000	061/217-230	\N	inactive	2023-08-17		2026-06-09 08:01:07.458087+02	2026-06-09 08:01:07.458087+02	\N	f	615	\N	\N	2024-02-29		f	\N	2023-08-29	osnovno	233	obrt	03-1-17-1-357/24	f
+196	Obrtnička djelatnost "eDeks"	03-1-17-1-390/24	\N	obrt	ul. 43.drinske brigade bb	Goražde	73000	061/359-809	\N	inactive	2024-03-07	-Rješenje o osnivanju broj: 03-1-17-1-388/23 od 31.03.2023.	2026-06-09 08:19:18.075563+02	2026-06-09 08:19:18.075563+02	\N	f	492	\N	\N	2025-01-31		f	\N	2023-04-15	dopunsko	612	obrt	03-1-17-138/25	f
+197	Obrtnička djelatnost "EUROBIRO"	03-1-17-1-400/24	\N	obrt	ul. 31. Drinske brigade br.133	Goražde	73000	061/246-596	\N	active	2024-03-19		2026-06-09 08:28:41.05675+02	2026-06-09 08:28:41.05675+02	\N	f	489	\N	\N	\N		f	\N	2024-03-19	dopunsko	53	obrt	\N	f
+198	Samostalni poljoprivredni proizvođač "MEMSUD"	03-1-17-1-424/24	\N	obrt	ul. Braće Posvandžića br.45	Goražde	73000	061/330-335	\N	active	2024-03-12		2026-06-09 08:48:09.256039+02	2026-06-09 08:48:09.256039+02	\N	f	4	\N	\N	\N		f	\N	2024-03-21	osnovno	591	srodna_djelatnost	\N	f
+199	Domaća radinost "HOLI"	03-1-17-1-447/24	\N	obrt	naselje Perjani	Goražde	73000	061/767-815	\N	inactive	2024-03-20		2026-06-09 08:53:27.377975+02	2026-06-09 08:54:33.830872+02	\N	f	23	\N	\N	2025-03-24		f	\N	2024-03-29	dopunsko	591	domaca_radinost	03-1-17-1-425/25	f
+200	Domaća radinost "A&E"	03-1-17-1-455/24	\N	obrt	Posestra bb	Goražde	73000	061/376-456	\N	inactive	2024-03-22		2026-06-09 09:06:04.124929+02	2026-06-09 09:07:32.310128+02	\N	f	23	\N	\N	2025-03-31		f	\N	2024-04-04	osnovno	591	domaca_radinost	03-1-17-1-435/25	f
+201	Domaća radinost "BEG"	03-1-17-1-479/24	\N	obrt	selo Raškovići	Goražde	73000	061/330-580	\N	active	2024-03-26		2026-06-09 09:15:14.017489+02	2026-06-09 09:16:14.725764+02	\N	f	19	\N	\N	\N		f	\N	2024-04-05	osnovno	591	domaca_radinost	\N	f
+202	Obrtnička radnja-autopraonica  "REPLAY-PONOVO"	03-1-17-1-487/24	\N	obrt	ul.31.drinske brigade br.132	Goražde	73000	061/278-500	\N	inactive	2024-03-27		2026-06-09 09:46:45.484011+02	2026-06-09 09:48:56.759109+02	\N	f	323	\N	\N	2024-07-04		f	\N	2024-04-10	osnovno	594	obrt	03-1-17-1-1029/24	f
+203	Domaća radinost "UŠANOVIĆ"	03-1-17-1-494/24	\N	obrt	selo Deševa bb	Goražde	73000	062/317-193	\N	inactive	2024-03-29		2026-06-09 11:37:11.833418+02	2026-06-09 11:37:11.833418+02	\N	f	4	\N	\N	2025-04-30		f	\N	2024-04-10	osnovno	591	domaca_radinost	03-1-17-1-567/25	f
+204	Obrtnička radnja "AUTOSERVIS GORAŽDE"	03-1-17-1-502/24	\N	obrt	ul. 31.drinske brigade br.290A	Goražde	73000	061-192-545	\N	active	2024-03-29		2026-06-09 11:43:52.625524+02	2026-06-09 11:43:52.625524+02	\N	f	323	\N	\N	\N		f	\N	2024-04-10	osnovno	114	obrt	\N	f
+205	Samostalni poljoprivredni proizvođač "DINKA"	03-1-17-1-510/24	\N	obrt	Crkvine bb	Goražde	73000	060/3423-760	\N	active	2024-03-29		2026-06-09 11:49:15.450828+02	2026-06-09 11:49:15.450828+02	\N	f	4	\N	\N	\N		f	\N	2024-04-13	osnovno	591	srodna_djelatnost	\N	f
+207	Obrtnička radnja-salon za masažu "RELAX"	03-1-17-1-913/23	\N	obrt	ul. Ferida Dizdarevića bb	Goražde	73000	061/829-701	\N	inactive	2023-07-20		2026-06-09 12:27:47.895542+02	2026-06-09 12:27:47.895542+02	\N	f	602	\N	\N	2024-03-31		f	\N	2023-08-01	osnovno	589	obrt	03-1-17-1-518/24	f
+206	Obrtnička djelatnost "Vodoinstalacije"	03-1-17-1-503/24	\N	obrt	ul. Srebrenička bb	Goražde	73000	062/989-668	\N	inactive	2024-04-01	-Rješenje Ministarstva za urbanizam, prostorno uređenje i zaštitu okoline BPK Goražde, broj:\r\nUP-1:09-19-15/24 od 20.04.2024.godine za licencu.	2026-06-09 11:59:23.262907+02	2026-06-09 12:03:11.69822+02	\N	f	312	\N	\N	2024-06-04		f	\N	2024-04-13	osnovno	458	obrt	03-1-17-1-879/24	f
+208	Samosatlni poljoprivredni proizvođač "LELA"	03-1-17-1-531/24	\N	obrt	selo Rešetnica	Goražde	73000	062/795-772	\N	active	2024-04-03		2026-06-09 12:30:55.577972+02	2026-06-09 12:30:55.577972+02	\N	f	4	\N	\N	\N		f	\N	2024-04-13	osnovno	591	srodna_djelatnost	\N	f
+209	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-522/24	\N	obrt	selo Kalac	Goražde	73000	\N	\N	inactive	2024-04-04	-Rješenje o osnivanju broj:0 2/VII-345-392/96 od 06.10.1996.\r\n-Rješenje broj: 03-1-123-1-1632/22 od 19.01.2023.godine, usklađivanje sa zakonskim propisima	2026-06-09 13:48:04.515406+02	2026-06-09 13:48:37.609567+02	\N	f	414	\N	\N	2024-04-01		f	\N	1996-10-06	osnovno	606	obrt	03-1-23-1-522/24	f
+210	Javni prijevoz putnika u vanlinijskom cestovnom prijevozu-taksi prijevoz	03-1-23-1-542/24	\N	obrt	ul. Seada Sofovića Sofe br.11	Goražde	73000	061/330-507	\N	active	2024-04-05	-Rješenje o osnivanju broj: 03-1-27-1-176/13 od 25.01.2013.godine,\r\n- Rješenje broj: 03-1-23-1-1602 od 30.09.2022.godine, zbog usklađivanja sa zakonskim propisima	2026-06-09 13:59:58.920492+02	2026-06-09 13:59:58.920492+02	\N	f	414	\N	\N	\N		f	\N	2013-01-25	osnovno	606	obrt	\N	f
+232	Obrtnička radnja-Frizerski salon "NOIR"	03-1-17-1-504/23	\N	obrt	ul. Ferida Dizdarevića br.17	Goražde	73000	061/936-612	\N	inactive	2023-04-19		2026-06-11 08:54:29.779997+02	2026-06-11 08:54:58.860897+02	\N	f	600	\N	\N	2024-04-30		f	\N	2023-04-28	osnovno	96	obrt	03-1-17-1-684/24	f
+212	Obrtničko-frizerska radnja "KEN"	03-1-17-1-546/24	\N	obrt	ul. Zaima Imamovića br.7	Goražde	73000	061-534-590	\N	active	2024-04-08	-Rješenje o osnivanju broj: 03-1-259/03 od 02.10.2003.godine\r\n-Rješenje broj: 03-1-21-489/08 od 08.04.2008. godine iz razloga usklađivanja sa zakonskim propisima\r\n-Rješenje broj: 03-1-21-1-2147/12 od 24.12.2012.godine, iz razloga promjene predmeta poslovanja i usklađivanja sa zakonskim propisima\r\n-Rješenje broj: 03-1-17-1-1384/22 od 09.09.2022. godine iz razloga usklađivanja sa zakonskim propisima	2026-06-09 15:20:04.337245+02	2026-06-09 15:30:25.329547+02	\N	f	600	\N	\N	\N		f	\N	2003-10-02	osnovno	216	stari_zanat	\N	f
+213	Domaća radinost "ALMA"	03-1-17-1-553/24	\N	obrt	naselje Ilovača bb	Goražde	73000	\N	\N	active	2024-04-08		2026-06-10 08:17:46.300173+02	2026-06-10 08:19:22.447942+02	\N	f	4	\N	\N	\N		f	\N	2024-04-23	osnovno	591	domaca_radinost	\N	f
+229	Samostalni poljoprivredni proizvođač "Sarajka"	03-1-17-1-678/24	\N	obrt	ul. Rogatičke brigade br.16	Goražde	73000	062/077-292	\N	inactive	2024-04-30		2026-06-10 14:17:06.755201+02	2026-06-10 14:19:31.041167+02	\N	f	12	\N	\N	2025-07-17		f	\N	2024-08-09	osnovno	591	srodna_djelatnost	03-1-17-1-964/25	f
+214	Javni prijevoz tereta u vanlinijskom cestovnom prijevozu	03-1-23-1-561/24	\N	obrt	naselje Osanica bb	Goražde	73000	062/517-229	\N	active	2024-04-08	-Privremeno rješenje broj: 03-1-23-1-500/24 od 29.03.2024.	2026-06-10 08:25:06.602896+02	2026-06-10 08:30:23.108469+02	\N	f	416	\N	\N	\N		f	\N	2024-04-08	osnovno	243	obrt	\N	f
+215	Obrtnička djelatnost "ED-AL"	03-1-17-1-562/24	\N	obrt	ul.31.drinske brigade br.126	Goražde	73000	061/724-085	\N	active	2024-04-09		2026-06-10 08:36:16.757724+02	2026-06-10 08:36:16.757724+02	\N	f	314	\N	\N	\N		f	\N	2024-04-18	osnovno	456	obrt	\N	f
+216	Domaća radinost "SANA"	03-1-17-1-547/24	\N	obrt	selo Podmihovići	Goražde	73000	061/950-058	\N	inactive	2024-04-15		2026-06-10 08:44:32.085033+02	2026-06-10 08:44:32.085033+02	\N	f	4	\N	\N	2025-04-30		f	\N	2024-04-25	osnovno	591	domaca_radinost	03-1-17-1-594/25	f
+217	Samostalni poljoprivredni proizvođač "Irma"	03-1-17-1-599/24	\N	obrt	naselje Lukarice	Goražde	73000	061/311-321	\N	inactive	2024-04-23		2026-06-10 08:48:58.002464+02	2026-06-10 08:48:58.002464+02	\N	f	4	\N	\N	2025-04-30		f	\N	2024-05-04	osnovno	591	srodna_djelatnost	03-1-17-1-591/25	f
+218	Domaća radinost "SUNCE"	03-1-17-1-603/24	\N	obrt	selo Rešetnica	Goražde	73000	061/506-109	\N	inactive	2024-04-23		2026-06-10 08:57:51.619821+02	2026-06-10 08:57:51.619821+02	\N	f	23	\N	\N	2025-05-05		f	\N	2024-05-04	osnovno	591	domaca_radinost	03-1-17-1-645/25	f
+219	Obrtnička radnja-kozmetički salon "Arnela"	03-1-17-1-628/24	\N	obrt	ul. Kulina bana br.4	Goražde	73000	\N	\N	inactive	2024-04-23		2026-06-10 09:03:15.05679+02	2026-06-10 09:03:32.872887+02	\N	f	600	\N	\N	2025-03-06		f	\N	2024-05-04	osnovno	444	obrt	03-1-17-1-342/25	f
+220	Srodna djelatnost "ŠUMSKI PLODOVI"	03-1-17-1-460/23	\N	obrt	ul. Bolnička br.65	Goražde	73000	062/407-116	\N	inactive	2023-04-11		2026-06-10 09:11:33.235962+02	2026-06-10 09:11:33.235962+02	\N	f	35	\N	\N	2024-04-30		f	\N	2023-04-24	osnovno	591	srodna_djelatnost	03-1-17-1-617/24	f
+221	Srodna djelatnost "ZLATNA DOLINA"	03-1-17-1-457/23	\N	obrt	ul. Salih bega Kuljuha br.1	Goražde	73000	061/708-535	\N	inactive	2023-04-11		2026-06-10 09:15:58.389521+02	2026-06-10 09:15:58.389521+02	\N	f	35	\N	\N	2024-04-30		f	\N	2023-04-24	osnovno	591	srodna_djelatnost	03-1-17-1-618/24	f
+222	Domaća radinost "ŠOLE"	03-1-17-1-641/24	\N	obrt	naselje Zupčići br.27	Goražde	73000	061/943-003	\N	active	2024-04-24		2026-06-10 09:23:02.20291+02	2026-06-10 09:23:02.20291+02	\N	f	599	\N	\N	\N		f	\N	2024-05-08	osnovno	600	domaca_radinost	\N	f
+223	Samostalni poljoprivredni proizvođač "LJUKOVAC"	03-1-17-1-609/24	\N	obrt	selo Gunjevići	Goražde	73000	061/314-113	\N	active	2024-04-25		2026-06-10 09:25:52.89854+02	2026-06-10 09:25:52.89854+02	\N	f	4	\N	\N	\N		f	\N	2024-05-08	osnovno	591	srodna_djelatnost	\N	f
+224	Domaća radinost "PROCLEAN-ČIŠĆENJE"	03-1-17-1-615/24	\N	obrt	selo Kučine bb	Goražde	73000	061/741-305	\N	inactive	2024-04-25	-Rješenje o privremenom prekidu broj: 03-1-17-1-166/25 od 10.02.2025.  od 10.02.2025.-10.05.2025.	2026-06-10 11:47:38.626868+02	2026-06-10 11:47:38.626868+02	\N	f	599	\N	\N	2025-05-10		f	\N	2024-05-08	osnovno	600	domaca_radinost	03-1-17-1-628/25	f
+225	Domaća radinost "ISMETA"	03-1-17-1-619/24	\N	obrt	ul. Salih bega Kuljuha bb	Goražde	73000	\N	\N	inactive	2024-04-25		2026-06-10 11:54:29.646233+02	2026-06-10 11:54:29.646233+02	\N	f	106	\N	\N	2025-04-30		f	\N	2024-05-07	osnovno	599	domaca_radinost	03-1-17-1-600/25	f
+226	Domaća radinost "BARE"	03-1-17-1-622/24	\N	obrt	selo Rešetnica bb	Goražde	73000	038/292-302	\N	inactive	2024-04-25		2026-06-10 11:59:09.494182+02	2026-06-10 11:59:09.494182+02	\N	f	23	\N	\N	2025-04-30		f	\N	2024-05-08	osnovno	591	domaca_radinost	03-1-17-1-592/25	f
+227	Obrtnička radnja "KAN KLJUČ"	03-1-17-1-643/24	\N	obrt	ul. Zaima Imamovića bb	Goražde	73000	061/501-402	\N	active	2024-04-25		2026-06-10 14:04:23.883511+02	2026-06-10 14:04:23.883511+02	\N	f	200	\N	\N	\N		f	\N	2024-05-04	dopunsko	233	obrt	\N	f
+166	Domaća radinost "ADNA"	03-1-17-1-631/24	\N	obrt	ul. Rada Jovanovića br.65	Goražde	73000	061/388-056	\N	active	2024-04-30	-Privremena odjava od 01.10.2024-30.04.2025. godine br.03-1-17-1-1376/24 od 24.09.2024. godine \r\n-Obavijest o ponovnom početku rada 03-1-17-1-548/25 od  21.04.2025.godine\r\n- Privremena odjava od 01.11.2025.-30.04.2026. godine, br.03-1-17-1-1409/25 od 21.10.2025.godine\r\n-Obavijest o ponovnom početku rada 03-1-17-1-513/26 od 20.04.2026.godine	2026-05-26 08:25:37.73914+02	2026-06-10 14:15:07.452086+02	\N	f	599	\N	\N	\N		f	\N	2024-05-14	dopunsko	600	domaca_radinost	\N	f
+230	Obrtnička radnja-kozmetički salon "BEAUTY SALON AMINA"	03-1-17-1-681/24	\N	obrt	ul. Zdravstvenih radnika br.20	Goražde	73000	062/270-719	\N	active	2024-04-30		2026-06-11 08:26:56.193454+02	2026-06-11 08:26:56.193454+02	\N	f	600	\N	\N	\N		f	\N	2024-05-09	osnovno	444	obrt	\N	f
+231	Obrtnička djelatnost "Sat Plus"	03-1-17-673/24	\N	obrt	ul. 31.drinske brigade br.268	Goražde	73000	062/548-206	\N	active	2024-05-03		2026-06-11 08:46:21.176157+02	2026-06-11 08:46:56.487007+02	\N	f	311	\N	\N	\N		f	\N	2024-05-15	dopunsko	115	obrt	\N	f
+233	Domaća radinost "Sanel"	03-1-17-1-693/24	\N	obrt	ul. Ferida Dizdarevića br.74	Goražde	73000	062/425-233	\N	active	2024-05-03		2026-06-11 09:08:05.063236+02	2026-06-11 09:08:33.18309+02	\N	f	599	\N	\N	\N		f	\N	2024-05-17	dopunsko	600	domaca_radinost	\N	f
+228	Obrtnička radnja "Enterijer"	03-1-17-1-647/24	\N	obrt	ul.31.drinske brigade br.15	Goražde	73000	061/271-354	\N	active	2024-04-25		2026-06-10 14:13:58.326648+02	2026-06-11 13:53:03.488736+02	\N	f	596	\N	\N	\N		f	\N	2024-05-08	dopunsko	116	stari_zanat	\N	f
+234	Obrtnička radnja "ISTAMBUL"	03-1-17-1-713/24	\N	obrt	ul. Alije Hodžića br.16	Goražde	73000	061/967-392	\N	active	2024-05-06		2026-06-11 13:50:31.103089+02	2026-06-11 13:53:20.519651+02	\N	f	596	\N	\N	\N		f	\N	2024-05-16	osnovno	116	stari_zanat	\N	f
+235	Domaća radinost "Zumra"	03-1-17-1-509/23	\N	obrt	ul. Mevsuda Bajića Bajebr.31	Goražde	73000	062/662-930	\N	inactive	2023-04-19		2026-06-11 13:58:18.629564+02	2026-06-11 13:58:18.629564+02	\N	f	598	\N	\N	2024-04-30		f	\N	2023-04-29	osnovno	118	domaca_radinost	03-1-17-1-692/24	f
+236	Domaća radinost "RAZIJA"	03-1-17-1-694/24	\N	obrt	Potkozara Donja bb	Goražde	73000	064/421 4748	\N	inactive	2024-05-07		2026-06-11 14:01:06.173488+02	2026-06-11 14:03:07.967463+02	\N	f	25	\N	\N	2025-05-31		f	\N	2024-05-17	osnovno	591	domaca_radinost	03-1-17-1-776/25	f
+237	Domaća radinost "POZITIVA"	03-1-17-1-719/24	\N	obrt	naselje Zupčići br.72	Goražde	73000	Tel. 061/602-062	\N	active	2024-05-08	-Rješenje o osnivanju broj:03-1-17-1-443/22 od 28.03.2022.godine (predmet poslovanja-krojač)	2026-06-11 14:41:16.86195+02	2026-06-11 15:00:13.054963+02	\N	f	2	\N	\N	\N		f	\N	2022-04-06	osnovno	591	domaca_radinost	\N	f
+238	Samostalni poljoprivredni proizvođač "HAJRIJA"	03-1-17-1-478/23	\N	obrt	naselje Vranići bb	Goražde	73000	061/829-692	\N	inactive	2023-04-12		2026-06-11 15:05:01.089863+02	2026-06-11 15:05:01.089863+02	\N	f	4	\N	\N	2024-05-07		f	\N	2023-04-22	osnovno	591	srodna_djelatnost	03-1-17-1-727/24	f
+239	Domaća radinost "Šuda"-Goražde	03-1-17-1-662/24	\N	obrt	Zabus bb	Goražde	73000	\N	\N	active	2024-05-10		2026-06-11 15:08:36.766064+02	2026-06-11 15:08:36.766064+02	\N	f	26	\N	\N	\N		f	\N	2024-05-18	osnovno	591	domaca_radinost	\N	f
+240	Domaća radinost "SELMA"	03-1-17-1-735/24	\N	obrt	ul. Ušanovića bb	Goražde	73000	061-306-637	\N	active	2024-05-10		2026-06-11 15:12:44.532297+02	2026-06-11 15:12:44.532297+02	\N	f	69	\N	\N	\N		f	\N	2024-05-22	osnovno	598	domaca_radinost	\N	f
+241	Samostalni poljoprivredni proizvođač "KARKELJA"	03-1-17-1-733/24	\N	obrt	ul. 1.drinske brigade br.10	Goražde	73000	061/534-164	\N	inactive	2024-05-14		2026-06-11 15:17:45.144133+02	2026-06-11 15:17:45.144133+02	\N	f	4	\N	\N	2024-09-10		f	\N	2024-05-25	osnovno	591	srodna_djelatnost	03-1-17-1-1320/24	f
+242	Samostalni poljoprivredni proizvođač "SeGa"	03-1-17-1-745/24	\N	obrt	Mravinjac bb	Goražde	73000	060/325 4626	\N	inactive	2024-05-14		2026-06-12 08:31:28.206365+02	2026-06-12 08:31:28.206365+02	\N	f	4	\N	\N	2025-12-31		f	\N	2024-05-24	osnovno	591	srodna_djelatnost	03-1-17-1-1656/25	f
+243	Domaća radinost "AL"	03-1-17-1-751/24	\N	obrt	ul. 1.Maj br.32	Goražde	73000	\N	\N	inactive	2024-05-15		2026-06-12 08:42:31.483912+02	2026-06-12 08:45:25.766014+02	\N	f	266	\N	\N	2025-02-03		f	\N	2024-05-24	osnovno	601	domaca_radinost	03-1-17-1-139/25	f
+244	Obrtnička radnja-autopraonica "CRISTAL"	03-1-17-1-335/25	\N	obrt	ul. 1.drinske brigade bb	Goražde	73000	061/377-281	\N	active	2025-03-11	-Rješenje o osnivanju broj:03-1-21-1-1612 od 13.07.2015.godine - osnovno zanimanje\r\n-Rješenje o privremenom prekidu rada broj: 03-1-21-1-1371 od 30.08.2019.godine (od 01.09.2019 do 29.02.2020.)\r\n-Obavijest o ponovnom početku rada broj: 03-1-17-1-540 od 28.02.2020.godine\r\n- Rješenje broj: 03-1-17-1-888/22 od 15.06.2022.godine iz razloga usklađivanja sa zakonskim propisima.\r\n-Rješenje o privremenom prekidu rada broj: 03-1-17-1-765 od 15.05.2024.godine (od 15.05.2024. do 15.08.2024.)\r\n-Obavijest o ponovnom početku rada broj: 03-1-17-1-1193/24 od 08.08.2024.godine\r\n-Rješenje o privremenom prekidu rada broj:03-1-17-1-667/24 od 10.12.2024.godine (od 11.12.2024.-11.03.2025.)\r\n-Obavijest o ponovnom početku rada broj: 03-1-17-1-282/25 od 03.03.2025.godine	2026-06-12 09:08:43.308042+02	2026-06-12 09:10:38.641487+02	\N	f	323	\N	\N	\N		f	\N	2015-07-13	dopunsko	114	obrt	\N	f
+245	Obrtnička djelatnost "BUSINESS FACTOR"	03-1-17-1-771/24	\N	obrt	naselje Bogušići	Goražde	73000	060/330 9003	\N	inactive	2024-05-20		2026-06-12 09:21:22.976626+02	2026-06-12 09:21:22.976626+02	\N	f	464	\N	\N	2025-07-10		f	\N	2024-05-31	osnovno	603	obrt	03-1-17-1-938/25	f
+246	Samostalni poljoprivredni proizvođač "EMA"	03-1-17-1-561/23	\N	obrt	selo Guskovići	Goražde	73000	061/265-152	\N	inactive	2023-05-03		2026-06-12 09:39:52.30709+02	2026-06-12 09:39:52.30709+02	\N	f	613	\N	\N	2024-05-31		f	\N	2023-05-12	osnovno	591	srodna_djelatnost	03-1-17-1-788/24	f
+247	Domaća radinost "BIJELA PČELA"	03-1-17-1-803/24	\N	obrt	Čitluk bb	Goražde	73000	061/090-173	\N	active	2024-05-23		2026-06-12 09:49:21.221391+02	2026-06-12 09:49:21.221391+02	\N	f	26	\N	\N	\N		f	\N	2024-06-01	osnovno	591	domaca_radinost	\N	f
+248	Samostalni poljoprivredni proizvođač "SENČO"	03-1-17-1-423/23	\N	obrt	selo Vraneši	Goražde	73000	062/408-697	\N	inactive	2023-04-04		2026-06-12 11:29:54.238388+02	2026-06-12 11:29:54.238388+02	\N	f	4	\N	\N	2024-05-31		f	\N	2023-04-15	osnovno	591	srodna_djelatnost	03-17-17-1-804/24	f
 \.
 
 
@@ -2568,6 +4559,47 @@ COPY public.registry_business_secondary_activities (id, business_id, activitycod
 23	85	16
 24	86	16
 25	90	597
+26	100	398
+27	103	398
+28	104	403
+29	107	398
+30	99	376
+31	119	401
+32	122	398
+33	123	404
+34	123	396
+35	124	376
+36	125	398
+37	126	397
+38	127	376
+39	127	377
+40	128	376
+41	131	376
+42	131	377
+43	133	404
+44	133	396
+45	134	382
+46	138	403
+47	143	398
+48	144	401
+49	142	384
+50	146	376
+51	152	398
+52	160	16
+53	160	12
+54	164	12
+55	170	25
+56	172	12
+57	188	191
+58	195	197
+59	195	198
+60	201	23
+61	208	16
+62	211	12
+63	211	613
+64	238	16
+65	241	12
+66	242	613
 \.
 
 
@@ -2580,14 +4612,14 @@ COPY public.registry_businessowner (id, ownership_percentage, business_id, owner
 2	\N	2	2
 3	\N	3	3
 5	\N	5	5
+116	100.00	114	118
 6	\N	6	6
 7	\N	7	7
 8	\N	8	8
-9	\N	9	8
 10	100.00	10	9
 11	100.00	11	10
+117	100.00	115	119
 4	100.00	4	4
-12	\N	12	11
 13	100.00	13	12
 14	100.00	14	13
 15	100.00	15	14
@@ -2597,8 +4629,6 @@ COPY public.registry_businessowner (id, ownership_percentage, business_id, owner
 19	100.00	19	18
 20	100.00	20	20
 23	100.00	22	23
-21	50.00	21	21
-22	50.00	21	22
 24	50.00	23	25
 25	50.00	23	26
 26	100.00	24	27
@@ -2669,6 +4699,164 @@ COPY public.registry_businessowner (id, ownership_percentage, business_id, owner
 91	100.00	89	93
 92	100.00	90	94
 93	100.00	91	95
+94	100.00	92	96
+9	100.00	9	8
+95	100.00	93	97
+96	100.00	94	98
+98	100.00	96	100
+97	100.00	95	99
+99	100.00	97	101
+100	100.00	98	102
+101	100.00	99	103
+102	100.00	100	104
+103	100.00	101	105
+104	100.00	102	106
+105	100.00	103	107
+106	100.00	104	108
+107	100.00	105	109
+108	100.00	106	110
+109	100.00	107	111
+110	100.00	108	112
+111	100.00	109	113
+112	100.00	110	114
+113	100.00	111	115
+114	100.00	112	116
+115	100.00	113	117
+118	100.00	116	120
+119	100.00	117	121
+120	100.00	118	122
+121	\N	119	123
+122	100.00	120	124
+123	100.00	121	125
+124	100.00	122	126
+125	100.00	123	127
+126	100.00	124	128
+127	100.00	125	129
+128	100.00	126	130
+129	100.00	127	131
+130	100.00	128	132
+131	100.00	129	133
+132	100.00	130	134
+133	100.00	131	135
+134	100.00	132	136
+135	100.00	133	137
+136	100.00	134	138
+137	100.00	135	139
+21	100.00	21	21
+138	100.00	136	140
+139	100.00	137	141
+140	100.00	138	142
+141	100.00	139	143
+142	100.00	140	144
+143	100.00	141	145
+144	100.00	142	146
+145	100.00	143	147
+146	100.00	144	148
+147	100.00	145	149
+148	100.00	146	150
+149	100.00	147	151
+150	100.00	148	152
+151	100.00	149	153
+152	100.00	150	154
+153	100.00	151	155
+154	100.00	152	156
+155	100.00	153	157
+156	100.00	154	158
+157	100.00	155	159
+158	\N	12	75
+159	100.00	156	160
+160	100.00	157	161
+161	100.00	158	162
+162	100.00	159	163
+163	100.00	160	164
+164	100.00	161	165
+165	100.00	162	166
+166	100.00	163	167
+167	100.00	164	168
+168	100.00	165	169
+169	100.00	166	170
+170	100.00	167	171
+171	100.00	168	172
+172	100.00	169	173
+173	100.00	170	174
+174	100.00	171	175
+175	100.00	172	176
+176	\N	173	177
+177	100.00	174	178
+178	100.00	175	179
+179	100.00	176	180
+180	100.00	177	181
+181	100.00	178	182
+182	\N	179	183
+183	\N	180	184
+184	100.00	181	185
+185	100.00	182	37
+186	100.00	183	186
+187	100.00	184	187
+188	100.00	185	188
+189	100.00	186	189
+190	100.00	187	190
+191	100.00	188	191
+192	100.00	189	192
+193	100.00	190	193
+194	100.00	191	194
+195	100.00	192	195
+196	100.00	193	196
+197	100.00	194	197
+198	100.00	195	198
+199	100.00	196	199
+200	100.00	197	200
+201	100.00	198	201
+202	100.00	199	202
+203	100.00	200	203
+204	100.00	201	205
+205	100.00	202	206
+206	100.00	203	207
+207	100.00	204	208
+208	100.00	205	209
+209	100.00	206	210
+210	100.00	207	211
+211	100.00	208	212
+212	100.00	209	213
+213	100.00	210	214
+214	100.00	211	215
+215	\N	212	216
+216	100.00	213	217
+217	100.00	214	218
+218	100.00	215	219
+219	100.00	216	220
+220	100.00	217	221
+221	100.00	218	222
+222	100.00	219	223
+223	100.00	220	224
+224	100.00	221	225
+225	100.00	222	226
+226	100.00	223	227
+227	100.00	224	228
+228	100.00	225	229
+229	100.00	226	230
+230	100.00	227	231
+231	100.00	228	232
+232	100.00	229	233
+233	100.00	230	234
+234	100.00	231	235
+235	100.00	232	236
+236	100.00	233	237
+237	100.00	234	238
+238	100.00	235	239
+239	100.00	236	240
+240	100.00	237	241
+241	100.00	238	242
+242	100.00	239	243
+243	100.00	240	244
+244	100.00	241	245
+245	100.00	242	246
+246	100.00	243	247
+247	100.00	244	248
+248	100.00	245	249
+249	100.00	246	250
+250	100.00	247	251
+251	100.00	248	252
 \.
 
 
@@ -2678,6 +4866,7 @@ COPY public.registry_businessowner (id, ownership_percentage, business_id, owner
 
 COPY public.registry_document (id, document_type, file, uploaded_at, business_id) FROM stdin;
 3	pdf	documents/2026/01/Zahtjev.pdf	2026-01-17 18:43:04.472524+01	1
+69	pdf	documents/2026/06/papračanin_aldin_obrt.pdf	2026-06-01 10:56:00.070841+02	175
 11	.pdf	documents/2026/03/obavijest_5obgGmM.pdf	2026-03-13 09:25:38.491088+01	4
 12	doc	documents/2026/03/7.Ugovor_podopolagački_radovi.docx	2026-03-13 09:47:47.456731+01	4
 13	pdf	documents/2026/03/Kuljuh_Zlatko-obrt.pdf	2026-03-13 10:34:06.544206+01	13
@@ -2685,6 +4874,7 @@ COPY public.registry_document (id, document_type, file, uploaded_at, business_id
 15	pdf	documents/2026/03/Mirvić_Ajla-trgovina.pdf	2026-03-13 10:36:35.683199+01	15
 16	pdf	documents/2026/03/Brezac_Naser-ugostiteljstvo_prenoćište.pdf	2026-03-25 13:24:56.804789+01	16
 17	pdf	documents/2026/03/Brezac_Naser-minimalni_uslovi.pdf	2026-03-25 13:25:22.035581+01	16
+70	pdf	documents/2026/06/suljić_haris_obrt.pdf	2026-06-01 11:03:26.78332+02	176
 19	pdf	documents/2026/04/rješenje_pozder_ahmed_LeceKCE.pdf	2026-04-14 12:21:20.68247+02	19
 20	pdf	documents/2026/04/prestanak_pozder_ahmed_HhxZXWn.pdf	2026-04-14 12:25:42.581538+02	19
 21	pdf	documents/2026/04/rješenje_pozder_ahmed_IhbkekO.pdf	2026-04-14 12:58:05.106792+02	18
@@ -2693,6 +4883,56 @@ COPY public.registry_document (id, document_type, file, uploaded_at, business_id
 24	pdf	documents/2026/04/prestanak_prljača_azra.pdf	2026-04-14 13:11:05.190273+02	17
 26	pdf	documents/2026/04/rješenje_zuko_hamza.pdf	2026-04-15 09:12:31.030624+02	20
 27	pdf	documents/2026/04/prestanak_zuko_hamza.pdf	2026-04-15 09:12:51.41305+02	20
+30	pdf	documents/2026/05/Mlatišuma_Kenan.pdf	2026-05-08 09:30:08.341419+02	143
+31	pdf	documents/2026/05/Papračanin_Nejra.pdf	2026-05-08 09:37:15.148222+02	147
+32	pdf	documents/2026/05/Terović_Sabiha.pdf	2026-05-08 09:38:42.137004+02	154
+34	pdf	documents/2026/05/Ahmetspahić_Sadika.pdf	2026-05-08 09:42:44.938579+02	130
+35	pdf	documents/2026/05/Hasović_Amela.pdf	2026-05-08 09:43:32.159788+02	155
+36	pdf	documents/2026/05/Džaferović_Senija.pdf	2026-05-08 09:45:08.321111+02	134
+33	pdf	documents/2026/05/kadrić_tarik_mjenja_se-.pdf	2026-05-08 09:40:12.947122+02	149
+37	pdf	documents/2026/05/Kadrić_Tarik_fzKsLhU.pdf	2026-05-08 11:58:20.915633+02	149
+38	pdf	documents/2026/05/laković_edina_mjenja_se.pdf	2026-05-08 11:59:10.601066+02	135
+39	pdf	documents/2026/05/šabanović_elvira.pdf	2026-05-08 12:00:00.345061+02	152
+40	pdf	documents/2026/05/dolo_mevludin_mjenja_se.pdf	2026-05-08 12:01:47.179823+02	120
+41	pdf	documents/2026/05/kamenica_nisveta_mjenja_se.pdf	2026-05-08 12:02:59.013608+02	145
+42	pdf	documents/2026/05/Radmilović_Elvira.pdf	2026-05-08 12:04:12.525682+02	153
+43	pdf	documents/2026/05/sirbubalo_vedin-obrt.pdf	2026-05-22 09:45:55.00392+02	162
+44	pdf	documents/2026/05/radmilović_fadila-obrt.pdf	2026-05-22 09:47:56.580391+02	159
+45	pdf	documents/2026/05/mujezinović_kenan_prestanak.pdf	2026-05-25 09:53:38.5299+02	163
+46	pdf	documents/2026/05/hasanspahić_melisa_prestanak.pdf	2026-05-25 10:59:59.445124+02	164
+47	pdf	documents/2026/05/selak_nedžad-prestanak.pdf	2026-05-25 11:26:30.147019+02	165
+48	pdf	documents/2026/05/Halilović_Sinan-prestanak.pdf	2026-05-25 11:32:41.678666+02	38
+49	pdf	documents/2026/05/huseinović_adna-privremeni_2024..pdf	2026-05-26 08:30:39.933635+02	166
+50	pdf	documents/2026/05/huseinović_adna-obrt.pdf	2026-05-26 08:33:53.876021+02	166
+51	pdf	documents/2026/05/huseinović_adna_zaključak_2025..pdf	2026-05-26 08:37:31.647964+02	166
+52	pdf	documents/2026/05/huseinović_adna_privremeni_2025..pdf	2026-05-26 08:45:00.379679+02	166
+53	pdf	documents/2026/05/huseinović_adna_zaključak_2026..pdf	2026-05-26 08:47:25.054467+02	166
+54	pdf	documents/2026/05/kurtović_nedžad_ugostitelj.pdf	2026-05-26 09:17:44.578035+02	167
+55	pdf	documents/2026/05/šabanović_elvira_prestanak.pdf	2026-05-26 11:05:45.177286+02	152
+56	pdf	documents/2026/05/muhić_kuljuh_sanja_rješenje_o_radu.pdf	2026-05-26 11:11:53.951718+02	151
+58	pdf	documents/2026/05/Muhić_kuljuh_Sanja_prestanak.pdf	2026-05-26 11:15:57.621029+02	151
+59	pdf	documents/2026/06/imamović_kerim-promjena.pdf	2026-06-01 09:02:08.819408+02	14
+60	pdf	documents/2026/06/halilović_kadira_obrt.pdf	2026-06-01 09:08:28.651609+02	168
+61	pdf	documents/2026/06/vrana_sabina_obrt.pdf	2026-06-01 09:14:18.571164+02	169
+62	pdf	documents/2026/06/hubjer_elmin_obrt.pdf	2026-06-01 09:19:48.954996+02	170
+63	pdf	documents/2026/06/ratković_altijana_obrt.pdf	2026-06-01 09:25:30.864131+02	171
+64	pdf	documents/2026/06/rahman_elvedina_pbrt.pdf	2026-06-01 09:31:13.243714+02	172
+65	pdf	documents/2026/06/deljo_sabiha_obrt.pdf	2026-06-01 09:37:06.550504+02	173
+66	pdf	documents/2026/06/maslan_ajnija_obrt.pdf	2026-06-01 09:41:56.581743+02	174
+67	pdf	documents/2026/06/imamović_amira_obrt.pdf	2026-06-01 09:48:35.066797+02	161
+68	pdf	documents/2026/06/hasanspahić_rizalija_obrt.pdf	2026-06-01 09:51:31.968418+02	160
+71	pdf	documents/2026/06/biser_paša_obrt.pdf	2026-06-01 12:23:41.048438+02	177
+72	pdf	documents/2026/06/hodo_adis_obrt.pdf	2026-06-01 12:25:17.134744+02	178
+73	pdf	documents/2026/06/hastor_aner-prestanak.pdf	2026-06-03 11:27:36.249384+02	179
+74	pdf	documents/2026/06/Bogdanić_Sajma.pdf	2026-06-08 08:17:34.196438+02	97
+75	pdf	documents/2026/06/Ćato_Senada.pdf	2026-06-08 08:25:06.063719+02	96
+76	pdf	documents/2026/06/Ahmetspahić_Jasmin.pdf	2026-06-08 08:28:36.3574+02	9
+77	pdf	documents/2026/06/Kutak-Džebo_Sadeta.pdf	2026-06-08 08:32:40.847827+02	98
+78	pdf	documents/2026/06/Džebo_Sadeta.pdf	2026-06-08 08:33:04.460349+02	98
+79	pdf	documents/2026/06/hukara_mehmed-prestanak.pdf	2026-06-08 09:43:52.712202+02	181
+80	pdf	documents/2026/06/Bogdanić_Adel-prestanak.pdf	2026-06-08 09:51:02.262991+02	93
+81	pdf	documents/2026/06/bešlija_kenan_2008.pdf	2026-06-09 15:23:27.224928+02	212
+82	pdf	documents/2026/06/bešlija_kenan_2012.pdf	2026-06-09 15:23:50.93206+02	212
 \.
 
 
@@ -2717,102 +4957,259 @@ COPY public.registry_license (id, license_type, license_number, issue_date, expi
 -- Data for Name: registry_owner; Type: TABLE DATA; Schema: public; Owner: registry_user
 --
 
-COPY public.registry_owner (id, first_name, last_name, personal_id, address, phone, email, created_at, deleted_at, is_deleted) FROM stdin;
-1	Enver	Pršeš	99939393	Hasana Kikića 2	0133333	enverprses@gmail.com	2026-01-11 20:36:57.59769+01	\N	f
-2	Osman	Ahmović	\N		\N	\N	2026-02-18 08:37:19.514901+01	\N	f
-3	Sadika	Ahmetspahić	\N		\N	\N	2026-02-18 08:53:18.501716+01	\N	f
-5	Sedin	Alihodžić	\N		\N	\N	2026-02-18 16:06:04.858356+01	\N	f
-6	ZLATKA	ADŽEM	\N		\N	\N	2026-03-05 13:20:41.276926+01	\N	f
-7	SALIH	AGANOVIĆ	\N		\N	\N	2026-03-05 13:28:48.981367+01	\N	f
-8	JASMIN	AHMETSPAHIĆ	\N		\N	\N	2026-03-05 13:38:13.32117+01	\N	f
-9	SENAD	ALETA	\N		\N	\N	2026-03-06 08:23:27.382979+01	\N	f
-10	ELVIR	ALIĆ	\N		\N	\N	2026-03-06 09:20:48.477502+01	\N	f
-11	Edmir	Bukva	\N		\N	\N	2026-03-11 13:56:37.866504+01	\N	f
-12	Zlatko	Kuljuh	\N	ul. Jusufa Duhovića br.1	061/044-096	\N	2026-03-12 08:19:26.791808+01	\N	f
-13	Kerim	Imamović	\N	naselje Bogušići bb	061/927-347	\N	2026-03-12 09:08:44.498852+01	\N	f
-14	Ajla	Mirvić	\N	ul. Esada Dučića br.20	060/318 6980	\N	2026-03-12 09:26:52.302057+01	\N	f
-15	Naser	Brezac	\N	ul. Ferida Dizdarevića br.23	\N	\N	2026-03-25 08:44:15.575739+01	\N	f
-16	Azra	Prljača	\N	ul. 22.maj br.85A	062/582-779	\N	2026-04-14 08:47:04.303677+02	\N	f
-17	Marija	Kovačević	\N	ul. 1.slavne višegradske brigade br.9	061/988-623	\N	2026-04-14 09:19:17.285864+02	\N	f
-18	Ahmed	Pozder	\N	selo Kalac	062/538-273	\N	2026-04-14 09:38:19.190171+02	\N	f
-19	Hamza	Zuko	\N	ul. 22.maj br.79a	061/056-361	\N	2026-04-15 08:57:45.140877+02	\N	f
-20	Hamza	Zuko	\N	ul.22.maj br.79 A	061/056-361	\N	2026-04-15 09:12:05.75591+02	\N	f
-4	Senada	Alić	\N		\N	\N	2026-02-18 15:51:52.63633+01	\N	f
-21	Alma	Babić	\N	ul. Doktora Karameha br.58	061/967-374	\N	2026-04-16 09:00:53.05916+02	\N	f
-22	Jasmin	Babić	\N	naselje Mravinjac	060/300-3456	\N	2026-04-16 09:02:24.355288+02	\N	f
-23	Latif	Sirčić	\N	Ušanovića bb	062/246-701	\N	2026-04-16 10:44:59.933285+02	\N	f
-24	Amna	Pušilo	\N	ul.1.slavne višegradske brigade br.11	062/934-424	\N	2026-04-16 11:02:28.736034+02	\N	f
-25	Vildan	Pušilo	\N	ul. Zufera ef. Bešlije br.5	061/271-356	\N	2026-04-16 13:01:33.856532+02	\N	f
-26	Safet	Devlić	\N	ul.22.Maj br.121	061/271-356	\N	2026-04-16 13:02:44.836074+02	\N	f
-27	Sinan	Ligata	\N	naselje Perjani	061/863-636	\N	2026-04-16 13:24:03.599257+02	\N	f
-28	Aldin	Bukva	\N	ul. Fazlagića br.4	060/329-8461	\N	2026-04-16 13:34:08.131009+02	\N	f
-29	Elvis	Hodžić	\N	selo Gunjevići	062/002-176	\N	2026-04-16 13:51:10.848807+02	\N	f
-30	Kemal	Kadrić	\N	ul. Bolnička 52A	061/297-998	\N	2026-04-16 14:04:42.88859+02	\N	f
-31	Sedina	Mujezinović	\N	Posestra bb	061/514-470	\N	2026-04-16 14:09:21.979625+02	\N	f
-32	Sedina	Mujezinović	\N	Posestra bb	061/514-470	\N	2026-04-16 14:12:41.542969+02	\N	f
-33	Senad	Hodžić	\N	ul. Fočanska br.31	062/450-485	\N	2026-04-16 14:30:46.660193+02	\N	f
-34	Ifeta	Bašić	\N	ul. Bekta Gacka br.7B	061/506-140	\N	2026-04-16 14:37:10.178017+02	\N	f
-35	Enver	Ćulesker	\N	ul. 22.maj 297	062/503-970	\N	2026-04-16 14:47:47.926394+02	\N	f
-36	Ilda	Hadžimusić	\N	ul. Braće Homoraša br.35	061/802-612	\N	2026-04-16 15:01:17.733527+02	\N	f
-37	Adna	Bezdrob	\N	ul. Zmaja od Bosne br.16	061/466-480	\N	2026-04-16 15:06:53.837148+02	\N	f
-38	Sead	Deljo	\N	ilovača	061/666-840	\N	2026-04-16 15:40:21.418142+02	\N	f
-40	Samra	Hodo	\N	Potrkuša bb	061/968-571	\N	2026-04-17 08:34:59.837324+02	\N	f
-39	Miralem	Hrelja	\N	ul.1.drinske brigade br.6	061/330-764	\N	2026-04-17 08:06:38.574662+02	\N	f
-41	Sevda	Čvorak	\N	Mravinjac	038/822462	\N	2026-04-17 09:11:59.714595+02	\N	f
-42	Sinan	Halilović	\N	ul.22.maj br.287	062/196-108	\N	2026-04-17 13:30:27.777456+02	\N	f
-43	Denira	Spahović	\N	ul. Adnana Mehanovića br.41	061/286-139	\N	2026-04-17 13:41:50.907526+02	\N	f
-44	Adis	Klovo	\N	ul. Jašarević Meha br.5	062/875-016	\N	2026-04-17 14:13:59.808412+02	\N	f
-45	Zlata	Klovo	\N	ul.Jašarević Meha br.5	062/053-364	\N	2026-04-17 14:32:42.133122+02	\N	f
-46	Mladen	Mandić	\N	ul. Čajnička br.71	065/412-628	\N	2026-04-17 14:44:24.452298+02	\N	f
-47	Azra	Babić	\N	Hubjeri	060/3123 362	\N	2026-04-17 14:48:54.173062+02	\N	f
-48	Nedžiba	Drakovac	\N	ul. Ruždije Islamagića br.70	066/341-952	\N	2026-04-17 15:01:43.024996+02	\N	f
-49	Emir	Mičivoda	\N	Guskovići	062/246-259	\N	2026-04-17 15:08:58.565695+02	\N	f
-50	Vedad	Mršo	\N	Kušeši	\N	\N	2026-04-20 11:48:59.273327+02	\N	f
-51	Enela	Adžem	\N	ul.31.drinske brigade br.18	062/947-704	\N	2026-04-20 11:52:27.275405+02	\N	f
-52	Elmin	Hodžić	\N	ul. Braće Bezdrob bb	062/832-126	\N	2026-04-20 12:03:48.385233+02	\N	f
-53	Semir	Hodžić	\N	Gunjevići	061/761-043	\N	2026-04-20 12:26:47.518428+02	\N	f
-54	Denis	Tatarin	\N	ul.1.maj br.9	061/044-051	\N	2026-04-20 12:38:53.828668+02	\N	f
-55	Elma	Kadrić	\N	ul. Bolnička br.52A	062/383-709	\N	2026-04-20 12:51:09.7935+02	\N	f
-56	Senad	Džino	\N	Dešava	061/161-883	\N	2026-04-20 12:58:17.422025+02	\N	f
-57	Aldin	Mahmutović	\N	ul. Salih bega Kuljuha br.17	061/040-939	\N	2026-04-20 13:01:44.904988+02	\N	f
-58	Ćamila	Hrelja	\N	ul. Enesa Turkovića br.23B	062/989-190	\N	2026-04-20 13:09:33.262281+02	\N	f
-59	Edin	Sirčić	\N	ul. Zmaja od Bosne br.32	061-304-811	\N	2026-04-20 13:39:42.191979+02	\N	f
-60	Irma	Riđević	\N	ul. Dževada Omerhodžića br.121	038/222-333	\N	2026-04-20 13:48:30.415937+02	\N	f
-61	Božidarka	Knežević	\N	ul. Srebrenička bb	065/615-711	\N	2026-04-20 13:58:08.334258+02	\N	f
-62	Nerma	Bardak	\N	ul. Enesa Turkovića br.15	061/569-385	\N	2026-04-20 14:24:17.0559+02	\N	f
-63	Emina	Pirija	\N	ul. Srebrenička 35	060/327-8377	\N	2026-04-20 14:52:38.561461+02	\N	f
-64	Sakib	Islamagić	\N	ul. Ferida Dizdarevića bb	061/183-147	\N	2026-04-23 08:48:16.175542+02	\N	f
-65	Sejo	Čavčić	\N	ul. Meha Hubjera br.4	\N	\N	2026-04-23 09:10:54.130528+02	\N	f
-66	Selma	Korjenić	\N	Kolovarice bb	061/946-290	\N	2026-04-23 09:48:12.911535+02	\N	f
-67	Emina	Hubjer	\N	Hubjeri br.8	061/496-976	\N	2026-04-23 09:55:19.11205+02	\N	f
-68	Kerim	Sijerčić	\N	ul. Muhidina Mašića Munje br.97	062/959-624	\N	2026-04-23 11:37:40.889708+02	\N	f
-69	Bahra	Žuga	\N	Kučine bb	062/089-666	\N	2026-04-23 11:50:16.527816+02	\N	f
-70	Amar	Baljević	\N	ul. Rifeta Vesnića br.11	060/318-6986	\N	2026-04-23 12:04:29.062863+02	\N	f
-71	Elvir	Muhić	\N	ul. Huseina Žige br.53	061/167-061	\N	2026-04-23 12:35:27.277554+02	\N	f
-72	Munira	Hodžić	\N	ul. Mevsuda Bajića Baje br.11	062/537-485	\N	2026-04-23 12:53:51.409666+02	\N	f
-73	Armin	Kanlić	\N	ul.43.drinske brigade br.10	062/002-130	\N	2026-04-23 12:57:58.568474+02	\N	f
-74	Emina	Karauzović	\N	naselje Sadba	062/228-300	\N	2026-04-23 13:22:30.673135+02	\N	f
-75	Edmir	Bukva	\N	naselje Zupčići	061/550-627	\N	2026-04-23 13:27:52.423116+02	\N	f
-76	Sanin	Zuban	\N	ul. Maršala Tita br.24	062/603-855	\N	2026-04-23 13:37:06.190254+02	\N	f
-77	Amina	Oković	\N	ul.1.slavne višegradske brigade br.7	062/861-265	\N	2026-04-23 13:58:01.191106+02	\N	f
-78	Enis	Halilović	\N	ul. Ibrahima Popovića br.24	061/271-508	\N	2026-04-23 14:05:53.749561+02	\N	f
-79	Almir	Džanković	\N	ul. Čajnička br.77	061/516-059	\N	2026-04-23 14:30:15.603336+02	\N	f
-80	Nedim	Bašić	\N	Zubovići	060/302-7774	\N	2026-04-24 08:04:32.68463+02	\N	f
-81	Senad	Garaplija	\N	Osječani	062/089-622	\N	2026-04-24 08:13:10.107891+02	\N	f
-82	Amin	Laković	\N	ul. Hajra Lakovića br.1	060/3437-400	\N	2026-04-24 08:20:45.197461+02	\N	f
-83	Fikreta	Ćurovac	\N	ul.22.maj br.103	062/195-869	\N	2026-04-24 08:34:03.17661+02	\N	f
-84	Enisa	Kulović	\N	ul. Ibre Čelika br.44	061/708-875	\N	2026-04-24 08:44:29.307563+02	\N	f
-85	Mustafa	Čutuna	\N	ul.22.maj br.151	061/331-098	\N	2026-04-24 08:51:31.566843+02	\N	f
-86	Armela	Zuko	\N	ul. Enesa Turkovića br.41	061/075-057	\N	2026-04-24 08:59:00.016055+02	\N	f
-87	Mirsad	Ligata	\N	ul.1.slavne višegradske brigade br.31	061/506-048	\N	2026-04-24 09:03:25.627533+02	\N	f
-88	Adis	Delahmet	\N	ul.1.slavne višegradske brigade br.19	062/856-231	\N	2026-04-24 09:09:29.947864+02	\N	f
-89	Selma	Šuman	\N	ul.43.drinske brigade br.9	061/915-373	\N	2026-04-24 09:19:37.623102+02	\N	f
-90	Alma	Devišević	\N	ul. Jusufa Duhovića br.2	061/613-010	\N	2026-04-24 09:26:15.345662+02	\N	f
-91	Kerim	Gušo	\N	ul. Paromlinska br.6 Sarajevo	062/113-560	\N	2026-04-24 09:35:20.1271+02	\N	f
-92	Adisa	Omerhodžić	\N	ul. 43.drinske brigade br.18	061/330-994	\N	2026-04-24 11:56:23.816953+02	\N	f
-93	Alsaid	Sozan	\N	ul. Zdravstvenih radnika br.20	061/880-710	\N	2026-04-24 12:01:35.958903+02	\N	f
-94	Nermin	Hadžimešić	\N	ul.43. drinske brigade br.26	061/376-430	\N	2026-04-24 14:41:34.247534+02	\N	f
-95	Almedin	Hukić	\N	ul. Salih bega Kuljuha br.1	062/450-310	\N	2026-04-24 14:49:47.681825+02	\N	f
+COPY public.registry_owner (id, first_name, last_name, personal_id, address, phone, email, created_at, deleted_at, is_deleted, sex) FROM stdin;
+64	Sakib	Islamagić	\N	ul. Ferida Dizdarevića bb	061/183-147	\N	2026-04-23 08:48:16.175542+02	\N	f	M
+5	Sedin	Alihodžić	\N		\N	\N	2026-02-18 16:06:04.858356+01	\N	f	M
+13	Kerim	Imamović	\N	naselje Bogušići bb	061/927-347	\N	2026-03-12 09:08:44.498852+01	\N	f	M
+60	Irma	Riđević	\N	ul. Dževada Omerhodžića br.121	038/222-333	\N	2026-04-20 13:48:30.415937+02	\N	f	F
+66	Selma	Korjenić	\N	Kolovarice bb	061/946-290	\N	2026-04-23 09:48:12.911535+02	\N	f	F
+17	Marija	Kovačević	\N	ul. 1.slavne višegradske brigade br.9	061/988-623	\N	2026-04-14 09:19:17.285864+02	\N	f	F
+6	ZLATKA	ADŽEM	\N		\N	\N	2026-03-05 13:20:41.276926+01	\N	f	F
+7	SALIH	AGANOVIĆ	\N		\N	\N	2026-03-05 13:28:48.981367+01	\N	f	M
+3	Sadika	Ahmetspahić	\N		\N	\N	2026-02-18 08:53:18.501716+01	\N	f	F
+9	SENAD	ALETA	\N		\N	\N	2026-03-06 08:23:27.382979+01	\N	f	M
+10	ELVIR	ALIĆ	\N		\N	\N	2026-03-06 09:20:48.477502+01	\N	f	M
+4	Senada	Alić	\N		\N	\N	2026-02-18 15:51:52.63633+01	\N	f	F
+15	Naser	Brezac	\N	ul. Ferida Dizdarevića br.23	\N	\N	2026-03-25 08:44:15.575739+01	\N	f	M
+47	Azra	Babić	\N	Hubjeri	060/3123 362	\N	2026-04-17 14:48:54.173062+02	\N	f	F
+22	Jasmin	Babić	\N	naselje Mravinjac	060/300-3456	\N	2026-04-16 09:02:24.355288+02	\N	f	M
+70	Amar	Baljević	\N	ul. Rifeta Vesnića br.11	060/318-6986	\N	2026-04-23 12:04:29.062863+02	\N	f	M
+62	Nerma	Bardak	\N	ul. Enesa Turkovića br.15	061/569-385	\N	2026-04-20 14:24:17.0559+02	\N	f	F
+34	Ifeta	Bašić	\N	ul. Bekta Gacka br.7B	061/506-140	\N	2026-04-16 14:37:10.178017+02	\N	f	F
+21	Alma	Babić	\N	ul. Doktora Karameha br.58	061/967-374	\N	2026-04-16 09:00:53.05916+02	\N	f	F
+28	Aldin	Bukva	\N	ul. Fazlagića br.4	060/329-8461	\N	2026-04-16 13:34:08.131009+02	\N	f	M
+65	Sejo	Čavčić	\N	ul. Meha Hubjera br.4	\N	\N	2026-04-23 09:10:54.130528+02	\N	f	M
+37	Adna	Bezdrob	\N	ul. Zmaja od Bosne br.16	061/466-480	\N	2026-04-16 15:06:53.837148+02	\N	f	F
+75	Edmir	Bukva	\N	naselje Zupčići	061/550-627	\N	2026-04-23 13:27:52.423116+02	\N	f	M
+41	Sevda	Čvorak	\N	Mravinjac	038/822462	\N	2026-04-17 09:11:59.714595+02	\N	f	F
+35	Enver	Ćulesker	\N	ul. 22.maj 297	062/503-970	\N	2026-04-16 14:47:47.926394+02	\N	f	M
+38	Sead	Deljo	\N	ilovača	061/666-840	\N	2026-04-16 15:40:21.418142+02	\N	f	M
+26	Safet	Devlić	\N	ul.22.Maj br.121	061/271-356	\N	2026-04-16 13:02:44.836074+02	\N	f	M
+56	Senad	Džino	\N	Dešava	061/161-883	\N	2026-04-20 12:58:17.422025+02	\N	f	M
+2	Osman	Ahmović	\N		\N	\N	2026-02-18 08:37:19.514901+01	\N	f	M
+42	Sinan	Halilović	\N	ul.22.maj br.287	062/196-108	\N	2026-04-17 13:30:27.777456+02	\N	f	M
+36	Ilda	Hadžimusić	\N	ul. Braće Homoraša br.35	061/802-612	\N	2026-04-16 15:01:17.733527+02	\N	f	F
+40	Samra	Hodo	\N	Potrkuša bb	061/968-571	\N	2026-04-17 08:34:59.837324+02	\N	f	F
+52	Elmin	Hodžić	\N	ul. Braće Bezdrob bb	062/832-126	\N	2026-04-20 12:03:48.385233+02	\N	f	M
+29	Elvis	Hodžić	\N	selo Gunjevići	062/002-176	\N	2026-04-16 13:51:10.848807+02	\N	f	M
+72	Munira	Hodžić	\N	ul. Mevsuda Bajića Baje br.11	062/537-485	\N	2026-04-23 12:53:51.409666+02	\N	f	F
+53	Semir	Hodžić	\N	Gunjevići	061/761-043	\N	2026-04-20 12:26:47.518428+02	\N	f	M
+58	Ćamila	Hrelja	\N	ul. Enesa Turkovića br.23B	062/989-190	\N	2026-04-20 13:09:33.262281+02	\N	f	F
+33	Senad	Hodžić	\N	ul. Fočanska br.31	062/450-485	\N	2026-04-16 14:30:46.660193+02	\N	f	M
+39	Miralem	Hrelja	\N	ul.1.drinske brigade br.6	061/330-764	\N	2026-04-17 08:06:38.574662+02	\N	f	M
+67	Emina	Hubjer	\N	Hubjeri br.8	061/496-976	\N	2026-04-23 09:55:19.11205+02	\N	f	F
+55	Elma	Kadrić	\N	ul. Bolnička br.52A	062/383-709	\N	2026-04-20 12:51:09.7935+02	\N	f	F
+30	Kemal	Kadrić	\N	ul. Bolnička 52A	061/297-998	\N	2026-04-16 14:04:42.88859+02	\N	f	M
+73	Armin	Kanlić	\N	ul.43.drinske brigade br.10	062/002-130	\N	2026-04-23 12:57:58.568474+02	\N	f	M
+74	Emina	Karauzović	\N	naselje Sadba	062/228-300	\N	2026-04-23 13:22:30.673135+02	\N	f	F
+44	Adis	Klovo	\N	ul. Jašarević Meha br.5	062/875-016	\N	2026-04-17 14:13:59.808412+02	\N	f	M
+45	Zlata	Klovo	\N	ul.Jašarević Meha br.5	062/053-364	\N	2026-04-17 14:32:42.133122+02	\N	f	F
+61	Božidarka	Knežević	\N	ul. Srebrenička bb	065/615-711	\N	2026-04-20 13:58:08.334258+02	\N	f	F
+12	Zlatko	Kuljuh	\N	ul. Jusufa Duhovića br.1	061/044-096	\N	2026-03-12 08:19:26.791808+01	\N	f	M
+49	Emir	Mičivoda	\N	Guskovići	062/246-259	\N	2026-04-17 15:08:58.565695+02	\N	f	M
+27	Sinan	Ligata	\N	naselje Perjani	061/863-636	\N	2026-04-16 13:24:03.599257+02	\N	f	M
+46	Mladen	Mandić	\N	ul. Čajnička br.71	065/412-628	\N	2026-04-17 14:44:24.452298+02	\N	f	M
+57	Aldin	Mahmutović	\N	ul. Salih bega Kuljuha br.17	061/040-939	\N	2026-04-20 13:01:44.904988+02	\N	f	M
+14	Ajla	Mirvić	\N	ul. Esada Dučića br.20	060/318 6980	\N	2026-03-12 09:26:52.302057+01	\N	f	F
+50	Vedad	Mršo	\N	Kušeši	\N	\N	2026-04-20 11:48:59.273327+02	\N	f	M
+71	Elvir	Muhić	\N	ul. Huseina Žige br.53	061/167-061	\N	2026-04-23 12:35:27.277554+02	\N	f	M
+32	Sedina	Mujezinović	\N	Posestra bb	061/514-470	\N	2026-04-16 14:12:41.542969+02	\N	f	F
+31	Sedina	Mujezinović	\N	Posestra bb	061/514-470	\N	2026-04-16 14:09:21.979625+02	\N	f	F
+16	Azra	Prljača	\N	ul. 22.maj br.85A	062/582-779	\N	2026-04-14 08:47:04.303677+02	\N	f	F
+18	Ahmed	Pozder	\N	selo Kalac	062/538-273	\N	2026-04-14 09:38:19.190171+02	\N	f	M
+63	Emina	Pirija	\N	ul. Srebrenička 35	060/327-8377	\N	2026-04-20 14:52:38.561461+02	\N	f	F
+24	Amna	Pušilo	\N	ul.1.slavne višegradske brigade br.11	062/934-424	\N	2026-04-16 11:02:28.736034+02	\N	f	F
+25	Vildan	Pušilo	\N	ul. Zufera ef. Bešlije br.5	061/271-356	\N	2026-04-16 13:01:33.856532+02	\N	f	M
+68	Kerim	Sijerčić	\N	ul. Muhidina Mašića Munje br.97	062/959-624	\N	2026-04-23 11:37:40.889708+02	\N	f	M
+59	Edin	Sirčić	\N	ul. Zmaja od Bosne br.32	061-304-811	\N	2026-04-20 13:39:42.191979+02	\N	f	M
+23	Latif	Sirčić	\N	Ušanovića bb	062/246-701	\N	2026-04-16 10:44:59.933285+02	\N	f	M
+43	Denira	Spahović	\N	ul. Adnana Mehanovića br.41	061/286-139	\N	2026-04-17 13:41:50.907526+02	\N	f	F
+54	Denis	Tatarin	\N	ul.1.maj br.9	061/044-051	\N	2026-04-20 12:38:53.828668+02	\N	f	M
+76	Sanin	Zuban	\N	ul. Maršala Tita br.24	062/603-855	\N	2026-04-23 13:37:06.190254+02	\N	f	M
+69	Bahra	Žuga	\N	Kučine bb	062/089-666	\N	2026-04-23 11:50:16.527816+02	\N	f	F
+19	Hamza	Zuko	\N	ul. 22.maj br.79a	061/056-361	\N	2026-04-15 08:57:45.140877+02	\N	f	M
+20	Hamza	Zuko	\N	ul.22.maj br.79 A	061/056-361	\N	2026-04-15 09:12:05.75591+02	\N	f	M
+11	Edmir	Bukva	\N		\N	\N	2026-03-11 13:56:37.866504+01	2026-05-07 08:12:34+02	t	M
+133	Sabina	Talović	\N	ul. Adnana Mehanovića br.48	\N	\N	2026-04-29 08:57:06.662972+02	\N	f	F
+123	Din	Hadžimešić	\N	ul. 43.drinske brigade br.26	062/328-141	\N	2026-04-28 08:41:40.046988+02	\N	f	M
+88	Adis	Delahmet	\N	ul.1.slavne višegradske brigade br.19	062/856-231	\N	2026-04-24 09:09:29.947864+02	\N	f	M
+103	Emir	Kuljuh	\N	ul. Alije Hodžića br.3	\N	\N	2026-04-27 09:36:16.665902+02	\N	f	M
+113	Hilmo	Turkušić	\N	naselje Ilovača	\N	\N	2026-04-27 12:00:09.483843+02	\N	f	M
+118	Azema	Salković	\N	naselje Ilovača	062/769-187	\N	2026-04-27 14:20:27.617674+02	\N	f	F
+112	Sanela	Turkušić	\N	naselje Ilovača	\N	\N	2026-04-27 11:57:25.975171+02	\N	f	F
+136	Samra	Bašić	\N	ul. Himze Ćurevca br.58	060/304-35-66	\N	2026-04-29 09:20:22.263763+02	\N	f	F
+85	Mustafa	Čutuna	\N	ul.22.maj br.151	061/331-098	\N	2026-04-24 08:51:31.566843+02	\N	f	M
+106	Emira	Bećirović	\N	ul. 31.drinske brigade br.120	\N	\N	2026-04-27 11:19:50.44086+02	\N	f	F
+80	Nedim	Bašić	\N	Zubovići	060/302-7774	\N	2026-04-24 08:04:32.68463+02	\N	f	M
+105	Armin	Bičo	\N	ul. Murisa Živojevića br.20.	\N	\N	2026-04-27 11:05:56.53688+02	\N	f	M
+97	Adel	Bogdanić	\N	il. Fazlagića br.3	\N	\N	2026-04-27 08:26:39.494611+02	\N	f	M
+101	Sajma	Bogdanić	\N	ul. Fazlagića br.3	061/887-151	\N	2026-04-27 09:19:22.518582+02	\N	f	F
+137	Aida	Borović	\N	ul. 1.maj br.26	061/909-215	\N	2026-04-29 09:32:48.838713+02	\N	f	F
+127	Azra	Čelik	\N	ul. 31.drinske brigade br.177	061-470-280	\N	2026-04-28 11:11:40.277493+02	\N	f	F
+130	Dina	Čeljo	\N	ul. 43 Drinske brigade br.12	\N	\N	2026-04-29 08:28:35.871026+02	\N	f	F
+108	Meliha	Gadžo-Pjano	\N	ul.43.drinske brigade br.8	061/499-633	\N	2026-04-27 11:31:28.659405+02	\N	f	F
+100	Senada	Ćato	\N	ul. Srebrenička br.33	060/358-8129	\N	2026-04-27 08:59:30.917799+02	\N	f	F
+83	Fikreta	Ćurovac	\N	ul.22.maj br.103	062/195-869	\N	2026-04-24 08:34:03.17661+02	\N	f	F
+128	Sanela	Čolo	\N	naselje Vranići	\N	\N	2026-04-28 11:16:06.452341+02	\N	f	F
+135	Amra	Delić	\N	ul. Braće Homoraša br.68	061/399-478	\N	2026-04-29 09:08:51.559976+02	\N	f	F
+90	Alma	Devišević	\N	ul. Jusufa Duhovića br.2	061/613-010	\N	2026-04-24 09:26:15.345662+02	\N	f	F
+124	Mevludin	Dolo	\N	ul. Enesa Turkovića br.12	\N	\N	2026-04-28 08:45:03.31879+02	\N	f	M
+98	Mirela	Drkenda	\N	ul. Šukrije Kukavice br.13	061/904-777	\N	2026-04-27 08:33:16.294808+02	\N	f	F
+115	Hajra	Dragolj	\N	ul. Halida Hubjera br.4	062/917-625	\N	2026-04-27 13:05:58.43856+02	\N	f	F
+138	Senija	Džaferović	\N	ul. 1.maj br.13	061/360-844	\N	2026-04-29 11:22:53.213622+02	\N	f	F
+79	Almir	Džanković	\N	ul. Čajnička br.77	061/516-059	\N	2026-04-23 14:30:15.603336+02	\N	f	M
+81	Senad	Garaplija	\N	Osječani	062/089-622	\N	2026-04-24 08:13:10.107891+02	\N	f	M
+102	Sadeta	Džebo	\N	ul. Šukrije Kukavice br.120	061/936-699	\N	2026-04-27 09:27:25.736593+02	\N	f	F
+140	Erdžana	Krakonja	\N	ul. 31.drinske brigade br.252 B	061/667 272	\N	2026-04-30 09:37:56.333968+02	\N	f	F
+92	Adisa	Omerhodžić	\N	ul. 43.drinske brigade br.18	061/330-994	\N	2026-04-24 11:56:23.816953+02	\N	f	F
+109	Aldina	Gabela	\N	ul. Jusufa Duhovića br.4	\N	\N	2026-04-27 11:35:29.756976+02	\N	f	F
+143	Mediha	Turkušić	\N	naselje Ilovača	061523014	\N	2026-04-30 09:52:18.290812+02	\N	f	F
+93	Alsaid	Sozan	\N	ul. Zdravstvenih radnika br.20	061/880-710	\N	2026-04-24 12:01:35.958903+02	\N	f	F
+142	Lejla	Zorlak	\N	ul. Hasana Kikića br 16	061/665-860	\N	2026-04-30 09:48:34.894487+02	\N	f	F
+145	Sanela	Turkušić	\N	naselje Ilovača	061-330-957	\N	2026-04-30 10:50:15.933144+02	\N	f	F
+117	Mediha	Turkušić	\N	naselje Ilovača	061-523-014	\N	2026-04-27 14:16:05.567006+02	\N	f	F
+91	Kerim	Gušo	\N	ul. Paromlinska br.6 Sarajevo	062/113-560	\N	2026-04-24 09:35:20.1271+02	\N	f	M
+94	Nermin	Hadžimešić	\N	ul.43. drinske brigade br.26	061/376-430	\N	2026-04-24 14:41:34.247534+02	\N	f	M
+121	Emir	Zuko	\N	ul. Omera Vrane br.7	\N	\N	2026-04-27 14:34:16.218515+02	\N	f	M
+141	Ilda	Hadžimusić	\N	ul. Braće Homoraš br.35,	061/802-612	\N	2026-04-30 09:44:16.215678+02	2026-05-08 14:54:16.179372+02	t	F
+131	Salem	Halilović	\N	ul. Hasana Kikića br.19	\N	\N	2026-04-29 08:38:44.084805+02	\N	f	M
+146	Sadžida	Hamzić	\N	ul. Šukrije Kukavice br.17	060/34 95 016	\N	2026-04-30 10:55:22.502329+02	\N	f	F
+96	Muhidin	Heto	\N	ul. Rada Jovanovića br.71	060/306 8195	\N	2026-04-24 14:58:59.803421+02	\N	f	M
+95	Almedin	Hukić	\N	ul. Salih bega Kuljuha br.1	062/450-310	\N	2026-04-24 14:49:47.681825+02	\N	f	M
+120	Amra	Kamenica	\N	ul. Zmaja od Bosne br.19	\N	\N	2026-04-27 14:30:43.823669+02	\N	f	F
+110	Haris	Kamenica	\N	ul. Zmaja od Bosne br.17	\N	\N	2026-04-27 11:45:33.409628+02	\N	f	M
+119	Memsura	Kamenica	\N	ul. Zmaja od Bosne br.17	\N	\N	2026-04-27 14:25:45.87521+02	\N	f	F
+104	Maja	Kamenica-Hodžić	\N	ul. Maršala Tita bb	\N	\N	2026-04-27 09:50:07.512728+02	\N	f	F
+122	Samira	Karauzović	\N	ul. Salih bega Kuljuha br.19	062/616-362	\N	2026-04-28 08:26:44.210315+02	\N	f	F
+126	Zibija	Korda	\N	ul. Suada Pozdera Buljka br.20	\N	\N	2026-04-28 11:03:03.524007+02	\N	f	F
+84	Enisa	Kulović	\N	ul. Ibre Čelika br.44	061/708-875	\N	2026-04-24 08:44:29.307563+02	\N	f	F
+114	Ismira	Kulović	\N	ul. Maršala Tita br.4	062/917-625	\N	2026-04-27 12:49:34.800045+02	\N	f	F
+82	Amin	Laković	\N	ul. Hajra Lakovića br.1	060/3437-400	\N	2026-04-24 08:20:45.197461+02	\N	f	M
+87	Mirsad	Ligata	\N	ul.1.slavne višegradske brigade br.31	061/506-048	\N	2026-04-24 09:03:25.627533+02	\N	f	M
+139	Edina	Laković	\N	ul.Hajra Lakovića br.1	061/360 595	\N	2026-04-29 11:29:37.930668+02	\N	f	F
+147	Kenan	Mlatišuma	\N	ul. Meha Jašarevića br.1	\N	\N	2026-04-30 11:40:46.488675+02	\N	f	M
+132	Eldina	Pušilo	\N	ul. Pobarnik br.19	\N	\N	2026-04-29 08:52:19.371845+02	\N	f	F
+77	Amina	Oković	\N	ul.1.slavne višegradske brigade br.7	062/861-265	\N	2026-04-23 13:58:01.191106+02	\N	f	F
+125	Zikrija	Oruč	\N	ul. Suada Pozdera Buljka br.9	\N	\N	2026-04-28 09:35:40.478081+02	\N	f	M
+107	Edin	Rašidović	\N	selo Kola	\N	\N	2026-04-27 11:23:36.565344+02	\N	f	M
+144	Azema	Salković	\N	naselje Ilovača	062/769-187	\N	2026-04-30 10:29:53.02388+02	\N	f	F
+89	Selma	Šuman	\N	ul.43.drinske brigade br.9	061/915-373	\N	2026-04-24 09:19:37.623102+02	\N	f	F
+129	Samira	Trgo	\N	ul. Fazlagića br.46	\N	\N	2026-04-29 08:22:03.75618+02	\N	f	F
+116	Armin	Žigo	\N	ul. 25.novembar br.20	\N	\N	2026-04-27 14:08:15.336193+02	\N	f	M
+213	Salko	Herak	\N	selo Kalac	\N	\N	2026-06-09 13:47:58.090179+02	\N	f	M
+99	Senka	Zuko	\N	ul. Ibrahima Popovića br.24	061/399-131	\N	2026-04-27 08:53:25.565333+02	\N	f	F
+111	Azemina	Zuko	\N	ul.22 maj bb	\N	\N	2026-04-27 11:50:57.047865+02	\N	f	F
+86	Armela	Zuko	\N	ul. Enesa Turkovića br.41	061/075-057	\N	2026-04-24 08:59:00.016055+02	\N	f	F
+186	Almedin	Mutapčić	\N	naselje Ratkovići	060/329-9328	\N	2026-06-08 12:38:34.864686+02	\N	f	M
+51	Enela	Adžem	\N	ul.31.drinske brigade br.18	062/947-704	\N	2026-04-20 11:52:27.275405+02	\N	f	F
+134	Sadika	Ahmetspahić	\N	ul. 1.slavne višegradske brigade br.29	062-053-460	\N	2026-04-29 09:00:03.983673+02	\N	f	F
+152	Elvis	Bukva	\N	selo Ratkovići	\N	\N	2026-05-04 14:22:11.126023+02	\N	f	M
+154	Jasmin	Bukva	\N	naselje Bogušići	Tel. 061/376-390	\N	2026-05-04 14:54:16.110059+02	\N	f	M
+187	Admir	Hodo	\N	naselje Potrkuša	061/301-520	\N	2026-06-08 12:43:00.073287+02	\N	f	M
+188	Irmel	Pjano	\N	ul. Ferida Dizdarevića br.26	060/321-4014	\N	2026-06-08 12:46:39.322606+02	\N	f	M
+189	Damir	Ahmetspahić	\N	ul.1.slavne višegradske brigade br.29	062/140-484	\N	2026-06-08 12:58:24.517083+02	\N	f	M
+8	Jasmin	Ahmetspahić	\N	ul. Hasana Kikića br.39	061/431-305	\N	2026-03-05 13:38:13.32117+01	\N	f	M
+148	Džan	Hadžimešić	\N	ul. Zdravstvenih radnika br.7	061/964-863	\N	2026-04-30 11:45:38.97898+02	\N	f	M
+159	Amela	Hasović	\N	ul.43.drinske brigade br.20	060/302-4839	\N	2026-05-05 08:32:03.039792+02	\N	f	F
+153	Tarik	Kadrić	\N	ul. Maršala Tita br.14	061/820-697	\N	2026-05-04 14:47:49.145633+02	\N	f	M
+149	Nisveta	Kamenica	\N	ul. Enesa Turkovića br.12	\N	\N	2026-05-04 13:58:31.601375+02	\N	f	F
+155	Sanja	Muhić Kuljuh	\N	ul. Alije Hodžića br.39	062/790-217	\N	2026-05-04 15:01:27.213227+02	\N	f	F
+151	Nejra	Papračanin	\N	ul.1.slavne višegradske brigade br.61	062/578-396	\N	2026-05-04 14:18:15.666157+02	\N	f	F
+1	Enver	Pršeš	99939393	Hasana Kikića 2	0133333	enverprses@gmail.com	2026-01-11 20:36:57.59769+01	\N	f	M
+150	Nedžad	Pušilo	\N	ul. Pobarnik br.19.	\N	\N	2026-05-04 14:14:02.810263+02	\N	f	M
+190	Admir	Žuga	\N	selo Kučine bb	061/741-305	\N	2026-06-08 13:13:39.358518+02	\N	f	M
+157	Elvira	Radmilović	\N	ul. Maršala Tita br.8	061/580-559	\N	2026-05-05 08:19:48.811374+02	\N	f	F
+156	Elvira	Šabanović	\N	ul. Fočanska br.28	062/608-771	\N	2026-05-05 08:11:03.110085+02	\N	f	F
+158	Sabiha	Terović	\N	ul.43.drinske brigade br.8	062/674-588	\N	2026-05-05 08:29:14.561595+02	\N	f	F
+78	Enis	Halilović	\N	ul. Ibrahima Popovića br.24	061/271-508	\N	2026-04-23 14:05:53.749561+02	\N	f	M
+160	Almir	Džambegović	\N	ul. Panorama br.42.	062/474-888	\N	2026-05-21 09:35:53.461629+02	\N	f	M
+161	Amela	Džambegović	\N	Zupčići bb	061-601-617	\N	2026-05-21 09:56:37.628284+02	\N	f	F
+162	Hedija	Mirvić	\N	naselje Vranići bb	062/907-105	\N	2026-05-21 10:48:48.341637+02	\N	f	F
+163	Fadila	Radmilović	\N	ul. Ferida Dizdarevića bb	062/538-388	\N	2026-05-22 08:47:06.203028+02	\N	f	F
+164	Rizalija	Hasanspahić	\N	selo Plesi	062/017-636	\N	2026-05-22 08:53:25.122449+02	\N	f	M
+165	Amira	Imamović	\N	ul. Seada Sofovića Sofe br.14	061/981-581	\N	2026-05-22 09:01:19.47405+02	\N	f	F
+166	Vedin	Sirbubalo	\N	naselje Zupčići bb	062/327-898	\N	2026-05-22 09:09:19.230772+02	\N	f	M
+167	Kenan	Mujezinović	\N	ul. Čajnička broj 16	061/833-963	\N	2026-05-25 09:21:49.142743+02	\N	f	M
+168	Melisa	Hasanspahić	\N	selo Plesi	061/246-703	\N	2026-05-25 10:55:48.174823+02	\N	f	F
+169	Nedžad	Selak	\N	ul. Hasana Kikića broj 44	061/297-932	\N	2026-05-25 11:22:15.442109+02	\N	f	M
+170	Adna	Huseinović	\N	ul. Rada Jovanovića br.65	061/388-056	\N	2026-05-26 08:25:08.052647+02	\N	f	F
+171	Nedžad	Kurtović	\N	ul. 43.drinske brigade br.18	062/331-302	\N	2026-05-26 09:13:40.121913+02	\N	f	M
+172	Kadira	Halilović	\N	ul. Braće Smajovića br.43	\N	\N	2026-06-01 09:07:57.40185+02	\N	f	F
+173	Sabina	Vrana	\N	ul. Omera Vrane br.3	062/223-703	\N	2026-06-01 09:13:21.300954+02	\N	f	F
+174	Elmin	Hubjer	\N	Hubjeri bb	060/3539-466	\N	2026-06-01 09:19:21.562515+02	\N	f	M
+175	Altijana	Ratković	\N	Posestra bb	062/315-062	\N	2026-06-01 09:24:59.626051+02	\N	f	F
+176	Elvedina	Rahman	\N	naselje Džindići bb	062/538-544	\N	2026-06-01 09:29:39.048063+02	\N	f	F
+177	Sabiha	Deljo	\N	naselje Ilovača bb	061/866-840	\N	2026-06-01 09:36:24.945396+02	\N	f	F
+178	Ajnija	Maslan	\N	ul. Rogatička br.5	062/590-281	\N	2026-06-01 09:41:28.871835+02	\N	f	F
+179	Aldin	Papračanin	\N	ul. 1.slavne višegradske brigade br.61	062/896-656	\N	2026-06-01 10:55:28.013822+02	\N	f	M
+180	Haris	Suljić	\N	ul. Dževada Omerhodžića br.31	060/3434-395	\N	2026-06-01 11:03:04.566342+02	\N	f	M
+181	Paša	Biser	\N	ul. Ibra Mujkovića br.4	061/594-338	\N	2026-06-01 11:07:29.762676+02	\N	f	F
+182	Adis	Hodo	\N	naselje Osanica	062/020-632	\N	2026-06-01 11:12:11.165512+02	\N	f	M
+48	Nedžiba	Drakovac	\N	ul. Ruždije Islamagića br.70	066/341-952	\N	2026-04-17 15:01:43.024996+02	\N	f	F
+183	Aner	Hastor	\N	ul.43.drinske brigade br.10	\N	\N	2026-06-03 11:27:06.198812+02	\N	f	M
+184	Amina	Kovač	\N	naselje Osanica	060/3278-306	\N	2026-06-08 09:34:12.020439+02	\N	f	F
+185	Mehemed	Hukara	\N	naselje Mravinjac bb	060/3588-661	\N	2026-06-08 09:43:34.812135+02	\N	f	M
+191	Midhat	Obuća	\N	ul. Braće Posvandžić br.7	061/206-586	\N	2026-06-08 13:28:12.406697+02	\N	f	M
+192	Samir	Tabaković	\N	naselje Berič	062/317-312	\N	2026-06-08 14:02:14.664404+02	\N	f	M
+193	Admir	Korjenić	\N	naselje Osanica	061/761-052	\N	2026-06-08 14:18:28.973741+02	\N	f	M
+194	Nura	Bukalo	\N	selo Bratiš	061/313-948	\N	2026-06-08 15:06:24.196536+02	\N	f	F
+195	Meva	Muminović	\N	ul.22 Maj br.75	038/227-867	\N	2026-06-08 15:24:57.686883+02	\N	f	F
+196	Muhamed	Herak	\N	ul. 22.Maj bb	\N	\N	2026-06-08 15:33:13.842602+02	\N	f	M
+197	Adana	Hodžić Borovina	\N	ul. 1.Maj br.32	061/533-766	\N	2026-06-08 15:44:16.122376+02	\N	f	F
+198	Safija	Tanjo	\N	naselje Mravinjac	061/217-230	\N	2026-06-09 08:00:58.280667+02	\N	f	F
+199	Emir	Popović	\N	ul. 43.drinske brigade bb (stambene prostorije - lamela H4)	061/359-809	\N	2026-06-09 08:18:03.488874+02	\N	f	M
+200	Muamer	Uhota	\N	ul. 31.drinske brigade br.133	061/246-596	\N	2026-06-09 08:28:23.51288+02	\N	f	M
+201	Memsud	Zorlak	\N	ul. Braće Posvandžića br.45	061/330-335	\N	2026-06-09 08:47:59.027624+02	\N	f	M
+202	Elmedina	Hodo	\N	naselje Perjani	061/767-815	\N	2026-06-09 08:51:30.619823+02	\N	f	F
+203	Armin	Mujezinović	\N	Posestra bb	061/376-456	\N	2026-06-09 09:05:39.859373+02	\N	f	M
+204	Mile	Jovović	\N	Glamoč bb	066/764-461	\N	2026-06-09 09:11:26.591137+02	\N	f	M
+205	Emir	Curo	\N	selo Raškovići	061/330-580	\N	2026-06-09 09:15:05.753037+02	\N	f	M
+206	Mugdim	Krakonja	\N	ul. 31.drinske brigade br.132	061/278-500	\N	2026-06-09 09:21:15.723086+02	\N	f	M
+207	Enisa	Ušanović	\N	selo Deševa bb	062/317-193	\N	2026-06-09 11:34:50.939667+02	\N	f	F
+208	Elvir	Kovač	\N	naselje Osanica bb	061-192-545	\N	2026-06-09 11:42:20.42522+02	\N	f	M
+209	Dinka	Zorlak	\N	Crkvine bb	060/3423-760	\N	2026-06-09 11:48:42.057284+02	\N	f	F
+210	Salmin	Kutlovac	\N	ul. Srebrenička bb	062/989-668	\N	2026-06-09 11:56:44.53063+02	\N	f	M
+211	Bahra	Turulja	\N	ul. 16.Muslimanske br.16	061/829-701	\N	2026-06-09 12:20:07.914191+02	\N	f	F
+212	Lejla	Uglješa	\N	selo Rešetnica	062/795-772	\N	2026-06-09 12:30:32.648836+02	\N	f	F
+214	Alen	Bašić	\N	ul. Seada Sofovića Sofe br.11	061/330-507	\N	2026-06-09 13:59:37.66831+02	\N	f	M
+215	Sebina	Muslić	\N	naselje Ilovača bb	061/239-031	\N	2026-06-09 14:21:01.723414+02	\N	f	F
+216	Kenan	Bešlija	\N	ul. Zaima Imamovića br.7	061-534-590	\N	2026-06-09 15:21:10.587181+02	\N	f	M
+217	Alma	Deljo	\N	naselje Ilovača bb	\N	\N	2026-06-10 08:19:16.876046+02	\N	f	F
+218	Sanin	Kovač	\N	naselje Osanica bb	062/517-229	\N	2026-06-10 08:29:42.364897+02	\N	f	M
+219	Edin	Alihodžić	\N	ul. 31.drinske brigade br.126	061/724-085	\N	2026-06-10 08:35:52.641777+02	\N	f	M
+220	Sanela	Šalaka	\N	selo Podmihovići	061/950-058	\N	2026-06-10 08:44:14.584216+02	\N	f	F
+221	Irma	Peštek	\N	naselje Lukarice	061/311-321	\N	2026-06-10 08:48:33.290845+02	\N	f	F
+222	Amela	Halilović	\N	selo Rešetnica	061/506-109	\N	2026-06-10 08:55:37.464847+02	\N	f	F
+223	Arnela	Rogo	\N	ul. Dževada Omerhodžića br.19	\N	\N	2026-06-10 09:02:49.350374+02	\N	f	F
+224	Hasena	Korjenić	\N	ul. Bolnička br.65	062/407-116	\N	2026-06-10 09:11:16.841373+02	\N	f	F
+225	Ramiz	Korjenić	\N	ul. Salih bega Kuljuha br.1	061/708-535	\N	2026-06-10 09:15:16.941744+02	\N	f	M
+226	Senada	Hasanbegović Šovšić	\N	naselje Zupčići br.27	061/943-003	\N	2026-06-10 09:22:37.550215+02	\N	f	F
+227	Enes	Ljukovac	\N	selo Gunjevići	061/314-113	\N	2026-06-10 09:25:31.284104+02	\N	f	M
+228	Aldin	Žuga	\N	selo Kučine bb	061/741-305	\N	2026-06-10 11:47:32.794559+02	\N	f	M
+229	Ismeta	Mirvić	\N	ul. Salih bega Kuljuha bb	\N	\N	2026-06-10 11:54:22.800838+02	\N	f	F
+230	Sanela	Halilović	\N	selo Rešetnica bb	038/292-302	\N	2026-06-10 11:58:43.642706+02	\N	f	F
+231	Nedim	Pinjo	\N	ul. Ruždije Islamagića br.26A	061/501-402	\N	2026-06-10 14:03:53.545882+02	\N	f	M
+232	Diana	Ćurovac	\N	ul. Nurije Rašidkadića br.15	061/271-354	\N	2026-06-10 14:13:31.328794+02	\N	f	F
+233	Aida	Kulić	\N	ul. Rogatičke brigade br.16	062/077-292	\N	2026-06-10 14:17:42.605083+02	\N	f	F
+234	Amina	Čupar	\N	ul. Hasana Kikića 41a	062/270-719	\N	2026-06-11 08:22:20.770718+02	\N	f	F
+235	Faruk	Krdžalija	\N	ul. 31.drinske brigade br.268	062/548-206	\N	2026-06-11 08:46:16.486285+02	\N	f	M
+236	Aldijana	Đogo	\N	ul. Bolnička br. 8	061/936-612	\N	2026-06-11 08:54:23.188244+02	\N	f	F
+237	Sanel	Halilović	\N	ul. Ferida Dizdarevića br.74	062/425-233	\N	2026-06-11 09:08:00.359871+02	\N	f	M
+238	Almir	Bogdanić	\N	ul. Čajnička bb	061/967-392	\N	2026-06-11 13:50:24.5891+02	\N	f	M
+239	Zumra	Grčo	\N	ul. Mevsuda Bajića Baje br.31	062/662-930	\N	2026-06-11 13:58:13.531853+02	\N	f	F
+240	Razija	Hadžović	\N	Potkozara Donja bb	064/421 4748	\N	2026-06-11 14:01:49.934256+02	\N	f	F
+241	Naida	Velić	\N	naselje Zupčići br.72	Tel. 061/602-062	\N	2026-06-11 14:41:10.547813+02	\N	f	F
+242	Hajrija	Mulahmetović	\N	naselje Vranići bb	061/829-692	\N	2026-06-11 15:04:54.586512+02	\N	f	F
+243	Damir	Deljo	\N	Zabus bb	\N	\N	2026-06-11 15:08:29.598365+02	\N	f	M
+244	Selma	Haljković-Muratspahić	\N	ul. Ušanovića bb	061-306-637	\N	2026-06-11 15:12:38.549291+02	\N	f	F
+245	Dino	Karkelja	\N	ul. 1.drinske brigade br.10	061/534-164	\N	2026-06-11 15:17:18.357454+02	\N	f	M
+246	Senada	Gabela	\N	Mravinjac bb	060/325 4626	\N	2026-06-12 08:22:04.805634+02	\N	f	F
+247	Ajla	Lagumdžija	\N	ul. 1.Maj br.32	\N	\N	2026-06-12 08:45:08.54513+02	\N	f	F
+248	Muhamed	Žiga	\N	ul. Fočanska bb	061/377-281	\N	2026-06-12 09:08:19.793344+02	\N	f	M
+249	Elvedin	Perjan	\N	naselje Bogušići	060/330 9003	\N	2026-06-12 09:21:06.357677+02	\N	f	M
+250	Ejub	Agović	\N	selo Guskovići	061/265-152	\N	2026-06-12 09:39:46.177377+02	\N	f	M
+251	Nedžad	Tabaković	\N	Čitluk bb	061/090-173	\N	2026-06-12 09:48:44.256354+02	\N	f	M
+252	Senad	Alaim	\N	selo Vraneši	062/408-697	\N	2026-06-12 11:29:48.29331+02	\N	f	M
 \.
 
 
@@ -2873,7 +5270,6 @@ COPY public.registry_profession (id, code, description) FROM stdin;
 50	2320.001	Profesor srednje škole
 51	2330.001	Nastavnik osnovne škole
 52	2341.001	Učitelj razredne nastave
-53	2411.001	Racunovođa
 54	2412.001	Finansijski analitičar
 55	2413.001	Revizor
 56	2421.001	Advokat
@@ -2934,7 +5330,6 @@ COPY public.registry_profession (id, code, description) FROM stdin;
 111	7131.001	Fasader
 112	7212.001	Zavarivač
 113	7223.001	Tokar
-114	7231.001	Automehaničar
 115	7411.001	Električar
 116	7421.001	Stolar
 117	7511.001	Mesar
@@ -3423,12 +5818,18 @@ COPY public.registry_profession (id, code, description) FROM stdin;
 600	gor12	čistač tekstila
 601	gor 13	proizvođač nakita (bižuterije)
 602	gor14	proizvođač ukrasa (ručnim radom)
-603	gor15	adminiatrator
 604	gor16	kovač
 605	gor17	zabavne igre
 606	gor18	vozač taksija
 607	7222.10	puškar, majstor
 608	7313.011	zlatar
+609	gor19	iznajmljivač smještajnog objekta u domaćinstvu
+610	gor 19	limar
+611	gor 20	prerađivač kafe
+612	gor 21	savjetnik u vezi sa poslovanjem
+53	2411.001	Racunovođa i knjigovođa
+114	7231.001	Automehaničar-pranje auta
+603	gor15	administrator
 \.
 
 
@@ -3437,8 +5838,8 @@ COPY public.registry_profession (id, code, description) FROM stdin;
 --
 
 COPY public.registry_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role) FROM stdin;
-1	pbkdf2_sha256$720000$Eattocl0PpZFhMbQXtiIXP$I9PB1abiOi+mf2tJtJXiWQ8lVV+WWTxdtTxwZlbRm1U=	2026-04-23 08:41:50.37481+02	t	admin	Nermina	Lagumdžija	nerma.lagumdzija@gorazde.ba	t	t	2026-01-11 11:48:08+01	admin
-2	pbkdf2_sha256$720000$wilII2wU59F6Q6MRtG88Fp$BiC2fcNzu9No3wLsDj2H5GI+uA2duDD8k3/jUJeB434=	2026-04-24 07:40:16.600069+02	t	admin1	Zihreta	Perjan	zihreta.perjan@gorazde.ba	t	t	2026-02-12 09:04:56+01	admin
+2	pbkdf2_sha256$720000$wilII2wU59F6Q6MRtG88Fp$BiC2fcNzu9No3wLsDj2H5GI+uA2duDD8k3/jUJeB434=	2026-06-08 07:24:43.946217+02	t	admin1	Zihreta	Perjan	zihreta.perjan@gorazde.ba	t	t	2026-02-12 09:04:56+01	admin
+1	pbkdf2_sha256$720000$Eattocl0PpZFhMbQXtiIXP$I9PB1abiOi+mf2tJtJXiWQ8lVV+WWTxdtTxwZlbRm1U=	2026-06-08 08:16:02.563752+02	t	admin	Nermina	Lagumdžija	nerma.lagumdzija@gorazde.ba	t	t	2026-01-11 11:48:08+01	admin
 \.
 
 
@@ -3483,7 +5884,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 68, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 386, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1187, true);
 
 
 --
@@ -3497,56 +5898,56 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 17, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 35, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 37, true);
 
 
 --
 -- Name: registry_activitycode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_activitycode_id_seq', 618, true);
+SELECT pg_catalog.setval('public.registry_activitycode_id_seq', 619, true);
 
 
 --
 -- Name: registry_assessment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_assessment_id_seq', 3, true);
+SELECT pg_catalog.setval('public.registry_assessment_id_seq', 18, true);
 
 
 --
 -- Name: registry_auditlog_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_auditlog_id_seq', 492, true);
+SELECT pg_catalog.setval('public.registry_auditlog_id_seq', 1499, true);
 
 
 --
 -- Name: registry_business_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_business_id_seq', 91, true);
+SELECT pg_catalog.setval('public.registry_business_id_seq', 248, true);
 
 
 --
 -- Name: registry_business_secondary_activities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_business_secondary_activities_id_seq', 25, true);
+SELECT pg_catalog.setval('public.registry_business_secondary_activities_id_seq', 66, true);
 
 
 --
 -- Name: registry_businessowner_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_businessowner_id_seq', 93, true);
+SELECT pg_catalog.setval('public.registry_businessowner_id_seq', 251, true);
 
 
 --
 -- Name: registry_document_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_document_id_seq', 28, true);
+SELECT pg_catalog.setval('public.registry_document_id_seq', 82, true);
 
 
 --
@@ -3567,14 +5968,14 @@ SELECT pg_catalog.setval('public.registry_license_id_seq', 1, false);
 -- Name: registry_owner_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_owner_id_seq', 95, true);
+SELECT pg_catalog.setval('public.registry_owner_id_seq', 252, true);
 
 
 --
 -- Name: registry_profession_id_seq; Type: SEQUENCE SET; Schema: public; Owner: registry_user
 --
 
-SELECT pg_catalog.setval('public.registry_profession_id_seq', 608, true);
+SELECT pg_catalog.setval('public.registry_profession_id_seq', 613, true);
 
 
 --
@@ -4258,7 +6659,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES 
 -- PostgreSQL database dump complete
 --
 
-\unrestrict JAJriRorrwkKAlWEjwZjrPgCE7PJidbdfRRLkyScbJ7k81eZ6AFXveVdGX6hcdA
+\unrestrict lMGrkQBS4aj8dx7YFryYixoAquh3f5v4yim9Lo1hCLeQsMe2jwUgZj3N2SvUBbc
 
 --
 -- Database "postgres" dump
@@ -4270,7 +6671,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES 
 -- PostgreSQL database dump
 --
 
-\restrict bcVqFQ8yXPcqVm5R786gKisOTYrUcc4uYqo5mCgyidfZKA1cR8VBlaXeRGZiKFK
+\restrict GgobjI8b6arqxoPh6HDxVdGhG0FgG8uhxinZbGg5Ghox54FSuEQCwCVL1jofxWl
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.1
@@ -7265,7 +9666,7 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES 
 -- PostgreSQL database dump complete
 --
 
-\unrestrict bcVqFQ8yXPcqVm5R786gKisOTYrUcc4uYqo5mCgyidfZKA1cR8VBlaXeRGZiKFK
+\unrestrict GgobjI8b6arqxoPh6HDxVdGhG0FgG8uhxinZbGg5Ghox54FSuEQCwCVL1jofxWl
 
 --
 -- PostgreSQL database cluster dump complete
